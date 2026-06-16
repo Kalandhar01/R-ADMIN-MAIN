@@ -1,0 +1,1529 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum PublishStatus {
+  draft
+  published
+  archived
+}
+
+enum DivisionStatus {
+  active
+  inactive
+  archived
+}
+
+enum MediaAssetKind {
+  image
+  video
+  document
+  model
+  other
+}
+
+enum InquiryStatus {
+  new
+  contacted
+  qualified
+  proposal_sent
+  won
+  closed
+  archived
+}
+
+enum SubscriptionStatus {
+  active
+  unsubscribed
+  bounced
+}
+
+enum NewsletterStatus {
+  draft
+  scheduled
+  published
+  archived
+}
+
+enum BlogStatus {
+  draft
+  scheduled
+  published
+  archived
+}
+
+enum CommentStatus {
+  pending
+  approved
+  rejected
+  archived
+}
+
+enum CareerApplicationStatus {
+  new
+  reviewed
+  shortlisted
+  rejected
+  hired
+}
+
+enum ProjectStatus {
+  concept
+  active
+  completed
+  archived
+}
+
+enum ConsultationStatus {
+  new
+  reviewed
+  contacted
+  archived
+}
+
+enum WorkflowStageKey {
+  consultation_submitted
+  internal_review
+  approval_verification
+  strategy_discussion
+  execution_planning
+  project_kickoff
+}
+
+enum WorkflowStageStatus {
+  locked
+  active
+  waiting
+  completed
+  rejected
+}
+
+enum UploadedDocumentKind {
+  submission
+  response
+}
+
+enum IngestionSourceType {
+  website_contact_form
+  book_consultation_form
+  newsletter_form
+  service_inquiry_form
+  career_form
+  admin_newsletter
+  admin_project
+  admin_document
+  admin_media
+  api
+}
+
+enum IngestionEntityType {
+  lead
+  newsletter
+  project
+  document
+  media
+}
+
+enum IngestionStatus {
+  received
+  processing
+  completed
+  failed
+}
+
+enum IngestionPriority {
+  low
+  medium
+  high
+}
+
+enum LeadStatus {
+  new
+  qualified
+  contacted
+  proposal_sent
+  won
+  closed
+  archived
+}
+
+enum IngestedProjectStatus {
+  concept
+  active
+  delayed
+  completed
+  archived
+}
+
+enum IngestedMediaKind {
+  image
+  video
+  document
+  model
+  other
+}
+
+enum NotificationPriority {
+  low
+  medium
+  high
+  critical
+}
+
+enum NotificationStatus {
+  unread
+  read
+  archived
+}
+
+enum ArchitectureLeadStatus {
+  new
+  contacted
+  qualified
+  converted
+  closed
+  archived
+}
+
+enum ArchitectureProjectStatus {
+  draft
+  concept
+  design
+  planning
+  active
+  completed
+  archived
+}
+
+enum ArchitectureMediaKind {
+  image
+  video
+  hero_video
+  project_image
+  gallery_asset
+  document
+  other
+}
+
+enum RealEstatePropertyStatus {
+  draft
+  private_review
+  available
+  reserved
+  sold
+  archived
+}
+
+enum RealEstateMediaKind {
+  image
+  video
+  floor_plan
+  brochure
+  gallery_asset
+  location_map
+  document
+  testimonial
+  other
+}
+
+enum RealEstateLeadStatus {
+  new
+  contacted
+  qualified
+  closed
+  archived
+}
+
+model Admin {
+  id           String     @id @default(cuid())
+  email        String     @unique
+  name         String
+  imageUrl     String?
+  passwordHash String?
+  googleId     String?
+  active       Boolean    @default(true)
+  lastLoginAt  DateTime?
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  roles        Role[]     @relation("AdminRoles")
+  auditLogs    AuditLog[]
+  settings     Settings[] @relation("SettingsUpdatedBy")
+  notifications Notification[]
+
+  @@index([active])
+  @@index([lastLoginAt])
+}
+
+model Role {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  description String?  @db.Text
+  permissions String[] @default([])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  admins      Admin[]  @relation("AdminRoles")
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  adminId   String?
+  action    String
+  entity    String
+  entityId  String?
+  summary   String   @db.Text
+  metadata  Json?
+  ipAddress String?
+  userAgent String?
+  createdAt DateTime @default(now())
+  admin     Admin?   @relation(fields: [adminId], references: [id], onDelete: SetNull)
+
+  @@index([adminId, createdAt])
+  @@index([action, createdAt])
+  @@index([entity, entityId])
+}
+
+model Settings {
+  id          String   @id @default(cuid())
+  key         String   @unique
+  label       String
+  scope       String   @default("global")
+  division    String   @default("ractysh-group")
+  value       Json     @default("{}")
+  updatedById String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  updatedBy   Admin?   @relation("SettingsUpdatedBy", fields: [updatedById], references: [id], onDelete: SetNull)
+
+  @@index([scope])
+  @@index([division])
+  @@index([updatedById])
+}
+
+model Notification {
+  id         String               @id @default(cuid())
+  adminId    String?
+  dedupeKey  String               @unique
+  title      String
+  message    String               @db.Text
+  project    String               @default("group")
+  division   String               @default("ractysh-group")
+  priority   NotificationPriority @default(medium)
+  status     NotificationStatus   @default(unread)
+  entity     String?
+  entityId   String?
+  actionUrl  String?
+  metadata   Json?
+  readAt     DateTime?
+  archivedAt DateTime?
+  createdAt  DateTime             @default(now())
+  updatedAt  DateTime             @updatedAt
+  admin      Admin?               @relation(fields: [adminId], references: [id], onDelete: SetNull)
+
+  @@index([adminId, status, createdAt])
+  @@index([project, status, createdAt])
+  @@index([division, status, createdAt])
+  @@index([priority, createdAt])
+  @@index([entity, entityId])
+}
+
+model ArchitectureLead {
+  id               String                 @id @default(cuid())
+  name             String
+  email            String
+  phone            String?
+  projectType      String
+  location         String?
+  budget           String?
+  message          String                 @db.Text
+  sourcePage       String?
+  status           ArchitectureLeadStatus @default(new)
+  contactedAt      DateTime?
+  convertedAt      DateTime?
+  archivedAt       DateTime?
+  notes            String?                @db.Text
+  metadata         Json?
+  contactInquiryId String?
+  legacyLeadId     String?
+  createdAt        DateTime               @default(now())
+  updatedAt        DateTime               @updatedAt
+
+  @@index([email])
+  @@index([status, createdAt])
+  @@index([projectType])
+  @@index([location])
+  @@index([createdAt])
+}
+
+model ArchitectureProject {
+  id            String                    @id @default(cuid())
+  title         String
+  slug          String                    @unique
+  description   String                    @db.Text
+  location      String
+  projectType   String
+  year          String
+  area          String?
+  status        ArchitectureProjectStatus @default(draft)
+  coverImage    String?
+  coverImageAlt String?
+  galleryImages String[]                  @default([])
+  featured      Boolean                   @default(false)
+  published     Boolean                   @default(false)
+  position      Int                       @default(0)
+  viewCount     Int                       @default(0)
+  metadata      Json?
+  createdAt     DateTime                  @default(now())
+  updatedAt     DateTime                  @updatedAt
+  media         ArchitectureMedia[]
+  pageViews     ArchitecturePageView[]
+
+  @@index([published, featured, position])
+  @@index([status, published])
+  @@index([projectType])
+  @@index([location])
+  @@index([position])
+  @@index([viewCount])
+}
+
+model ArchitectureMedia {
+  id          String                @id @default(cuid())
+  kind        ArchitectureMediaKind @default(image)
+  title       String
+  altText     String?
+  url         String
+  provider    String                @default("local")
+  providerId  String?
+  mimeType    String?
+  size        Int?
+  width       Int?
+  height      Int?
+  usage       String                @default("project")
+  projectId   String?
+  metadata    Json?
+  createdAt   DateTime              @default(now())
+  updatedAt   DateTime              @updatedAt
+  project     ArchitectureProject?  @relation(fields: [projectId], references: [id], onDelete: SetNull)
+
+  @@index([kind, createdAt])
+  @@index([usage, createdAt])
+  @@index([projectId])
+}
+
+model ArchitectureHero {
+  id               String   @id @default(cuid())
+  key              String   @unique @default("architecture-home")
+  heading          String   @db.Text
+  description      String   @db.Text
+  videoUrl         String
+  posterUrl        String?
+  primaryCtaText   String   @default("View Works")
+  primaryCtaHref   String   @default("#works")
+  secondaryCtaText String   @default("Consultation")
+  secondaryCtaHref String   @default("#consultation")
+  metadata         Json?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model ArchitecturePageView {
+  id        String               @id @default(cuid())
+  path      String
+  projectId String?
+  projectSlug String?
+  referrer  String?
+  userAgent String?
+  ipHash    String?
+  createdAt DateTime             @default(now())
+  project   ArchitectureProject? @relation(fields: [projectId], references: [id], onDelete: SetNull)
+
+  @@index([path, createdAt])
+  @@index([projectId, createdAt])
+  @@index([projectSlug, createdAt])
+  @@index([createdAt])
+}
+
+model PropertyCategory {
+  id          String     @id @default(cuid())
+  name        String
+  slug        String     @unique
+  description String?    @db.Text
+  position    Int        @default(0)
+  active      Boolean    @default(true)
+  metadata    Json?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  properties  Property[]
+
+  @@index([active, position])
+  @@index([position])
+}
+
+model PropertyLocation {
+  id           String     @id @default(cuid())
+  city         String
+  slug         String     @unique
+  microMarket  String?
+  address      String?
+  latitude     Decimal?   @db.Decimal(10, 7)
+  longitude    Decimal?   @db.Decimal(10, 7)
+  description  String?    @db.Text
+  landmarks    String[]   @default([])
+  connectivity Json?
+  active       Boolean    @default(true)
+  position     Int        @default(0)
+  metadata     Json?
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  properties   Property[]
+
+  @@index([active, position])
+  @@index([city])
+  @@index([position])
+}
+
+model Property {
+  id              String                   @id @default(cuid())
+  title           String
+  slug            String                   @unique
+  summary         String                   @db.Text
+  description     String                   @db.Text
+  categoryId      String?
+  locationId      String?
+  propertyType    String
+  status          RealEstatePropertyStatus @default(draft)
+  investmentValue String?
+  priceLabel      String?
+  roiIndicator    String?
+  appreciation    String?
+  ticketSize      String?
+  area            String?
+  bedrooms        String?
+  handover        String?
+  developer       String?
+  coverImage      String?
+  coverImageAlt   String?
+  heroVideo       String?
+  brochureUrl     String?
+  floorPlanUrl    String?
+  amenities       String[]                 @default([])
+  highlights      String[]                 @default([])
+  metrics         Json?
+  priceTrends     Json?
+  featured        Boolean                  @default(false)
+  published       Boolean                  @default(false)
+  position        Int                      @default(0)
+  metadata        Json?
+  createdAt       DateTime                 @default(now())
+  updatedAt       DateTime                 @updatedAt
+  category        PropertyCategory?        @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  location        PropertyLocation?        @relation(fields: [locationId], references: [id], onDelete: SetNull)
+  media           PropertyMedia[]
+  leads           PropertyLead[]
+
+  @@index([published, featured, position])
+  @@index([status, published])
+  @@index([categoryId])
+  @@index([locationId])
+  @@index([propertyType])
+  @@index([position])
+  @@index([createdAt])
+}
+
+model PropertyMedia {
+  id          String              @id @default(cuid())
+  propertyId  String?
+  kind        RealEstateMediaKind @default(image)
+  title       String
+  altText     String?
+  url         String
+  provider    String              @default("local")
+  mimeType    String?
+  size        Int?
+  width       Int?
+  height      Int?
+  position    Int                 @default(0)
+  metadata    Json?
+  createdAt   DateTime            @default(now())
+  updatedAt   DateTime            @updatedAt
+  property    Property?           @relation(fields: [propertyId], references: [id], onDelete: SetNull)
+
+  @@index([propertyId, position])
+  @@index([kind, createdAt])
+  @@index([position])
+}
+
+model PropertyLead {
+  id            String               @id @default(cuid())
+  propertyId    String?
+  name          String
+  email         String
+  phone         String?
+  interestType  String               @default("site_visit")
+  budget        String?
+  preferredDate DateTime?
+  message       String?              @db.Text
+  sourcePage    String?
+  status        RealEstateLeadStatus @default(new)
+  contactedAt   DateTime?
+  qualifiedAt   DateTime?
+  closedAt      DateTime?
+  archivedAt    DateTime?
+  notes         String?              @db.Text
+  metadata      Json?
+  legacyLeadId  String?
+  createdAt     DateTime             @default(now())
+  updatedAt     DateTime             @updatedAt
+  property      Property?            @relation(fields: [propertyId], references: [id], onDelete: SetNull)
+
+  @@index([propertyId, createdAt])
+  @@index([email])
+  @@index([status, createdAt])
+  @@index([interestType])
+  @@index([createdAt])
+}
+
+model SiteConfig {
+  id                String            @id @default(cuid())
+  key               String            @unique @default("default")
+  division          String            @default("ractysh-group")
+  logoText          String            @default("Ractysh")
+  seoTitle          String
+  seoDescription    String            @db.Text
+  seoKeywords       String[]          @default([])
+  themeMode         String            @default("light")
+  themeAccent       String            @default("#8b1118")
+  footerHeadline    String
+  footerDescription String            @db.Text
+  footerLinks       Json              @default("[]")
+  socialLinks       Json              @default("[]")
+  popupConfig       Json?
+  googleRatings     Json?
+  feedbackConfig    Json?
+  updatedAt         DateTime          @updatedAt
+  createdAt         DateTime          @default(now())
+  navItems          NavItem[]
+  heroSections      HeroSection[]
+  pageSections      PageSection[]
+
+  @@index([division])
+}
+
+model NavItem {
+  id           String     @id @default(cuid())
+  siteConfigId String
+  parentId     String?
+  label        String
+  description  String?    @db.Text
+  href         String
+  position     Int        @default(0)
+  visible      Boolean    @default(true)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  siteConfig   SiteConfig @relation(fields: [siteConfigId], references: [id], onDelete: Cascade)
+  parent       NavItem?   @relation("NavTree", fields: [parentId], references: [id], onDelete: Cascade)
+  children     NavItem[]  @relation("NavTree")
+
+  @@unique([siteConfigId, parentId, label])
+  @@index([siteConfigId, position])
+  @@index([parentId])
+}
+
+model HeroSection {
+  id            String        @id @default(cuid())
+  siteConfigId  String
+  pageSlug      String        @default("home")
+  division      String        @default("ractysh-group")
+  eyebrow       String
+  headline      String        @db.Text
+  subheadline   String        @db.Text
+  primaryCta    String?
+  primaryHref   String?
+  secondaryCta  String?
+  secondaryHref String?
+  trustLine     String?       @db.Text
+  mediaUrl      String?
+  status        PublishStatus @default(published)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  siteConfig    SiteConfig    @relation(fields: [siteConfigId], references: [id], onDelete: Cascade)
+
+  @@unique([siteConfigId, pageSlug])
+  @@index([division, pageSlug])
+  @@index([status])
+}
+
+model PageSection {
+  id           String        @id @default(cuid())
+  siteConfigId String
+  pageSlug     String
+  division     String        @default("ractysh-group")
+  key          String
+  label        String
+  visible      Boolean       @default(true)
+  position     Int           @default(0)
+  content      Json          @default("{}")
+  status       PublishStatus @default(published)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  siteConfig   SiteConfig    @relation(fields: [siteConfigId], references: [id], onDelete: Cascade)
+
+  @@unique([siteConfigId, pageSlug, key])
+  @@index([division, pageSlug, position])
+  @@index([pageSlug, position])
+  @@index([status])
+}
+
+model CompanyDivision {
+  id             String          @id @default(cuid())
+  slug           String          @unique
+  name           String
+  legalName      String          @unique
+  summary        String          @db.Text
+  description    String?         @db.Text
+  metric         String?
+  registrationNo String?
+  foundedYear    Int?
+  website        String?
+  brandColor     String          @default("#8b1118")
+  accentColor    String          @default("#d6b45f")
+  status         DivisionStatus  @default(active)
+  position       Int             @default(0)
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  services       ServiceOffer[]
+  projects       Project[]
+  teamMembers    TeamMember[]
+  locations      Location[]
+  mediaAssets    MediaAsset[]
+  statistics     Statistic[]
+  certifications Certification[]
+  timelineEvents TimelineEvent[]
+  careerJobs     CareerJob[]
+  domainMappings DomainMapping[]
+
+  @@index([status, position])
+}
+
+model DomainMapping {
+  id        String           @id @default(cuid())
+  domain    String           @unique
+  division  String
+  companyId String?
+  status    DivisionStatus   @default(active)
+  primary   Boolean          @default(false)
+  notes     String?          @db.Text
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+  company   CompanyDivision? @relation(fields: [companyId], references: [id], onDelete: SetNull)
+
+  @@index([division, status])
+  @@index([companyId])
+}
+
+model ServiceOffer {
+  id           String           @id @default(cuid())
+  companyId    String
+  division     String           @default("ractysh-group")
+  slug         String           @unique
+  title        String
+  summary      String           @db.Text
+  description  String?          @db.Text
+  category     String
+  href         String?
+  imageUrl     String?
+  heroContent  Json             @default("{}")
+  metrics      Json             @default("[]")
+  images       String[]         @default([])
+  sections     Json             @default("[]")
+  cta          Json             @default("{}")
+  seo          Json             @default("{}")
+  tags         String[]         @default([])
+  status       PublishStatus    @default(published)
+  position     Int              @default(0)
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+  company      CompanyDivision  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  projectLinks ProjectService[]
+  mediaAssets  MediaAsset[]
+
+  @@index([companyId, position])
+  @@index([division, status])
+  @@index([category])
+  @@index([status])
+}
+
+model Project {
+  id           String           @id @default(cuid())
+  companyId    String
+  division     String           @default("ractysh-group")
+  slug         String           @unique
+  title        String
+  category     String
+  location     String
+  summary      String           @db.Text
+  description  String?          @db.Text
+  year         String
+  status       ProjectStatus    @default(concept)
+  clientName   String?
+  imageUrl     String?
+  featured     Boolean          @default(false)
+  position     Int              @default(0)
+  metadata     Json             @default("{}")
+  startedAt    DateTime?
+  completedAt  DateTime?
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+  company      CompanyDivision  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  serviceLinks ProjectService[]
+  mediaAssets  MediaAsset[]
+
+  @@index([companyId, status])
+  @@index([division, status])
+  @@index([division, featured, position])
+  @@index([category])
+  @@index([year])
+}
+
+model ProjectService {
+  projectId      String
+  serviceOfferId String
+  assignedAt     DateTime     @default(now())
+  project        Project      @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  serviceOffer   ServiceOffer @relation(fields: [serviceOfferId], references: [id], onDelete: Cascade)
+
+  @@id([projectId, serviceOfferId])
+  @@index([serviceOfferId])
+}
+
+model MediaAsset {
+  id           String           @id @default(cuid())
+  kind         MediaAssetKind   @default(image)
+  title        String
+  altText      String?
+  url          String
+  provider     String           @default("local")
+  providerId   String?
+  mimeType     String?
+  size         Int?
+  width        Int?
+  height       Int?
+  metadata     Json?
+  division     String           @default("ractysh-group")
+  companyId    String?
+  serviceId    String?
+  projectId    String?
+  teamMemberId String?
+  blogPostId   String?
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+  company      CompanyDivision? @relation(fields: [companyId], references: [id], onDelete: SetNull)
+  service      ServiceOffer?    @relation(fields: [serviceId], references: [id], onDelete: SetNull)
+  project      Project?         @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  teamMember   TeamMember?      @relation(fields: [teamMemberId], references: [id], onDelete: SetNull)
+  blogPost     BlogPost?        @relation(fields: [blogPostId], references: [id], onDelete: SetNull)
+
+  @@index([kind])
+  @@index([division])
+  @@index([companyId])
+  @@index([serviceId])
+  @@index([projectId])
+  @@index([teamMemberId])
+  @@index([blogPostId])
+}
+
+model TeamMember {
+  id                  String           @id @default(cuid())
+  companyId           String?
+  division            String           @default("ractysh-group")
+  slug                String           @unique
+  name                String
+  role                String
+  position            String?
+  biography           String?          @db.Text
+  leadershipStatement String?          @db.Text
+  imageUrl            String?
+  email               String?
+  phone               String?
+  socialLinks         Json             @default("[]")
+  achievements        String[]         @default([])
+  awards              String[]         @default([])
+  gallery             String[]         @default([])
+  isFounder           Boolean          @default(false)
+  isDirector          Boolean          @default(false)
+  positionOrder       Int              @default(0)
+  createdAt           DateTime         @default(now())
+  updatedAt           DateTime         @updatedAt
+  company             CompanyDivision? @relation(fields: [companyId], references: [id], onDelete: SetNull)
+  mediaAssets         MediaAsset[]
+  certifications      Certification[]
+  timelineEvents      TimelineEvent[]
+  blogPosts           BlogPost[]
+
+  @@index([companyId])
+  @@index([division])
+  @@index([isFounder, isDirector])
+}
+
+model BlogPost {
+  id          String        @id @default(cuid())
+  authorId    String?
+  division    String        @default("ractysh-group")
+  slug        String        @unique
+  title       String
+  category    String
+  excerpt     String        @db.Text
+  body        String?       @db.Text
+  imageUrl    String?
+  readingTime String?
+  tags        String[]      @default([])
+  status      PublishStatus @default(draft)
+  publishedAt DateTime?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  author      TeamMember?   @relation(fields: [authorId], references: [id], onDelete: SetNull)
+  mediaAssets MediaAsset[]
+
+  @@index([status, publishedAt])
+  @@index([division, status, publishedAt])
+  @@index([category])
+}
+
+model Blog {
+  id             String        @id @default(cuid())
+  division       String        @default("ractysh-group")
+  title          String
+  slug           String        @unique
+  excerpt        String        @db.Text
+  content        String        @db.Text
+  coverImage     String
+  coverImageAlt  String?
+  imageMetadata  Json?
+  author         String
+  category       String
+  tags           String[]      @default([])
+  featured       Boolean       @default(false)
+  status         BlogStatus    @default(draft)
+  publishedAt    DateTime?
+  readTime       String
+  seoTitle       String?
+  seoDescription String?       @db.Text
+  canonicalUrl   String?
+  views          Int           @default(0)
+  likes          Int           @default(0)
+  aiGenerated    Boolean       @default(false)
+  aiPrompt       String?       @db.Text
+  relatedSlugs   String[]      @default([])
+  newsletterId   String?
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+  comments       BlogComment[]
+
+  @@index([status, publishedAt])
+  @@index([division, status, publishedAt])
+  @@index([featured, status])
+  @@index([category])
+  @@index([views])
+  @@index([newsletterId])
+}
+
+model BlogComment {
+  id          String        @id @default(cuid())
+  blogId      String
+  authorName  String
+  authorEmail String
+  content     String        @db.Text
+  status      CommentStatus @default(pending)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  blog        Blog          @relation(fields: [blogId], references: [id], onDelete: Cascade)
+
+  @@index([blogId, status])
+  @@index([createdAt])
+}
+
+model Newsletter {
+  id          String           @id @default(cuid())
+  division    String           @default("ractysh-group")
+  title       String
+  slug        String           @unique
+  excerpt     String           @db.Text
+  content     String           @db.Text
+  coverImage  String
+  category    String
+  author      String
+  featured    Boolean          @default(false)
+  status      NewsletterStatus @default(draft)
+  publishDate DateTime?
+  tags        String[]         @default([])
+  readTime    String
+  views       Int              @default(0)
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+
+  @@index([status, publishDate])
+  @@index([division, status, publishDate])
+  @@index([featured, status])
+  @@index([category])
+  @@index([views])
+}
+
+model Subscriber {
+  id        String             @id @default(cuid())
+  email     String             @unique
+  division  String             @default("ractysh-group")
+  status    SubscriptionStatus @default(active)
+  source    String             @default("executive-intelligence-center")
+  createdAt DateTime           @default(now())
+  updatedAt DateTime           @updatedAt
+
+  @@index([status])
+  @@index([division, status])
+  @@index([source])
+  @@index([createdAt])
+}
+
+model NewsletterSubscriber {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  division  String   @default("ractysh-group")
+  createdAt DateTime @default(now())
+
+  @@index([division])
+  @@index([createdAt])
+}
+
+model IngestionEvent {
+  id           String              @id @default(cuid())
+  sourceType   IngestionSourceType
+  entityType   IngestionEntityType
+  status       IngestionStatus     @default(received)
+  priority     IngestionPriority   @default(high)
+  source       String
+  division     String              @default("ractysh-group")
+  service      String?
+  location     String?
+  entityId     String?
+  entityModel  String?
+  payload      Json                @default("{}")
+  aiSummary    String?             @db.Text
+  errorMessage String?             @db.Text
+  startedAt    DateTime?
+  processedAt  DateTime?
+  createdAt    DateTime            @default(now())
+  updatedAt    DateTime            @updatedAt
+  lead         Lead?
+  project      IngestedProject?
+  document     IngestedDocument?
+  media        IngestedMedia?
+
+  @@index([sourceType, createdAt])
+  @@index([division, createdAt])
+  @@index([entityType, createdAt])
+  @@index([status, createdAt])
+  @@index([priority, createdAt])
+  @@index([entityModel, entityId])
+}
+
+model Lead {
+  id               String               @id @default(cuid())
+  division         String               @default("ractysh-group")
+  fullName         String
+  email            String
+  phone            String?
+  companyName      String?
+  source           String
+  sourceType       IngestionSourceType  @default(website_contact_form)
+  service          String?
+  location         String?
+  status           LeadStatus           @default(new)
+  message          String?              @db.Text
+  aiSummary        String?              @db.Text
+  metadata         Json?
+  ingestionEventId String?              @unique
+  createdAt        DateTime             @default(now())
+  updatedAt        DateTime             @updatedAt
+  ingestionEvent   IngestionEvent?      @relation(fields: [ingestionEventId], references: [id], onDelete: SetNull)
+
+  @@index([email])
+  @@index([division, status, createdAt])
+  @@index([sourceType, createdAt])
+  @@index([status, createdAt])
+  @@index([service])
+  @@index([location])
+}
+
+model IngestedProject {
+  id               String                @id @default(cuid())
+  title            String
+  division         String                @default("ractysh-group")
+  status           IngestedProjectStatus @default(active)
+  progress         Int                   @default(0)
+  owner            String?
+  dueDate          DateTime?
+  priority         IngestionPriority     @default(high)
+  budget           Decimal?              @db.Decimal(14, 2)
+  location         String?
+  summary          String?               @db.Text
+  aiSummary        String?               @db.Text
+  metadata         Json?
+  ingestionEventId String?               @unique
+  createdAt        DateTime              @default(now())
+  updatedAt        DateTime              @updatedAt
+  ingestionEvent   IngestionEvent?       @relation(fields: [ingestionEventId], references: [id], onDelete: SetNull)
+
+  @@index([division, status])
+  @@index([division, priority])
+  @@index([status, dueDate])
+  @@index([priority, dueDate])
+  @@index([owner])
+}
+
+model IngestedDocument {
+  id               String          @id @default(cuid())
+  division         String          @default("ractysh-group")
+  filename         String
+  mimeType         String
+  size             Int?
+  url              String?
+  provider         String          @default("metadata")
+  providerId       String?
+  category         String
+  projectId        String?
+  projectName      String?
+  uploadedBy       String          @default("admin")
+  uploadDate       DateTime        @default(now())
+  aiSummary        String?         @db.Text
+  metadata         Json?
+  ingestionEventId String?         @unique
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+  ingestionEvent   IngestionEvent? @relation(fields: [ingestionEventId], references: [id], onDelete: SetNull)
+
+  @@index([category, uploadDate])
+  @@index([division, uploadDate])
+  @@index([projectId])
+  @@index([projectName])
+  @@index([uploadDate])
+}
+
+model IngestedMedia {
+  id               String            @id @default(cuid())
+  division         String            @default("ractysh-group")
+  kind             IngestedMediaKind  @default(image)
+  title            String
+  altText          String?
+  url              String?
+  category         String
+  tags             String[]          @default([])
+  projectId        String?
+  metadata         Json?
+  aiDescription    String?           @db.Text
+  ingestionEventId String?           @unique
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  ingestionEvent   IngestionEvent?   @relation(fields: [ingestionEventId], references: [id], onDelete: SetNull)
+
+  @@index([kind])
+  @@index([division, createdAt])
+  @@index([category, createdAt])
+  @@index([projectId])
+  @@index([createdAt])
+}
+
+model Statistic {
+  id        String           @id @default(cuid())
+  companyId String?
+  division  String           @default("ractysh-group")
+  scope     String           @default("global")
+  label     String
+  value     Int
+  suffix    String           @default("")
+  position  Int              @default(0)
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+  company   CompanyDivision? @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@unique([scope, label])
+  @@index([companyId])
+  @@index([division])
+  @@index([scope, position])
+}
+
+model Testimonial {
+  id          String   @id @default(cuid())
+  division    String   @default("ractysh-group")
+  quote       String   @db.Text
+  name        String
+  role        String
+  companyName String?
+  rating      Int?
+  approved    Boolean  @default(false)
+  source      String?
+  position    Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([approved, position])
+  @@index([division, approved])
+}
+
+model Location {
+  id              String           @id @default(cuid())
+  companyId       String?
+  division        String           @default("ractysh-group")
+  name            String
+  address         String           @db.Text
+  outlookLocation String?
+  city            String?
+  state           String?
+  country         String           @default("India")
+  postalCode      String?
+  phone           String?
+  email           String?
+  hours           String?
+  mapEmbedUrl     String?          @db.Text
+  position        Int              @default(0)
+  active          Boolean          @default(true)
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  company         CompanyDivision? @relation(fields: [companyId], references: [id], onDelete: SetNull)
+
+  @@index([companyId])
+  @@index([division])
+  @@index([active, position])
+}
+
+model LegalDocument {
+  id          String    @id @default(cuid())
+  slug        String    @unique
+  title       String
+  summary     String    @db.Text
+  body        String    @db.Text
+  fileUrl     String?
+  effectiveAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Certification {
+  id           String           @id @default(cuid())
+  companyId    String?
+  teamMemberId String?
+  division     String           @default("ractysh-group")
+  title        String
+  issuer       String
+  year         String
+  fileUrl      String?
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+  company      CompanyDivision? @relation(fields: [companyId], references: [id], onDelete: SetNull)
+  teamMember   TeamMember?      @relation(fields: [teamMemberId], references: [id], onDelete: SetNull)
+
+  @@index([companyId])
+  @@index([division])
+  @@index([teamMemberId])
+}
+
+model TimelineEvent {
+  id           String           @id @default(cuid())
+  companyId    String?
+  teamMemberId String?
+  division     String           @default("ractysh-group")
+  year         String
+  title        String
+  description  String           @db.Text
+  position     Int              @default(0)
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+  company      CompanyDivision? @relation(fields: [companyId], references: [id], onDelete: SetNull)
+  teamMember   TeamMember?      @relation(fields: [teamMemberId], references: [id], onDelete: SetNull)
+
+  @@index([companyId, position])
+  @@index([division, position])
+  @@index([teamMemberId, position])
+}
+
+model Partner {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  description String   @db.Text
+  website     String?
+  logoUrl     String?
+  position    Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model CareerJob {
+  id           String              @id @default(cuid())
+  companyId    String?
+  division     String              @default("ractysh-group")
+  slug         String              @unique
+  title        String
+  location     String
+  type         String
+  summary      String              @db.Text
+  description  String?             @db.Text
+  status       PublishStatus       @default(published)
+  createdAt    DateTime            @default(now())
+  updatedAt    DateTime            @updatedAt
+  company      CompanyDivision?    @relation(fields: [companyId], references: [id], onDelete: SetNull)
+  applications CareerApplication[]
+
+  @@index([companyId])
+  @@index([division, status])
+  @@index([status])
+}
+
+model CareerApplication {
+  id           String                  @id @default(cuid())
+  jobId        String?
+  division     String                  @default("ractysh-group")
+  fullName     String
+  email        String
+  phone        String?
+  position     String
+  experience   String
+  message      String                  @db.Text
+  resumeUrl    String?
+  portfolioUrl String?
+  coverLetter  String?                 @db.Text
+  status       CareerApplicationStatus @default(new)
+  notes        String?                 @db.Text
+  createdAt    DateTime                @default(now())
+  updatedAt    DateTime                @updatedAt
+  job          CareerJob?              @relation(fields: [jobId], references: [id], onDelete: SetNull)
+
+  @@index([jobId])
+  @@index([division, status, createdAt])
+  @@index([email])
+  @@index([position])
+  @@index([status])
+  @@index([createdAt])
+}
+
+model ContactInquiry {
+  id         String        @id @default(cuid())
+  division   String        @default("ractysh-group")
+  name       String
+  email      String
+  phone      String?
+  company    String?
+  service    String?
+  subject    String?
+  message    String        @db.Text
+  sourcePage String?
+  status     InquiryStatus @default(new)
+  notes      String?       @db.Text
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
+
+  @@index([email])
+  @@index([division, status, createdAt])
+  @@index([status, createdAt])
+  @@index([service])
+  @@index([sourcePage])
+}
+
+model ServiceRequest {
+  id        String   @id @default(cuid())
+  division  String   @default("ractysh-group")
+  name      String
+  email     String
+  service   String
+  route     String
+  createdAt DateTime @default(now())
+
+  @@index([email])
+  @@index([division, createdAt])
+  @@index([service])
+  @@index([createdAt])
+}
+
+model Subscription {
+  id             String             @id @default(cuid())
+  email          String             @unique
+  source         String             @default("website")
+  status         SubscriptionStatus @default(active)
+  consentAt      DateTime           @default(now())
+  unsubscribedAt DateTime?
+  createdAt      DateTime           @default(now())
+  updatedAt      DateTime           @updatedAt
+}
+
+model Consultation {
+  id                        String             @id @default(cuid())
+  trackingToken             String             @unique @default(uuid())
+  division                  String             @default("ractysh-group")
+  fullName                  String
+  companyName               String
+  emailAddress              String
+  phoneNumber               String
+  serviceType               String
+  budgetRange               String
+  projectTimeline           String
+  projectDescription        String             @db.Text
+  preferredConsultationType String
+  source                    String             @default("book-consultation-page")
+  status                    ConsultationStatus @default(new)
+  currentStageKey           WorkflowStageKey   @default(internal_review)
+  notificationSent          Boolean            @default(false)
+  notificationSkipped       Boolean            @default(false)
+  notificationError         String?
+  notificationSentAt        DateTime?
+  createdAt                 DateTime           @default(now())
+  updatedAt                 DateTime           @updatedAt
+  workflowStages            WorkflowStage[]
+  workflowLogs              WorkflowLog[]
+  uploadedDocuments         UploadedDocument[]
+  statusHistory             StatusHistory[]
+
+  @@index([emailAddress])
+  @@index([division, status, createdAt])
+  @@index([status])
+  @@index([currentStageKey])
+  @@index([createdAt])
+}
+
+model WorkflowStage {
+  id                String              @id @default(cuid())
+  consultationId    String
+  key               WorkflowStageKey
+  title             String
+  description       String              @db.Text
+  position          Int
+  status            WorkflowStageStatus @default(locked)
+  stateLabel        String              @default("Locked")
+  startedAt         DateTime?
+  unlockedAt        DateTime?
+  completedAt       DateTime?
+  rejectedAt        DateTime?
+  createdAt         DateTime            @default(now())
+  updatedAt         DateTime            @updatedAt
+  consultation      Consultation        @relation(fields: [consultationId], references: [id], onDelete: Cascade)
+  workflowLogs      WorkflowLog[]
+  uploadedDocuments UploadedDocument[]
+  statusHistory     StatusHistory[]
+
+  @@unique([consultationId, key])
+  @@index([consultationId, position])
+  @@index([status])
+}
+
+model WorkflowLog {
+  id             String            @id @default(cuid())
+  consultationId String
+  stageId        String?
+  stageKey       WorkflowStageKey?
+  action         String
+  actorId        String?
+  actorEmail     String?
+  actorRole      String?
+  note           String?           @db.Text
+  metadata       Json?
+  createdAt      DateTime          @default(now())
+  consultation   Consultation      @relation(fields: [consultationId], references: [id], onDelete: Cascade)
+  stage          WorkflowStage?    @relation(fields: [stageId], references: [id], onDelete: SetNull)
+
+  @@index([consultationId, createdAt])
+  @@index([stageId])
+}
+
+enum ConstructionLeadStatus {
+  new
+  contacted
+  qualified
+  proposal_sent
+  won
+  lost
+}
+
+model ConstructionLead {
+  id                String                  @id @default(cuid())
+  fullName          String
+  email             String
+  phone             String?
+  selectedServices  String[]                @default([])
+  projectType       String?
+  projectLocation   String?
+  budgetRange       String?
+  timeline          String?
+  message           String?                 @db.Text
+  status            ConstructionLeadStatus  @default(new)
+  notes             String?                 @db.Text
+  source            String                  @default("consultation-form")
+  createdAt         DateTime                @default(now())
+  updatedAt         DateTime                @updatedAt
+  statusHistory     ConstructionLeadStatusHistory[]
+
+  @@index([email])
+  @@index([status, createdAt])
+  @@index([status])
+  @@index([createdAt])
+}
+
+model ConstructionLeadStatusHistory {
+  id         String   @id @default(cuid())
+  leadId     String
+  fromStatus String?
+  toStatus   String
+  changedBy  String?
+  note       String?  @db.Text
+  createdAt  DateTime @default(now())
+  lead       ConstructionLead @relation(fields: [leadId], references: [id], onDelete: Cascade)
+
+  @@index([leadId, createdAt])
+}
+model UploadedDocument {
+  id             String               @id @default(cuid())
+  consultationId String
+  stageId        String?
+  stageKey       WorkflowStageKey?
+  kind           UploadedDocumentKind @default(submission)
+  filename       String
+  mimeType       String
+  size           Int
+  url            String?
+  provider       String               @default("metadata")
+  providerId     String?
+  uploadedBy     String               @default("client")
+  createdAt      DateTime             @default(now())
+  consultation   Consultation         @relation(fields: [consultationId], references: [id], onDelete: Cascade)
+  stage          WorkflowStage?       @relation(fields: [stageId], references: [id], onDelete: SetNull)
+
+  @@index([consultationId, kind])
+  @@index([stageId])
+}
+
+model ChatbotQuery {
+  id        String   @id @default(cuid())
+  question  String   @db.Text
+  answer    String   @db.Text
+  pageUrl   String?
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+}
+
+model StatusHistory {
+  id             String            @id @default(cuid())
+  consultationId String
+  stageId        String?
+  stageKey       WorkflowStageKey?
+  fromStatus     String?
+  toStatus       String
+  label          String?
+  changedBy      String?
+  note           String?           @db.Text
+  createdAt      DateTime          @default(now())
+  consultation   Consultation      @relation(fields: [consultationId], references: [id], onDelete: Cascade)
+  stage          WorkflowStage?    @relation(fields: [stageId], references: [id], onDelete: SetNull)
+
+  @@index([consultationId, createdAt])
+  @@index([stageId])
+}

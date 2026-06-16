@@ -1,0 +1,80 @@
+{
+  "generatedAt": "2026-06-08T08:29:53.980Z",
+  "scannedRoots": [
+    "apps/web/src",
+    "apps/admin/src",
+    "apps/api/src",
+    "Architecture-Site/src",
+    "Import-Export-site/src",
+    "OTC-exchange/src"
+  ],
+  "finalAudit": {
+    "sourceFilesScanned": 261,
+    "imageReferencesAudited": 190,
+    "uniqueImageReferences": 190,
+    "duplicateImagesFound": 0,
+    "duplicateContentGroups": 0,
+    "duplicateSourcePhotoFamilies": 0,
+    "externalRenderableImageReferencesRemaining": 0,
+    "missingLocalAssets": [],
+    "allDuplicateUsageCleared": true,
+    "allRenderableImagesLocal": true
+  },
+  "remediation": {
+    "initialFindingsThisPass": {
+      "exactDuplicatePathGroups": 10,
+      "byteIdenticalUsedContentGroups": 11,
+      "repeatedSourcePhotoFamilies": 16,
+      "standaloneCssImageDuplicateGroups": 2
+    },
+    "duplicateVisualFamiliesRemoved": 18,
+    "exactDuplicatePathGroupsRemoved": 10,
+    "byteIdenticalUsedContentGroupsRemoved": 11,
+    "repeatedSourcePhotoFamiliesRemoved": 16,
+    "standaloneCssImageDuplicateGroupsRemoved": 2,
+    "generatedLocalReplacementAssets": 84,
+    "photographicLocalReferencesRestoredThisPass": 67,
+    "sourcePngFilesRemovedFromPublicImages": 4,
+    "cssRasterImageUrlsRemaining": 0,
+    "externalRenderableImageLinksRemoved": 0,
+    "externalRenderableImageLinksRemaining": 0
+  },
+  "formatOperations": {
+    "newAvifAssets": 2,
+    "newWebpAssets": 82,
+    "pngSourceAssetsRemoved": 4,
+    "remainingPngFiles": [
+      "apps/web/public/brand/ractysh-email-logo.png",
+      "apps/web/public/brand/ractysh-icon-192.png",
+      "apps/web/public/brand/ractysh-icon-32.png",
+      "apps/web/public/brand/ractysh-logo.png",
+      "apps/web/public/brand/ractysh-newsletter-logo.png",
+      "Architecture-Site/public/favicon.png"
+    ]
+  },
+  "assetInventory": {
+    "publicImageFilesAudited": 346,
+    "byFormat": {
+      "webp": 309,
+      "avif": 31,
+      "png": 6
+    },
+    "totalBytes": 53948877,
+    "totalMiB": 51.45
+  },
+  "duplicateUsageReport": [],
+  "duplicateContentReport": [],
+  "duplicateSourcePhotoReport": [],
+  "nonRenderableExternalEndpointsNotCountedAsImageLoading": [
+    "Cloudinary upload/destroy API endpoints remain in admin/API upload flows; they are not renderable image src/background URLs."
+  ],
+  "rawEmailImageExceptions": [
+    "Email templates keep raw img/Img primitives for email-client compatibility; frontend/browser UI images use next/image or OptimizedImage."
+  ],
+  "notes": [
+    "Final renderable source scan excludes docs, build output, test screenshots, node_modules, generated dist files and .next output.",
+    "Visible placeholder-style references in the main web app were rewired back to downloaded local photographic assets in public/images.",
+    "No Unsplash, Pexels, remote CDN image URLs or direct internet image loads remain in renderable UI image references.",
+    "CSS url(...) raster image loading was removed from the audited UI source."
+  ]
+}

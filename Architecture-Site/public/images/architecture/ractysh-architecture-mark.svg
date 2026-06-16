@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-label="Ractysh Architecture mark">
+  <rect width="128" height="128" fill="#FFFFFF"/>
+  <path d="M24 108V20h32c18 0 30 11 30 28 0 12-6 21-17 25l24 35H74L52 75H40v33H24Zm16-47h15c13 0 20-5 20-15 0-9-7-14-20-14H40v29Z" fill="#111111"/>
+  <path d="M89 20h15v88H89V20Z" fill="#6D1018"/>
+  <path d="M18 116h92" fill="none" stroke="#B8934F" stroke-width="4" stroke-linecap="square"/>
+</svg>

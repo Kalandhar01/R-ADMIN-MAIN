@@ -1,0 +1,8199 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  --warm-white: #fbf8f2;
+  --warm-muted: #ded2bf;
+  --stone: #9d9487;
+  --concrete: #cbc5b9;
+  --graphite: #111214;
+  --deep-graphite: #080807;
+  --gold: #c4a15b;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: #000;
+  color: var(--warm-white);
+  overflow-x: hidden;
+  scroll-behavior: auto;
+}
+
+html.arch-intro-lock,
+html.arch-intro-lock body {
+  overflow: hidden;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  overflow-x: hidden;
+  background: #000;
+  color: var(--warm-white);
+  font-family: var(--font-body), Manrope, system-ui, sans-serif;
+  letter-spacing: 0;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  letter-spacing: 0;
+}
+
+button {
+  cursor: pointer;
+}
+
+img,
+video,
+canvas {
+  display: block;
+  max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+p {
+  letter-spacing: 0;
+}
+
+h1,
+h2,
+h3 {
+  overflow-wrap: anywhere;
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+::selection {
+  background: rgba(196, 161, 91, 0.38);
+  color: #fff;
+}
+
+.architecture-site {
+  position: relative;
+  isolation: isolate;
+  min-height: 100vh;
+  background: #000;
+}
+
+.intro-cinema,
+.project-showcase {
+  min-height: 100vh;
+  min-height: 100svh;
+}
+
+.animation-black-wake {
+  background: #000;
+  animation: black-wake 11.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.intro-vignette {
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.72), transparent 24%, transparent 76%, rgba(0, 0, 0, 0.7)),
+    linear-gradient(180deg, #000 0%, transparent 24%, transparent 62%, rgba(0, 0, 0, 0.82) 100%);
+}
+
+.animation-scroll-line {
+  animation: scroll-line 1.9s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+.video-hero {
+  min-height: 100vh;
+  min-height: 100svh;
+}
+
+.story-section {
+  background:
+    linear-gradient(180deg, rgba(251, 248, 242, 0.98), #f4eee4 52%, rgba(251, 248, 242, 0.99)),
+    repeating-linear-gradient(90deg, rgba(17, 18, 20, 0.04) 0, rgba(17, 18, 20, 0.04) 1px, transparent 1px, transparent 12vw);
+}
+
+.process-section {
+  background:
+    linear-gradient(180deg, #090908, #151514 46%, #080807),
+    repeating-linear-gradient(90deg, rgba(196, 161, 91, 0.12) 0, rgba(196, 161, 91, 0.12) 1px, transparent 1px, transparent 13vw);
+}
+
+.works-section {
+  background: #000;
+}
+
+.project-showcase {
+  background: #000;
+  contain: paint;
+}
+
+.project-image {
+  height: 100%;
+  width: 100%;
+  will-change: transform;
+}
+
+.gallery-section {
+  background:
+    linear-gradient(180deg, #fbf8f2, #ece3d7),
+    linear-gradient(90deg, rgba(196, 161, 91, 0.16), transparent 28%, transparent 72%, rgba(17, 18, 20, 0.06));
+}
+
+.gallery-track {
+  will-change: transform;
+}
+
+.gallery-frame {
+  box-shadow: 0 34px 80px rgba(17, 18, 20, 0.22);
+}
+
+.gallery-frame::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+  background: linear-gradient(180deg, transparent 48%, rgba(0, 0, 0, 0.55));
+}
+
+.philosophy-section {
+  background:
+    linear-gradient(180deg, #f5efe6, #fbf8f2 44%, #e7dccd),
+    repeating-linear-gradient(0deg, rgba(17, 18, 20, 0.035) 0, rgba(17, 18, 20, 0.035) 1px, transparent 1px, transparent 96px);
+}
+
+.contact-section {
+  background:
+    linear-gradient(135deg, rgba(196, 161, 91, 0.08), transparent 30%),
+    linear-gradient(180deg, #121313, #080807);
+}
+
+.consultation-desk {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(251, 248, 242, 0.14);
+  background:
+    linear-gradient(135deg, rgba(251, 248, 242, 0.09), rgba(251, 248, 242, 0.03)),
+    linear-gradient(180deg, rgba(196, 161, 91, 0.07), rgba(0, 0, 0, 0));
+  padding: 1rem;
+  box-shadow: 0 42px 110px rgba(0, 0, 0, 0.42);
+}
+
+@media (min-width: 640px) {
+  .consultation-desk {
+    padding: 1.25rem;
+  }
+}
+
+.desk-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+  color: rgba(251, 248, 242, 0.58);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.desk-strip span {
+  border: 1px solid rgba(196, 161, 91, 0.28);
+  padding: 0.42rem 0.62rem;
+}
+
+.consultation-desk label {
+  display: grid;
+  gap: 0.52rem;
+}
+
+.consultation-desk label span {
+  color: rgba(251, 248, 242, 0.68);
+  font-size: 0.74rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.consultation-desk input,
+.consultation-desk select,
+.consultation-desk textarea {
+  width: 100%;
+  border: 1px solid rgba(251, 248, 242, 0.16);
+  border-radius: 0;
+  background: rgba(0, 0, 0, 0.22);
+  color: var(--warm-white);
+  outline: none;
+  padding: 0.9rem 0.95rem;
+  transition:
+    border-color 220ms ease,
+    background 220ms ease,
+    box-shadow 220ms ease;
+}
+
+.consultation-desk input::placeholder,
+.consultation-desk textarea::placeholder {
+  color: rgba(251, 248, 242, 0.42);
+}
+
+.consultation-desk select {
+  appearance: none;
+}
+
+.consultation-desk input:focus,
+.consultation-desk select:focus,
+.consultation-desk textarea:focus {
+  border-color: rgba(196, 161, 91, 0.78);
+  background: rgba(0, 0, 0, 0.34);
+  box-shadow: 0 0 0 1px rgba(196, 161, 91, 0.14);
+}
+
+.desk-signal {
+  display: flex;
+  min-height: 3.4rem;
+  align-items: center;
+  gap: 0.72rem;
+  border-top: 1px solid rgba(251, 248, 242, 0.12);
+  padding-top: 0.95rem;
+  color: rgba(251, 248, 242, 0.7);
+  font-size: 0.82rem;
+}
+
+.desk-signal svg {
+  width: 1rem;
+  height: 1rem;
+  color: var(--gold);
+  flex: 0 0 auto;
+}
+
+.desk-action {
+  display: inline-flex;
+  min-height: 3.2rem;
+  max-width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 0.72rem;
+  border: 1px solid rgba(196, 161, 91, 0.74);
+  background: var(--gold);
+  color: #080807;
+  padding: 0.9rem 1.05rem;
+  font-size: 0.82rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  box-shadow: 0 18px 54px rgba(196, 161, 91, 0.16);
+  transition:
+    transform 220ms ease,
+    background 220ms ease,
+    box-shadow 220ms ease;
+}
+
+.desk-action:hover {
+  transform: translateY(-2px);
+  background: #dec072;
+  box-shadow: 0 22px 70px rgba(196, 161, 91, 0.22);
+}
+
+.desk-action svg {
+  width: 1rem;
+  height: 1rem;
+  flex: 0 0 auto;
+}
+
+.footer-section {
+  background:
+    linear-gradient(180deg, #080807, #000),
+    repeating-linear-gradient(90deg, rgba(251, 248, 242, 0.06) 0, rgba(251, 248, 242, 0.06) 1px, transparent 1px, transparent 9rem);
+}
+
+@keyframes black-wake {
+  0%,
+  11% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes scroll-line {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(170%);
+  }
+}
+
+@media (max-width: 767px) {
+  .project-showcase {
+    min-height: 860px;
+  }
+
+  .gallery-track {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+
+  .gallery-track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .gallery-frame {
+    scroll-snap-align: start;
+  }
+}
+
+@media (max-width: 374px) {
+  .desk-action {
+    width: 100%;
+    padding-right: 0.82rem;
+    padding-left: 0.82rem;
+    font-size: 0.76rem;
+  }
+
+  .consultation-desk {
+    padding: 0.86rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.industrial-design-page {
+  --industrial-warm: #fbf8f2;
+  --industrial-stone: #9d9487;
+  --industrial-graphite: #111214;
+  --industrial-black: #050505;
+  --industrial-gold: #c4a15b;
+  position: relative;
+  isolation: isolate;
+  min-height: 100vh;
+  font-family: var(--font-body), Manrope, system-ui, sans-serif;
+}
+
+.industrial-design-page h1,
+.industrial-design-page h2,
+.industrial-design-page h3 {
+  overflow-wrap: anywhere;
+  text-wrap: balance;
+}
+
+.industrial-nav {
+  border-bottom: 1px solid rgba(251, 248, 242, 0.08);
+  background: linear-gradient(180deg, rgba(5, 5, 5, 0.62), rgba(5, 5, 5, 0));
+  backdrop-filter: blur(10px);
+}
+
+.industrial-hero,
+.industrial-work-presentation {
+  min-height: 100vh;
+  min-height: 100svh;
+}
+
+.industrial-hero-grid {
+  pointer-events: none;
+  opacity: 0.22;
+  background-image:
+    linear-gradient(rgba(196, 161, 91, 0.22) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(251, 248, 242, 0.12) 1px, transparent 1px);
+  background-size:
+    8rem 8rem,
+    8rem 8rem;
+  mask-image: radial-gradient(ellipse at 62% 44%, black 0%, rgba(0, 0, 0, 0.68) 46%, transparent 78%);
+}
+
+.industrial-hero-vignette {
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(5, 5, 5, 0.9), rgba(5, 5, 5, 0.42) 36%, rgba(5, 5, 5, 0.18) 68%, rgba(5, 5, 5, 0.72)),
+    linear-gradient(180deg, rgba(5, 5, 5, 0.78), transparent 32%, rgba(5, 5, 5, 0.9));
+}
+
+.industrial-editorial-section,
+.industrial-why-section {
+  background:
+    linear-gradient(180deg, #fbf8f2, #f1eadf 52%, #fbf8f2),
+    repeating-linear-gradient(90deg, rgba(17, 18, 20, 0.04) 0, rgba(17, 18, 20, 0.04) 1px, transparent 1px, transparent 11rem);
+}
+
+.industrial-model-section,
+.industrial-consultation-section {
+  background:
+    radial-gradient(ellipse at 74% 28%, rgba(196, 161, 91, 0.12), transparent 34rem),
+    linear-gradient(180deg, #111214, #070707);
+}
+
+.industrial-model-frame {
+  contain: paint;
+}
+
+.industrial-process-section {
+  background:
+    linear-gradient(180deg, #f1eadf, #fbf8f2 52%, #e5dbcc),
+    repeating-linear-gradient(0deg, rgba(17, 18, 20, 0.04) 0, rgba(17, 18, 20, 0.04) 1px, transparent 1px, transparent 6rem);
+}
+
+.industrial-work-presentation {
+  background: #050505;
+  contain: paint;
+}
+
+.industrial-work-presentation img {
+  will-change: transform;
+}
+
+.industrial-consultation-desk {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(251, 248, 242, 0.14);
+  background:
+    linear-gradient(135deg, rgba(251, 248, 242, 0.09), rgba(251, 248, 242, 0.03)),
+    linear-gradient(180deg, rgba(196, 161, 91, 0.08), rgba(0, 0, 0, 0));
+  padding: 1rem;
+  box-shadow: 0 42px 110px rgba(0, 0, 0, 0.42);
+}
+
+.industrial-desk-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+  color: rgba(251, 248, 242, 0.62);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.industrial-desk-strip span {
+  border: 1px solid rgba(196, 161, 91, 0.28);
+  padding: 0.42rem 0.62rem;
+}
+
+.industrial-consultation-desk label {
+  display: grid;
+  gap: 0.52rem;
+}
+
+.industrial-consultation-desk label span {
+  color: rgba(251, 248, 242, 0.7);
+  font-size: 0.74rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.industrial-consultation-desk input,
+.industrial-consultation-desk select,
+.industrial-consultation-desk textarea {
+  width: 100%;
+  border: 1px solid rgba(251, 248, 242, 0.16);
+  border-radius: 0;
+  background: rgba(0, 0, 0, 0.22);
+  color: var(--industrial-warm);
+  outline: none;
+  padding: 0.9rem 0.95rem;
+  transition:
+    border-color 220ms ease,
+    background 220ms ease,
+    box-shadow 220ms ease;
+}
+
+.industrial-consultation-desk input::placeholder,
+.industrial-consultation-desk textarea::placeholder {
+  color: rgba(251, 248, 242, 0.42);
+}
+
+.industrial-consultation-desk select {
+  appearance: none;
+}
+
+.industrial-consultation-desk input:focus,
+.industrial-consultation-desk select:focus,
+.industrial-consultation-desk textarea:focus {
+  border-color: rgba(196, 161, 91, 0.78);
+  background: rgba(0, 0, 0, 0.34);
+  box-shadow: 0 0 0 1px rgba(196, 161, 91, 0.14);
+}
+
+.industrial-desk-action {
+  display: inline-flex;
+  min-height: 3.2rem;
+  max-width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 0.72rem;
+  border: 1px solid rgba(196, 161, 91, 0.74);
+  background: var(--industrial-gold);
+  color: #080807;
+  padding: 0.9rem 1.05rem;
+  font-size: 0.82rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  box-shadow: 0 18px 54px rgba(196, 161, 91, 0.16);
+  transition:
+    transform 220ms ease,
+    background 220ms ease,
+    box-shadow 220ms ease;
+}
+
+.industrial-desk-action:hover {
+  transform: translateY(-2px);
+  background: #dec072;
+  box-shadow: 0 22px 70px rgba(196, 161, 91, 0.22);
+}
+
+.industrial-desk-action svg {
+  width: 1rem;
+  height: 1rem;
+  flex: 0 0 auto;
+}
+
+@media (max-width: 767px) {
+  .industrial-design-page .industrial-hero h1 {
+    font-size: 3.7rem;
+    line-height: 0.9;
+  }
+
+  .industrial-hero {
+    min-height: 940px;
+  }
+
+  .industrial-model-frame {
+    min-height: 32rem;
+  }
+
+  .industrial-work-presentation {
+    min-height: 860px;
+  }
+}
+
+@media (max-width: 374px) {
+  .industrial-desk-action {
+    width: 100%;
+    padding-right: 0.82rem;
+    padding-left: 0.82rem;
+    font-size: 0.74rem;
+  }
+
+  .industrial-consultation-desk {
+    padding: 0.86rem;
+  }
+}
+
+:root {
+  color-scheme: light;
+  --arch-white: #ffffff;
+  --arch-red: #6D1018;
+  --arch-gold: #b8934f;
+  --arch-black: #111111;
+  --arch-muted: rgba(17, 17, 17, 0.64);
+}
+
+html {
+  background: var(--arch-white);
+  color: var(--arch-black);
+  scroll-behavior: auto;
+}
+
+body {
+  background: var(--arch-white);
+  color: var(--arch-black);
+}
+
+::selection {
+  background: rgba(139, 16, 24, 0.16);
+  color: var(--arch-black);
+}
+
+.architecture-site {
+  position: relative;
+  isolation: isolate;
+  min-height: 100vh;
+  overflow: clip;
+  background:
+    linear-gradient(90deg, rgba(17, 17, 17, 0.035) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(184, 147, 79, 0.035) 1px, transparent 1px),
+    var(--arch-white);
+  background-size:
+    clamp(5rem, 11vw, 9rem) clamp(5rem, 11vw, 9rem),
+    clamp(5rem, 11vw, 9rem) clamp(5rem, 11vw, 9rem),
+    auto;
+  font-family: var(--font-body), Manrope, system-ui, sans-serif;
+}
+
+.architecture-site h1,
+.architecture-site h2,
+.architecture-site h3,
+.architecture-site .editorial-copy {
+  font-family: var(--font-display), "Bodoni Moda", Georgia, serif;
+  letter-spacing: 0;
+}
+
+.architecture-nav {
+  border-bottom: 1px solid rgba(17, 17, 17, 0.08);
+  background: rgba(255, 255, 255, 0.74);
+  backdrop-filter: blur(18px);
+}
+
+.nav-mark {
+  display: inline-grid;
+  gap: 0.05rem;
+  color: var(--arch-black);
+  text-decoration: none;
+}
+
+.nav-mark span {
+  font-family: var(--font-display), "Bodoni Moda", Georgia, serif;
+  font-size: 1.28rem;
+  font-weight: 600;
+  line-height: 0.85;
+}
+
+.nav-mark small {
+  color: var(--arch-red);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.eyebrow {
+  font-size: 0.72rem;
+  font-weight: 750;
+  letter-spacing: 0.18em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.blueprint-loader {
+  color: var(--arch-red);
+}
+
+.blueprint-loader::before {
+  position: absolute;
+  inset: 0;
+  content: "";
+  opacity: 0.38;
+  background-image:
+    linear-gradient(rgba(139, 16, 24, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(139, 16, 24, 0.08) 1px, transparent 1px);
+  background-size: 46px 46px;
+  mask-image: radial-gradient(circle at center, black 0%, rgba(0, 0, 0, 0.58) 42%, transparent 72%);
+}
+
+.blueprint-stage {
+  position: relative;
+  width: min(84vw, 52rem);
+  padding: 2rem;
+}
+
+.blueprint-plan {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  filter: drop-shadow(0 18px 42px rgba(139, 16, 24, 0.08));
+}
+
+.blueprint-dimension,
+.blueprint-label {
+  fill: var(--arch-black);
+  font-family: var(--font-body), Manrope, system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+}
+
+.blueprint-label {
+  fill: rgba(17, 17, 17, 0.52);
+  font-size: 12px;
+}
+
+.blueprint-logo {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 2;
+  display: grid;
+  gap: 0.18rem;
+  min-width: 13rem;
+  transform: translate(-50%, -50%);
+  border: 1px solid rgba(139, 16, 24, 0.18);
+  background: rgba(255, 255, 255, 0.88);
+  padding: 1rem 1.35rem;
+  text-align: center;
+  box-shadow: 0 26px 80px rgba(17, 17, 17, 0.08);
+}
+
+.blueprint-logo span {
+  font-family: var(--font-display), "Bodoni Moda", Georgia, serif;
+  font-size: 2.15rem;
+  font-weight: 600;
+  line-height: 0.85;
+  color: var(--arch-black);
+}
+
+.blueprint-logo small {
+  color: var(--arch-red);
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.hero-film {
+  min-height: 100svh;
+}
+
+.hero-white-wash {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.42) 35%, rgba(255, 255, 255, 0.86) 100%),
+    radial-gradient(circle at 50% 42%, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.74) 68%),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.18) 48%, rgba(255, 255, 255, 0.9));
+}
+
+.scroll-thread {
+  animation: scroll-line 1.9s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+.editorial-section,
+.studio-section,
+.works-masonry-section,
+.philosophy-white-section,
+.contact-white-section,
+.footer-white {
+  position: relative;
+}
+
+.editorial-section::before,
+.studio-section::before,
+.works-masonry-section::before,
+.contact-white-section::before {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  content: "";
+  background:
+    linear-gradient(90deg, rgba(139, 16, 24, 0.035) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(17, 17, 17, 0.035) 1px, transparent 1px);
+  background-size: 9rem 9rem;
+  mask-image: linear-gradient(180deg, transparent, black 12%, black 88%, transparent);
+}
+
+.editorial-section > *,
+.studio-section > *,
+.works-masonry-section > *,
+.philosophy-white-section > *,
+.contact-white-section > *,
+.footer-white > * {
+  position: relative;
+  z-index: 1;
+}
+
+.editorial-frame {
+  border-top: 1px solid rgba(17, 17, 17, 0.12);
+  background: var(--arch-white);
+}
+
+.process-red-section {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 18% 8%, rgba(184, 147, 79, 0.18), transparent 24rem),
+    linear-gradient(135deg, #6D1018 0%, #5f0910 48%, #111111 100%);
+}
+
+.process-red-section::after {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  content: "";
+  opacity: 0.24;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.18) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.16) 1px, transparent 1px);
+  background-size: 7rem 7rem;
+}
+
+.process-red-section > * {
+  position: relative;
+  z-index: 1;
+}
+
+.process-row {
+  transition:
+    border-color 420ms ease,
+    transform 420ms ease;
+}
+
+.process-row:hover {
+  border-color: rgba(184, 147, 79, 0.58);
+  transform: translateX(0.25rem);
+}
+
+.project-tile {
+  background: var(--arch-black);
+  box-shadow: 0 32px 72px rgba(17, 17, 17, 0.12);
+}
+
+.project-overlay {
+  background:
+    linear-gradient(180deg, rgba(17, 17, 17, 0.04), rgba(17, 17, 17, 0.78)),
+    linear-gradient(90deg, rgba(139, 16, 24, 0.28), transparent 58%);
+  opacity: 0.9;
+  transition:
+    opacity 700ms cubic-bezier(0.22, 1, 0.36, 1),
+    background 700ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.project-tile:hover .project-overlay {
+  opacity: 1;
+  background:
+    linear-gradient(180deg, rgba(17, 17, 17, 0.02), rgba(17, 17, 17, 0.82)),
+    linear-gradient(90deg, rgba(139, 16, 24, 0.34), rgba(184, 147, 79, 0.08) 72%);
+}
+
+.consultation-desk {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(17, 17, 17, 0.16);
+  background:
+    linear-gradient(135deg, rgba(139, 16, 24, 0.055), transparent 32%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(248, 246, 241, 0.88));
+  padding: clamp(1rem, 2vw, 1.45rem);
+  box-shadow: 0 38px 96px rgba(17, 17, 17, 0.1);
+}
+
+.consultation-desk::before {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  content: "";
+  opacity: 0.5;
+  background-image:
+    linear-gradient(rgba(139, 16, 24, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(17, 17, 17, 0.06) 1px, transparent 1px);
+  background-size: 4.25rem 4.25rem;
+  mask-image: linear-gradient(135deg, black, transparent 74%);
+}
+
+.consultation-desk > * {
+  position: relative;
+  z-index: 1;
+}
+
+.desk-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+  color: rgba(17, 17, 17, 0.62);
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.desk-strip span {
+  border: 1px solid rgba(139, 16, 24, 0.18);
+  background: rgba(255, 255, 255, 0.62);
+  padding: 0.46rem 0.66rem;
+}
+
+.consultation-desk label {
+  display: grid;
+  gap: 0.52rem;
+}
+
+.consultation-desk label span {
+  color: rgba(17, 17, 17, 0.58);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.consultation-desk input,
+.consultation-desk select,
+.consultation-desk textarea {
+  width: 100%;
+  border: 1px solid rgba(17, 17, 17, 0.16);
+  border-radius: 0;
+  background: rgba(255, 255, 255, 0.78);
+  color: var(--arch-black);
+  outline: none;
+  padding: 0.95rem 1rem;
+  transition:
+    border-color 260ms ease,
+    background 260ms ease,
+    box-shadow 260ms ease;
+}
+
+.consultation-desk input::placeholder,
+.consultation-desk textarea::placeholder {
+  color: rgba(17, 17, 17, 0.36);
+}
+
+.consultation-desk select {
+  appearance: none;
+}
+
+.consultation-desk input:focus,
+.consultation-desk select:focus,
+.consultation-desk textarea:focus {
+  border-color: rgba(139, 16, 24, 0.64);
+  background: #fff;
+  box-shadow: 0 0 0 4px rgba(139, 16, 24, 0.08);
+}
+
+.desk-message {
+  max-width: 29rem;
+  font-size: 0.86rem;
+  line-height: 1.7;
+}
+
+.desk-action {
+  display: inline-flex;
+  min-height: 3.25rem;
+  max-width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 0.72rem;
+  border: 1px solid rgba(139, 16, 24, 0.78);
+  background: var(--arch-red);
+  color: #fff;
+  padding: 0.9rem 1.08rem;
+  font-size: 0.8rem;
+  font-weight: 850;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  box-shadow: 0 18px 46px rgba(139, 16, 24, 0.18);
+  transition:
+    transform 260ms ease,
+    background 260ms ease,
+    box-shadow 260ms ease;
+}
+
+.desk-action:hover:not(:disabled) {
+  transform: translateY(-2px);
+  background: #711018;
+  box-shadow: 0 22px 66px rgba(139, 16, 24, 0.22);
+}
+
+.desk-action:disabled {
+  cursor: wait;
+  opacity: 0.72;
+}
+
+.desk-action svg {
+  width: 1rem;
+  height: 1rem;
+  flex: 0 0 auto;
+}
+
+@media (max-width: 767px) {
+  .architecture-nav {
+    background: rgba(255, 255, 255, 0.88);
+  }
+
+  .nav-mark span {
+    font-size: 1.08rem;
+  }
+
+  .nav-mark small {
+    font-size: 0.55rem;
+  }
+
+  .project-tile {
+    min-height: 35rem;
+  }
+}
+
+@media (max-width: 430px) {
+  .blueprint-stage {
+    width: 96vw;
+    padding: 0.8rem;
+  }
+
+  .blueprint-logo {
+    min-width: 11rem;
+    padding: 0.82rem 1rem;
+  }
+
+  .blueprint-logo span {
+    font-size: 1.72rem;
+  }
+
+  .desk-action {
+    width: 100%;
+  }
+}
+
+.editorial-position-section {
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+  min-height: 100svh;
+  scroll-margin-top: 6rem;
+  background:
+    radial-gradient(circle at 17% 18%, rgba(139, 16, 24, 0.055), transparent 28rem),
+    radial-gradient(circle at 82% 74%, rgba(184, 147, 79, 0.075), transparent 26rem),
+    #fff;
+}
+
+.editorial-position-section::after {
+  position: absolute;
+  inset: 8rem 0;
+  z-index: 0;
+  pointer-events: none;
+  content: "";
+  border-block: 1px solid rgba(17, 17, 17, 0.08);
+  opacity: 0.72;
+}
+
+.editorial-position-field {
+  position: absolute !important;
+  inset: -8rem 0;
+  z-index: 0 !important;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(139, 16, 24, 0.05) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(17, 17, 17, 0.045) 1px, transparent 1px),
+    linear-gradient(135deg, transparent 0 47%, rgba(184, 147, 79, 0.08) 47% 47.25%, transparent 47.25% 100%);
+  background-size:
+    8.5rem 8.5rem,
+    8.5rem 8.5rem,
+    23rem 23rem;
+  mask-image: radial-gradient(ellipse at 54% 48%, black 0%, rgba(0, 0, 0, 0.72) 48%, transparent 82%);
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+.editorial-position-grid {
+  position: relative;
+  z-index: 2;
+  align-items: start;
+}
+
+.editorial-position-heading {
+  transform: translateZ(0);
+}
+
+.editorial-position-heading h2 {
+  max-width: 8.2ch;
+}
+
+.editorial-panel-stack {
+  display: grid;
+  gap: clamp(1rem, 2vw, 1.4rem);
+  transform: translateZ(0);
+}
+
+.editorial-story-panel {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(17, 17, 17, 0.12);
+  background:
+    linear-gradient(135deg, rgba(139, 16, 24, 0.045), transparent 34%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(250, 248, 244, 0.88));
+  padding: clamp(1.35rem, 3vw, 2.5rem);
+  box-shadow: 0 30px 80px rgba(17, 17, 17, 0.075);
+  will-change: transform, opacity;
+  transform: translateZ(0);
+}
+
+.editorial-story-panel::before {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  content: "";
+  background-image:
+    linear-gradient(rgba(139, 16, 24, 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(17, 17, 17, 0.05) 1px, transparent 1px);
+  background-size: 4.4rem 4.4rem;
+  mask-image: linear-gradient(135deg, black, transparent 70%);
+  opacity: 0.54;
+}
+
+.editorial-story-panel > * {
+  position: relative;
+  z-index: 1;
+}
+
+.editorial-panel-number {
+  display: inline-flex;
+  min-width: 2.4rem;
+  min-height: 2.4rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(139, 16, 24, 0.24);
+  color: var(--arch-red);
+  font-size: 0.72rem;
+  font-weight: 850;
+  letter-spacing: 0.14em;
+}
+
+.editorial-story-panel h3 {
+  margin-top: 1.6rem;
+  max-width: 13ch;
+  color: var(--arch-black);
+  font-family: var(--font-display), "Bodoni Moda", Georgia, serif;
+  font-size: 3.4rem;
+  font-weight: 500;
+  line-height: 0.92;
+}
+
+.editorial-story-panel p {
+  margin-top: 1.35rem;
+  max-width: 35rem;
+  color: rgba(17, 17, 17, 0.64);
+  font-size: 1.05rem;
+  line-height: 1.9;
+}
+
+.architecture-footer {
+  position: relative;
+  isolation: isolate;
+  overflow: clip;
+  scroll-margin-top: 6rem;
+  background: #fff;
+}
+
+.architecture-footer::before {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  content: "";
+  background:
+    linear-gradient(90deg, rgba(139, 16, 24, 0.04) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(17, 17, 17, 0.045) 1px, transparent 1px),
+    radial-gradient(circle at 12% 18%, rgba(139, 16, 24, 0.05), transparent 26rem),
+    radial-gradient(circle at 82% 82%, rgba(184, 147, 79, 0.08), transparent 24rem);
+  background-size:
+    8rem 8rem,
+    8rem 8rem,
+    auto,
+    auto;
+  mask-image: linear-gradient(180deg, transparent, black 10%, black 100%);
+}
+
+.architecture-footer > * {
+  position: relative;
+  z-index: 1;
+}
+
+.footer-statement {
+  border-top: 1px solid rgba(17, 17, 17, 0.12);
+  padding-top: clamp(2rem, 4vw, 3.2rem);
+}
+
+.footer-statement h2 span,
+.footer-cta h3 span {
+  display: block;
+}
+
+.footer-columns {
+  display: grid;
+  gap: clamp(2rem, 5vw, 5.5rem);
+  margin-top: clamp(4rem, 8vw, 8rem);
+  padding-block: clamp(2rem, 4vw, 3.6rem);
+  border-block: 1px solid rgba(17, 17, 17, 0.12);
+}
+
+.footer-column h3 {
+  color: var(--arch-red);
+  font-size: 0.76rem;
+  font-weight: 850;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.footer-column div {
+  display: grid;
+  gap: 0.72rem;
+  margin-top: 1.3rem;
+}
+
+.footer-link {
+  position: relative;
+  width: fit-content;
+  color: rgba(17, 17, 17, 0.68);
+  font-size: 1.05rem;
+  line-height: 1.6;
+  text-decoration: none;
+  transition: color 260ms ease;
+}
+
+.footer-link::after {
+  position: absolute;
+  right: 0;
+  bottom: 0.08rem;
+  left: 0;
+  height: 1px;
+  content: "";
+  background: var(--arch-red);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 360ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.footer-link:hover {
+  color: var(--arch-black);
+}
+
+.footer-link:hover::after {
+  transform: scaleX(1);
+}
+
+.footer-cta {
+  display: grid;
+  gap: 2rem;
+  align-items: end;
+  padding-top: clamp(3rem, 7vw, 6.4rem);
+}
+
+.footer-cta h3 {
+  font-family: var(--font-display), "Bodoni Moda", Georgia, serif;
+  font-size: 3.6rem;
+  font-weight: 500;
+  line-height: 0.86;
+}
+
+.footer-cta-button {
+  display: inline-flex;
+  width: fit-content;
+  min-height: 3.5rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  border: 1px solid rgba(139, 16, 24, 0.76);
+  background: var(--arch-red);
+  color: #fff;
+  padding: 1rem 1.25rem;
+  font-size: 0.78rem;
+  font-weight: 850;
+  letter-spacing: 0.14em;
+  text-decoration: none;
+  text-transform: uppercase;
+  box-shadow: 0 18px 52px rgba(139, 16, 24, 0.18);
+  transition:
+    transform 320ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 320ms cubic-bezier(0.22, 1, 0.36, 1),
+    background 320ms ease;
+}
+
+.footer-cta-button:hover {
+  transform: translate3d(0, -4px, 0);
+  background: #721018;
+  box-shadow: 0 24px 72px rgba(139, 16, 24, 0.24);
+}
+
+.footer-cta-button svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+@media (min-width: 768px) {
+  .footer-columns {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .footer-cta {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+}
+
+@media (max-width: 1023px) {
+  .editorial-position-heading h2 {
+    max-width: 11ch;
+  }
+
+  .editorial-story-panel h3 {
+    max-width: 15ch;
+  }
+}
+
+@media (max-width: 640px) {
+  .editorial-position-section {
+    min-height: auto;
+  }
+
+  .editorial-panel-stack {
+    gap: 1rem;
+  }
+
+  .footer-cta-button {
+    width: 100%;
+  }
+}
+
+/* Ractysh Architecture final design system pass */
+html,
+body {
+  background: #ffffff;
+  color: #111111;
+}
+
+body {
+  font-weight: 400;
+}
+
+.architecture-site {
+  --arch-white: #ffffff;
+  --arch-black: #111111;
+  --arch-red: #6D1018;
+  --arch-gold: #b8934f;
+  background:
+    linear-gradient(90deg, rgba(17, 17, 17, 0.032) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(139, 16, 24, 0.026) 1px, transparent 1px),
+    #ffffff;
+  background-size: 8rem 8rem;
+}
+
+.architecture-site h1,
+.architecture-site h2,
+.architecture-site h3,
+.hero-editorial-statement,
+.nav-mark span,
+.blueprint-logo span,
+.footer-brand-lockup small,
+.footer-cta h3 {
+  font-family: var(--font-display), "Bodoni Moda", Georgia, serif;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+.architecture-site h1 {
+  font-size: 4.4rem;
+  line-height: 0.86;
+}
+
+.architecture-site h2 {
+  font-size: 3.55rem;
+  line-height: 0.9;
+}
+
+.architecture-site h3 {
+  font-size: 2.45rem;
+  line-height: 0.98;
+}
+
+.architecture-site p,
+.architecture-site a,
+.architecture-site input,
+.architecture-site select,
+.architecture-site textarea,
+.architecture-site button {
+  font-weight: 400;
+}
+
+.architecture-site .eyebrow,
+.architecture-nav-link,
+.hero-logo-name,
+.desk-strip,
+.consultation-desk label span,
+.desk-action,
+.footer-cta-button,
+.footer-column h3 {
+  font-weight: 700;
+}
+
+.section-title {
+  font-weight: 600;
+  line-height: 0.9;
+}
+
+#studio,
+#works,
+#process,
+#consultation {
+  scroll-margin-top: 6rem;
+}
+
+[data-arch-section] {
+  transform-origin: 50% 70%;
+  will-change: transform, opacity;
+}
+
+[data-arch-project-image] {
+  will-change: transform, clip-path;
+}
+
+.architecture-nav {
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow: 0 1px 0 rgba(17, 17, 17, 0.06);
+}
+
+.architecture-nav-links {
+  letter-spacing: 0.12em;
+}
+
+.architecture-nav-link {
+  position: relative;
+  color: rgba(17, 17, 17, 0.58);
+  text-decoration: none;
+  transition: color 240ms ease;
+}
+
+.architecture-nav-link::after {
+  position: absolute;
+  right: 0;
+  bottom: -0.42rem;
+  left: 0;
+  height: 1px;
+  content: "";
+  background: var(--arch-red);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.architecture-nav-link:hover,
+.architecture-nav-link.is-active {
+  color: var(--arch-red);
+}
+
+.architecture-nav-link.is-active::after {
+  transform: scaleX(1);
+}
+
+.architecture-nav.is-over-light {
+  background: rgba(255, 255, 255, 0.88);
+  border-bottom-color: rgba(17, 17, 17, 0.08);
+  color: #111111;
+}
+
+.architecture-nav.is-over-light .architecture-nav-link {
+  color: rgba(17, 17, 17, 0.62);
+}
+
+.architecture-nav.is-over-light .architecture-nav-link:hover,
+.architecture-nav.is-over-light .architecture-nav-link.is-active {
+  color: #6d1018;
+}
+
+.architecture-nav.is-over-light .architecture-nav-link::after {
+  background: #6d1018;
+}
+
+.hero-film {
+  min-height: 100svh;
+}
+
+.hero-film video {
+  filter: saturate(1.04) contrast(1.04);
+}
+
+.hero-white-wash {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.76) 0%, rgba(255, 255, 255, 0.28) 42%, rgba(255, 255, 255, 0.84) 100%),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.18) 48%, rgba(255, 255, 255, 0.84));
+}
+
+.hero-logo-lockup {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+  color: var(--arch-black);
+}
+
+.hero-logo-symbol,
+.footer-brand-lockup span {
+  display: inline-grid;
+  width: 2.85rem;
+  height: 2.85rem;
+  place-items: center;
+  border: 1px solid rgba(139, 16, 24, 0.38);
+  color: var(--arch-red);
+  font-family: var(--font-display), "Bodoni Moda", Georgia, serif;
+  font-size: 1.24rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.hero-logo-name {
+  color: rgba(17, 17, 17, 0.72);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.hero-brand-title {
+  font-size: 4.9rem;
+  line-height: 0.84;
+}
+
+.hero-editorial-statement {
+  font-size: 2.9rem;
+  line-height: 0.94;
+}
+
+.editorial-frame {
+  box-shadow: 0 34px 90px rgba(17, 17, 17, 0.08);
+}
+
+.process-red-section {
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(135deg, #6D1018 0%, #4E0C12 48%, #111111 100%);
+  background-size: 7rem 7rem, 7rem 7rem, auto;
+}
+
+.process-red-section::after {
+  opacity: 0.12;
+}
+
+.project-tile {
+  isolation: isolate;
+  box-shadow: 0 34px 80px rgba(17, 17, 17, 0.14);
+}
+
+.project-tile h3 {
+  font-size: 2.85rem;
+  line-height: 0.9;
+}
+
+.contact-white-section {
+  background:
+    linear-gradient(90deg, rgba(17, 17, 17, 0.032) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(139, 16, 24, 0.03) 1px, transparent 1px),
+    #ffffff;
+  background-size: 8rem 8rem;
+}
+
+.consultation-desk {
+  background:
+    linear-gradient(135deg, rgba(139, 16, 24, 0.045), transparent 34%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(255, 255, 255, 0.92));
+}
+
+.consultation-desk p,
+.desk-message {
+  font-weight: 400;
+}
+
+.editorial-position-section {
+  background:
+    linear-gradient(90deg, rgba(139, 16, 24, 0.036) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(17, 17, 17, 0.035) 1px, transparent 1px),
+    #ffffff;
+  background-size: 8.5rem 8.5rem;
+}
+
+.editorial-story-panel h3 {
+  font-size: 3.4rem;
+  font-weight: 600;
+  line-height: 0.94;
+}
+
+.architecture-footer::before {
+  background:
+    linear-gradient(90deg, rgba(139, 16, 24, 0.04) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(17, 17, 17, 0.042) 1px, transparent 1px);
+  background-size: 8rem 8rem;
+}
+
+.footer-brand-lockup {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+  color: var(--arch-black);
+}
+
+.footer-brand-lockup small {
+  color: var(--arch-red);
+  font-size: 1.35rem;
+  line-height: 1;
+}
+
+.footer-statement h2 {
+  font-size: 4.4rem;
+  line-height: 0.86;
+}
+
+.footer-cta h3 {
+  font-size: 3.6rem;
+  line-height: 0.88;
+}
+
+@media (min-width: 768px) {
+  .architecture-site h1 {
+    font-size: 6rem;
+  }
+
+  .architecture-site h2 {
+    font-size: 4.85rem;
+  }
+
+  .architecture-site h3 {
+    font-size: 3rem;
+  }
+
+  .hero-brand-title {
+    font-size: 6.7rem;
+  }
+
+  .hero-editorial-statement {
+    font-size: 4rem;
+  }
+
+  .project-tile h3 {
+    font-size: 3.25rem;
+  }
+
+  .editorial-story-panel h3 {
+    font-size: 4.25rem;
+  }
+
+  .footer-statement h2 {
+    font-size: 6.4rem;
+  }
+
+  .footer-cta h3 {
+    font-size: 5.25rem;
+  }
+}
+
+@media (min-width: 1180px) {
+  .architecture-site h1 {
+    font-size: 7.4rem;
+  }
+
+  .architecture-site h2 {
+    font-size: 6.3rem;
+  }
+
+  .hero-brand-title {
+    font-size: 8.6rem;
+  }
+
+  .hero-editorial-statement {
+    font-size: 5.15rem;
+  }
+
+  .footer-statement h2 {
+    font-size: 8.2rem;
+  }
+
+  .footer-cta h3 {
+    font-size: 6.7rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .architecture-nav nav {
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .architecture-nav-links {
+    gap: 0.85rem;
+    padding-top: 0.1rem;
+    font-size: 0.61rem;
+  }
+
+  .hero-logo-lockup {
+    flex-direction: column;
+    gap: 0.62rem;
+  }
+
+  .hero-brand-title {
+    font-size: 4.05rem;
+  }
+
+  .hero-editorial-statement {
+    font-size: 2.45rem;
+  }
+
+  .project-tile h3 {
+    font-size: 2.45rem;
+  }
+
+  .footer-statement h2,
+  .footer-cta h3 {
+    font-size: 3.55rem;
+  }
+}
+
+@media (max-width: 390px) {
+  .architecture-site h1,
+  .hero-brand-title {
+    font-size: 3.45rem;
+  }
+
+  .architecture-site h2,
+  .footer-statement h2,
+  .footer-cta h3 {
+    font-size: 3rem;
+  }
+
+  .architecture-nav-links {
+    gap: 0.62rem;
+    font-size: 0.57rem;
+  }
+}
+
+/* Ractysh Architecture domain complete rebuild */
+:root {
+  color-scheme: light;
+  --arch-white: #ffffff;
+  --arch-stone: #f5f3ef;
+  --arch-black: #111111;
+  --arch-burgundy: #6d1018;
+  --arch-gold: #b8934f;
+}
+
+html,
+body {
+  background: #ffffff;
+  color: #111111;
+}
+
+body {
+  font-family: var(--font-body), Manrope, system-ui, sans-serif;
+}
+
+.architecture-site {
+  --arch-white: #ffffff;
+  --arch-stone: #f5f3ef;
+  --arch-black: #111111;
+  --arch-burgundy: #6d1018;
+  --arch-gold: #b8934f;
+  overflow: clip;
+  background: #ffffff;
+  color: #111111;
+  font-family: var(--font-body), Manrope, system-ui, sans-serif;
+  letter-spacing: 0;
+}
+
+.architecture-site *,
+.architecture-site *::before,
+.architecture-site *::after {
+  letter-spacing: 0;
+}
+
+.architecture-site h1,
+.architecture-site h2,
+.architecture-site h3,
+.architecture-site .brand-word,
+.architecture-site .footer-brand-lockup small,
+.architecture-site .arch-loader-logo small {
+  font-family: var(--font-display), "Bodoni Moda", Didot, Georgia, serif;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+.architecture-site p,
+.architecture-site a,
+.architecture-site button,
+.architecture-site input,
+.architecture-site select,
+.architecture-site textarea,
+.architecture-site label,
+.architecture-site small {
+  font-family: var(--font-body), Manrope, system-ui, sans-serif;
+}
+
+.arch-loader {
+  background: #ffffff;
+  color: #6d1018;
+}
+
+.arch-loader-stage {
+  width: min(82vw, 42rem);
+}
+
+.arch-loader-plan {
+  width: 100%;
+  color: #6d1018;
+}
+
+.arch-loader-logo {
+  display: grid;
+  justify-items: center;
+  gap: 0.65rem;
+  margin-top: 1rem;
+  color: #111111;
+  text-align: center;
+}
+
+.arch-loader-logo span,
+.brand-symbol {
+  display: inline-grid;
+  width: 2.85rem;
+  height: 2.85rem;
+  place-items: center;
+  border: 1px solid rgba(109, 16, 24, 0.46);
+  color: #6d1018;
+  font-family: var(--font-display), "Bodoni Moda", Didot, Georgia, serif;
+  font-size: 1.18rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.arch-loader-logo small {
+  color: #111111;
+  font-size: 1.12rem;
+  line-height: 1;
+}
+
+.architecture-nav {
+  background: rgba(255, 255, 255, 0.16);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.22);
+  color: #ffffff;
+  backdrop-filter: blur(18px);
+  box-shadow: none;
+}
+
+.nav-mark,
+.hero-logo-lockup,
+.footer-brand-lockup {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.82rem;
+  color: inherit;
+  text-decoration: none;
+}
+
+.nav-mark small,
+.brand-word,
+.footer-brand-lockup small {
+  color: currentColor;
+  font-size: 0.82rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.architecture-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 1.45rem;
+  color: currentColor;
+  font-size: 0.74rem;
+  font-weight: 700;
+}
+
+.architecture-nav-link {
+  position: relative;
+  color: rgba(255, 255, 255, 0.78);
+  text-decoration: none;
+  transition: color 260ms ease;
+}
+
+.architecture-nav-link::after {
+  position: absolute;
+  right: 0;
+  bottom: -0.5rem;
+  left: 0;
+  height: 1px;
+  content: "";
+  background: #b8934f;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 360ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.architecture-nav-link:hover,
+.architecture-nav-link.is-active {
+  color: #ffffff;
+}
+
+.architecture-nav-link.is-active::after {
+  transform: scaleX(1);
+}
+
+.arch-hero {
+  min-height: 100vh;
+  min-height: 100svh;
+  background: #111111;
+  isolation: isolate;
+}
+
+.arch-hero-video {
+  filter: saturate(0.95) contrast(1.04);
+  transform-origin: center;
+}
+
+.arch-hero-overlay {
+  background:
+    linear-gradient(180deg, rgba(17, 17, 17, 0.48), rgba(17, 17, 17, 0.14) 44%, rgba(17, 17, 17, 0.7)),
+    linear-gradient(90deg, rgba(17, 17, 17, 0.58), transparent 42%, rgba(17, 17, 17, 0.56));
+}
+
+.arch-hero-title {
+  width: 100%;
+  max-width: 10ch;
+  margin-inline: auto;
+  color: #ffffff;
+  font-size: clamp(4rem, 7vw, 8rem);
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  line-height: 0.88;
+  text-align: center;
+  text-wrap: balance;
+  overflow-wrap: normal;
+  word-break: normal;
+  overflow: visible;
+}
+
+.arch-hero-title span,
+.arch-footer-title span {
+  display: block;
+}
+
+.arch-hero-subtitle {
+  color: rgba(255, 255, 255, 0.76);
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.85;
+}
+
+.arch-scroll-line {
+  background: rgba(255, 255, 255, 0.28);
+}
+
+.arch-scroll-line span {
+  display: block;
+  width: 1px;
+  height: 2.4rem;
+  background: #b8934f;
+  animation: scroll-line 1.9s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+.arch-kicker {
+  margin: 0;
+  font-size: 0.74rem;
+  font-weight: 800;
+  line-height: 1.1;
+}
+
+.arch-section-title {
+  max-width: 10ch;
+  color: #111111;
+  font-size: 3.2rem;
+  line-height: 0.92;
+}
+
+.arch-studio-section,
+.arch-contact-section {
+  background:
+    linear-gradient(90deg, rgba(17, 17, 17, 0.035) 1px, transparent 1px),
+    #ffffff;
+  background-size: 9rem 9rem;
+}
+
+.arch-sticky-copy {
+  z-index: 2;
+}
+
+.arch-metrics {
+  display: grid;
+  gap: 0;
+  border-top: 1px solid rgba(17, 17, 17, 0.14);
+}
+
+.arch-metrics div {
+  display: grid;
+  grid-template-columns: 4rem 1fr;
+  gap: 1.25rem;
+  align-items: center;
+  padding: 1rem 0;
+  border-bottom: 1px solid rgba(17, 17, 17, 0.14);
+}
+
+.arch-metrics span {
+  color: #6d1018;
+  font-family: var(--font-display), "Bodoni Moda", Didot, Georgia, serif;
+  font-size: 2.1rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.arch-metrics small {
+  color: rgba(17, 17, 17, 0.62);
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+.arch-studio-image {
+  position: relative;
+  overflow: hidden;
+  background: #f5f3ef;
+}
+
+.arch-studio-image::after,
+.arch-project-media::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+  background: linear-gradient(180deg, transparent 44%, rgba(17, 17, 17, 0.26));
+}
+
+.arch-story-rows {
+  margin-top: 2.25rem;
+}
+
+.arch-story-rows article {
+  display: grid;
+  grid-template-columns: 4rem minmax(0, 1fr);
+  gap: 1.5rem;
+  padding: 2rem 0;
+  border-top: 1px solid rgba(17, 17, 17, 0.14);
+}
+
+.arch-story-rows article > span,
+.arch-editorial-panels article > span {
+  color: #b8934f;
+  font-family: var(--font-display), "Bodoni Moda", Didot, Georgia, serif;
+  font-size: 2.4rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.arch-story-rows h3,
+.arch-editorial-panels h3 {
+  margin-top: 0.7rem;
+  color: #111111;
+  font-size: 2.45rem;
+  line-height: 0.98;
+}
+
+.arch-story-rows p,
+.arch-editorial-panels p,
+.arch-works-intro p,
+.arch-contact-copy {
+  color: rgba(17, 17, 17, 0.66);
+  font-size: 1rem;
+  line-height: 1.9;
+}
+
+.arch-works-intro {
+  display: grid;
+  gap: 1.8rem;
+  max-width: 65rem;
+}
+
+.arch-works-intro .arch-section-title {
+  max-width: 12ch;
+}
+
+.arch-works-intro > p:last-child {
+  max-width: 39rem;
+}
+
+.arch-project-gallery {
+  display: grid;
+  gap: 0;
+}
+
+.arch-project-showcase {
+  display: grid;
+  min-height: 92vh;
+  min-height: 92svh;
+  grid-template-columns: minmax(0, 1.18fr) minmax(22rem, 0.82fr);
+  align-items: stretch;
+  border-top: 1px solid rgba(17, 17, 17, 0.12);
+  background: #ffffff;
+}
+
+.arch-project-showcase.is-reverse {
+  grid-template-columns: minmax(22rem, 0.82fr) minmax(0, 1.18fr);
+}
+
+.arch-project-showcase.is-reverse .arch-project-media {
+  order: 2;
+}
+
+.arch-project-showcase.is-reverse .arch-project-copy {
+  order: 1;
+}
+
+.arch-project-media {
+  position: relative;
+  min-height: 72vh;
+  min-height: 72svh;
+  overflow: hidden;
+  background: #f5f3ef;
+}
+
+.arch-project-media img {
+  transition: transform 1200ms cubic-bezier(0.22, 1, 0.36, 1), filter 1200ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.arch-project-showcase:hover .arch-project-media img {
+  filter: saturate(1.04) contrast(1.04);
+  transform: scale(1.04);
+}
+
+.arch-project-copy {
+  display: flex;
+  min-height: 100%;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4rem;
+}
+
+.arch-project-number {
+  margin-top: 4rem;
+  color: #b8934f;
+  font-family: var(--font-display), "Bodoni Moda", Didot, Georgia, serif;
+  font-size: 4.2rem;
+  font-weight: 600;
+  line-height: 0.9;
+}
+
+.arch-project-copy h3 {
+  max-width: 8.8ch;
+  margin-top: 1rem;
+  color: #111111;
+  font-size: 4.8rem;
+  line-height: 0.9;
+}
+
+.arch-project-copy p {
+  max-width: 28rem;
+  margin-top: 1.4rem;
+  color: rgba(17, 17, 17, 0.66);
+  font-size: 1rem;
+  line-height: 1.9;
+}
+
+.arch-project-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem 1.2rem;
+  margin-top: 2rem;
+  padding-top: 1.35rem;
+  border-top: 1px solid rgba(17, 17, 17, 0.14);
+  color: rgba(17, 17, 17, 0.58);
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.arch-editorial-position {
+  background:
+    linear-gradient(90deg, rgba(109, 16, 24, 0.035) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(17, 17, 17, 0.034) 1px, transparent 1px),
+    #f5f3ef;
+  background-size: 8rem 8rem;
+}
+
+.arch-editorial-panels {
+  display: grid;
+  gap: 0;
+}
+
+.arch-editorial-panels article {
+  display: grid;
+  grid-template-columns: 4rem minmax(0, 1fr);
+  gap: 1.5rem;
+  padding: 2.2rem 0;
+  border-top: 1px solid rgba(17, 17, 17, 0.14);
+}
+
+.arch-process-section {
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.065) 1px, transparent 1px),
+    linear-gradient(180deg, #111111, #151313 48%, #111111);
+  background-size: 9rem 9rem, auto;
+}
+
+.arch-process-head {
+  display: grid;
+  gap: 1.6rem;
+}
+
+.arch-process-head .arch-section-title {
+  max-width: 12ch;
+  color: #ffffff;
+}
+
+.arch-process-window {
+  margin-top: 5rem;
+  overflow: hidden;
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.arch-process-track {
+  display: flex;
+  min-width: max-content;
+  gap: 3rem;
+  padding: 3.2rem 0;
+}
+
+.arch-process-step {
+  width: 22rem;
+}
+
+.arch-process-step span {
+  color: #b8934f;
+  font-family: var(--font-display), "Bodoni Moda", Didot, Georgia, serif;
+  font-size: 4rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.arch-process-step h3 {
+  margin-top: 1.4rem;
+  color: #ffffff;
+  font-size: 3.6rem;
+  line-height: 0.92;
+}
+
+.arch-process-step p {
+  margin-top: 1.1rem;
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 1rem;
+  line-height: 1.85;
+}
+
+.arch-contact-section .arch-section-title {
+  max-width: 12ch;
+}
+
+.arch-contact-location {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  color: rgba(17, 17, 17, 0.68);
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.arch-contact-location svg {
+  width: 1rem;
+  height: 1rem;
+  color: #6d1018;
+}
+
+.arch-consultation-desk {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(17, 17, 17, 0.14);
+  background:
+    linear-gradient(135deg, rgba(109, 16, 24, 0.045), transparent 36%),
+    #ffffff;
+  padding: 1.2rem;
+  box-shadow: 0 34px 90px rgba(17, 17, 17, 0.08);
+}
+
+.arch-consultation-desk .desk-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-bottom: 1.2rem;
+  color: rgba(17, 17, 17, 0.62);
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.arch-consultation-desk .desk-strip span {
+  border: 1px solid rgba(184, 147, 79, 0.32);
+  padding: 0.45rem 0.62rem;
+}
+
+.arch-consultation-desk label {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.arch-consultation-desk label span {
+  color: rgba(17, 17, 17, 0.62);
+  font-size: 0.74rem;
+  font-weight: 800;
+}
+
+.arch-consultation-desk input,
+.arch-consultation-desk select,
+.arch-consultation-desk textarea {
+  width: 100%;
+  border: 1px solid rgba(17, 17, 17, 0.14);
+  border-radius: 0;
+  background: #f5f3ef;
+  color: #111111;
+  outline: none;
+  padding: 0.92rem 0.96rem;
+  transition:
+    border-color 220ms ease,
+    background 220ms ease,
+    box-shadow 220ms ease;
+}
+
+.arch-consultation-desk input::placeholder,
+.arch-consultation-desk textarea::placeholder {
+  color: rgba(17, 17, 17, 0.42);
+}
+
+.arch-consultation-desk input:focus,
+.arch-consultation-desk select:focus,
+.arch-consultation-desk textarea:focus {
+  border-color: rgba(109, 16, 24, 0.74);
+  background: #ffffff;
+  box-shadow: 0 0 0 1px rgba(109, 16, 24, 0.1);
+}
+
+.arch-desk-footer {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1.4rem;
+  padding-top: 1.4rem;
+  border-top: 1px solid rgba(17, 17, 17, 0.12);
+}
+
+.desk-message {
+  margin: 0;
+  color: rgba(17, 17, 17, 0.62);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.desk-message.is-error {
+  color: #6d1018;
+}
+
+.desk-action,
+.footer-cta-button {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  gap: 0.58rem;
+  border: 1px solid #6d1018;
+  border-radius: 0;
+  background: #6d1018;
+  color: #ffffff;
+  font-size: 0.84rem;
+  font-weight: 800;
+  line-height: 1;
+  padding: 0.92rem 1rem;
+  text-decoration: none;
+  transition:
+    background 240ms ease,
+    color 240ms ease,
+    border-color 240ms ease;
+}
+
+.desk-action svg,
+.footer-cta-button svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.desk-action:hover,
+.footer-cta-button:hover {
+  border-color: #b8934f;
+  background: #111111;
+}
+
+.desk-action:disabled {
+  cursor: not-allowed;
+  opacity: 0.62;
+}
+
+.arch-footer {
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.055) 1px, transparent 1px),
+    #111111;
+  background-size: 9rem 9rem;
+}
+
+.arch-footer .brand-symbol {
+  border-color: rgba(184, 147, 79, 0.52);
+  color: #b8934f;
+}
+
+.arch-footer-title {
+  max-width: 9ch;
+  color: #ffffff;
+  font-size: 4.4rem;
+  line-height: 0.88;
+}
+
+.arch-footer-bottom {
+  display: grid;
+  gap: 2rem;
+  align-items: end;
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.arch-footer-bottom p {
+  max-width: 36rem;
+  color: rgba(255, 255, 255, 0.66);
+  font-size: 1rem;
+  line-height: 1.9;
+}
+
+@media (min-width: 768px) {
+  .arch-hero-title {
+    font-size: 6.35rem;
+  }
+
+  .arch-section-title {
+    font-size: 4.8rem;
+  }
+
+  .arch-story-rows h3,
+  .arch-editorial-panels h3 {
+    font-size: 3.25rem;
+  }
+
+  .arch-footer-title {
+    font-size: 6.4rem;
+  }
+
+  .arch-footer-bottom {
+    grid-template-columns: 1fr auto;
+  }
+}
+
+@media (min-width: 1180px) {
+  .arch-hero-title {
+    font-size: 8.25rem;
+  }
+
+  .arch-section-title {
+    font-size: 6.15rem;
+  }
+
+  .arch-footer-title {
+    font-size: 8.1rem;
+  }
+}
+
+@media (max-width: 1023px) {
+  .arch-project-showcase,
+  .arch-project-showcase.is-reverse {
+    min-height: auto;
+    grid-template-columns: 1fr;
+  }
+
+  .arch-project-showcase.is-reverse .arch-project-media,
+  .arch-project-showcase.is-reverse .arch-project-copy {
+    order: initial;
+  }
+
+  .arch-project-copy {
+    padding: 2rem 1.25rem 4rem;
+  }
+
+  .arch-project-copy h3 {
+    max-width: 11ch;
+    font-size: 3.65rem;
+  }
+
+  .arch-process-window {
+    overflow-x: auto;
+    scrollbar-width: thin;
+  }
+
+  .arch-process-track {
+    transform: none;
+    padding-right: 2rem;
+  }
+}
+
+@media (max-width: 720px) {
+  .architecture-nav nav {
+    align-items: flex-start;
+    gap: 0.9rem;
+  }
+
+  .architecture-nav-links {
+    max-width: 13rem;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 0.62rem 0.85rem;
+    font-size: 0.68rem;
+  }
+
+  .brand-symbol {
+    width: 2.45rem;
+    height: 2.45rem;
+  }
+
+  .nav-mark small {
+    max-width: 5.8rem;
+    line-height: 1.15;
+  }
+
+  .hero-logo-lockup {
+    flex-direction: column;
+  }
+
+  .arch-hero-title {
+    font-size: 3.95rem;
+  }
+
+  .arch-section-title,
+  .arch-footer-title {
+    font-size: 3.35rem;
+  }
+
+  .arch-story-rows article,
+  .arch-editorial-panels article {
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+  }
+
+  .arch-story-rows h3,
+  .arch-editorial-panels h3 {
+    font-size: 2.38rem;
+  }
+
+  .arch-project-media {
+    min-height: 58svh;
+  }
+
+  .arch-project-number {
+    margin-top: 2rem;
+    font-size: 3.3rem;
+  }
+
+  .arch-project-copy h3 {
+    font-size: 3.15rem;
+  }
+
+  .arch-process-step {
+    width: 18rem;
+  }
+
+  .arch-process-step h3 {
+    font-size: 2.85rem;
+  }
+
+  .arch-desk-footer {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .desk-action,
+  .footer-cta-button {
+    width: 100%;
+  }
+}
+
+@media (max-width: 390px) {
+  .arch-hero-title {
+    font-size: 3.35rem;
+  }
+
+  .arch-section-title,
+  .arch-footer-title {
+    font-size: 2.95rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .arch-scroll-line span {
+    animation: none;
+  }
+}
+
+/* Architecture domain rebuild: editorial white gallery system */
+html,
+body {
+  background: #ffffff;
+  color: #111111;
+}
+
+.architecture-site {
+  --arch-white: #ffffff;
+  --arch-stone: #f5f3ef;
+  --arch-black: #111111;
+  --arch-burgundy: #6d1018;
+  --arch-gold: #b8934f;
+  background: #ffffff;
+  color: #111111;
+  overflow: clip;
+}
+
+.architecture-site *,
+.architecture-site *::before,
+.architecture-site *::after {
+  letter-spacing: 0 !important;
+}
+
+.architecture-site h1,
+.architecture-site h2,
+.architecture-site h3,
+.architecture-site .brand-symbol,
+.architecture-site .brand-word,
+.architecture-site .footer-brand-lockup small,
+.architecture-site .arch-loader-logo small {
+  font-family: var(--font-display), "Bodoni Moda", Didot, Georgia, serif;
+  font-weight: 600;
+}
+
+.architecture-nav {
+  background: transparent;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  backdrop-filter: none;
+  box-shadow: none;
+  transition:
+    background 360ms ease,
+    color 360ms ease,
+    border-color 360ms ease,
+    backdrop-filter 360ms ease;
+}
+
+.architecture-nav .brand-symbol {
+  border-color: rgba(255, 255, 255, 0.52);
+  color: #ffffff;
+}
+
+.architecture-nav .nav-mark small,
+.architecture-nav .brand-word {
+  color: rgba(255, 255, 255, 0.86);
+}
+
+.architecture-nav-link {
+  color: rgba(255, 255, 255, 0.76);
+}
+
+.architecture-nav-link:hover,
+.architecture-nav-link.is-active {
+  color: #ffffff;
+}
+
+.architecture-nav-link::after {
+  background: #b8934f;
+}
+
+.architecture-nav.is-over-light {
+  background: rgba(255, 255, 255, 0.9);
+  border-bottom-color: rgba(17, 17, 17, 0.08);
+  color: #111111;
+  backdrop-filter: blur(18px);
+}
+
+.architecture-nav.is-over-light .brand-symbol {
+  border-color: rgba(109, 16, 24, 0.42);
+  color: #6d1018;
+}
+
+.architecture-nav.is-over-light .nav-mark small,
+.architecture-nav.is-over-light .brand-word {
+  color: #111111;
+}
+
+.architecture-nav.is-over-light .architecture-nav-link {
+  color: rgba(17, 17, 17, 0.62);
+}
+
+.architecture-nav.is-over-light .architecture-nav-link:hover,
+.architecture-nav.is-over-light .architecture-nav-link.is-active {
+  color: #6d1018;
+}
+
+.architecture-nav.is-over-light .architecture-nav-link::after {
+  background: #6d1018;
+}
+
+.arch-hero {
+  min-height: 100vh;
+  min-height: 100svh;
+  background: #111111;
+}
+
+.arch-hero-video {
+  filter: saturate(1.02) contrast(1.06);
+  will-change: transform, opacity;
+}
+
+.arch-hero-overlay {
+  pointer-events: none;
+  background: #111111;
+}
+
+.hero-logo-lockup {
+  color: #ffffff;
+}
+
+.hero-logo-lockup .brand-symbol {
+  border-color: rgba(255, 255, 255, 0.58);
+  color: #ffffff;
+}
+
+.arch-hero-title {
+  max-width: 11ch;
+  color: #ffffff;
+  font-size: 4.55rem;
+  line-height: 0.88;
+  text-wrap: balance;
+}
+
+.arch-hero-subtitle {
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 1rem;
+  line-height: 1.82;
+}
+
+.arch-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.72rem;
+  margin-top: 2rem;
+}
+
+.arch-hero-cta {
+  display: inline-flex;
+  min-height: 3.05rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.58rem;
+  border: 1px solid rgba(255, 255, 255, 0.38);
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  padding: 0.88rem 1rem;
+  text-decoration: none;
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  backdrop-filter: blur(14px);
+  transition:
+    background 260ms ease,
+    border-color 260ms ease,
+    color 260ms ease,
+    transform 260ms ease;
+}
+
+.arch-hero-cta.is-primary {
+  border-color: rgba(184, 147, 79, 0.74);
+  background: rgba(109, 16, 24, 0.72);
+}
+
+.arch-hero-cta:hover {
+  border-color: #b8934f;
+  background: rgba(255, 255, 255, 0.16);
+  transform: translateY(-2px);
+}
+
+.arch-hero-cta svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.arch-scroll-line {
+  background: rgba(255, 255, 255, 0.28);
+}
+
+.arch-scroll-line span {
+  background: #b8934f;
+}
+
+.arch-studio-section,
+.arch-works-section,
+.arch-contact-section {
+  background:
+    linear-gradient(90deg, rgba(17, 17, 17, 0.032) 1px, transparent 1px),
+    #ffffff;
+  background-size: 9rem 9rem;
+}
+
+.arch-editorial-position {
+  background:
+    linear-gradient(90deg, rgba(109, 16, 24, 0.035) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(17, 17, 17, 0.032) 1px, transparent 1px),
+    #f5f3ef;
+  background-size: 8rem 8rem;
+}
+
+.arch-kicker {
+  color: #6d1018;
+  font-size: 0.76rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.arch-section-title {
+  color: #111111;
+  font-size: 3.55rem;
+  line-height: 0.9;
+}
+
+.arch-metrics {
+  border-top: 1px solid rgba(17, 17, 17, 0.13);
+}
+
+.arch-metrics div,
+.arch-story-rows article,
+.arch-editorial-panels article {
+  border-bottom-color: rgba(17, 17, 17, 0.13);
+  border-top-color: rgba(17, 17, 17, 0.13);
+}
+
+.arch-metrics span,
+.arch-story-rows article > span,
+.arch-editorial-panels article > span,
+.arch-project-number,
+.arch-process-step span {
+  color: #b8934f;
+}
+
+.arch-studio-image,
+.arch-project-media {
+  background: #f5f3ef;
+}
+
+.arch-studio-image {
+  box-shadow: 0 34px 96px rgba(17, 17, 17, 0.09);
+}
+
+.arch-story-rows h3,
+.arch-editorial-panels h3,
+.arch-project-copy h3 {
+  color: #111111;
+}
+
+.arch-story-rows p,
+.arch-editorial-panels p,
+.arch-works-intro p,
+.arch-contact-copy,
+.arch-project-copy p {
+  color: rgba(17, 17, 17, 0.66);
+}
+
+.arch-works-intro {
+  min-height: auto;
+  align-content: end;
+}
+
+.arch-works-section > .mx-auto {
+  padding-top: 8rem;
+  padding-bottom: 4.5rem;
+}
+
+.arch-project-showcase {
+  min-height: 100vh;
+  min-height: 100svh;
+  grid-template-columns: minmax(0, 1.22fr) minmax(22rem, 0.78fr);
+  background: #ffffff;
+}
+
+.arch-project-showcase.is-reverse {
+  grid-template-columns: minmax(22rem, 0.78fr) minmax(0, 1.22fr);
+}
+
+.arch-project-media {
+  min-height: 100svh;
+}
+
+.arch-project-media::after {
+  background:
+    linear-gradient(180deg, transparent 42%, rgba(17, 17, 17, 0.24)),
+    linear-gradient(90deg, rgba(17, 17, 17, 0.12), transparent 34%);
+}
+
+.arch-project-copy {
+  padding: 4.8rem;
+}
+
+.arch-project-copy h3 {
+  max-width: 8.5ch;
+  font-size: 5.1rem;
+  line-height: 0.88;
+}
+
+.arch-project-meta {
+  border-top-color: rgba(17, 17, 17, 0.14);
+  color: rgba(17, 17, 17, 0.58);
+}
+
+.arch-process-section {
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.055) 1px, transparent 1px),
+    linear-gradient(180deg, #111111, #211115 50%, #111111);
+  background-size: 9rem 9rem, auto;
+}
+
+.arch-process-head .arch-kicker {
+  color: #b8934f;
+}
+
+.arch-process-window {
+  border-top-color: rgba(255, 255, 255, 0.18);
+  border-bottom-color: rgba(255, 255, 255, 0.18);
+}
+
+.arch-process-track {
+  gap: 4rem;
+}
+
+.arch-process-step {
+  width: 23rem;
+}
+
+.arch-process-step h3 {
+  color: #ffffff;
+}
+
+.arch-process-step p {
+  color: rgba(255, 255, 255, 0.68);
+}
+
+.arch-consultation-desk {
+  border: 1px solid rgba(17, 17, 17, 0.14);
+  background:
+    linear-gradient(135deg, rgba(109, 16, 24, 0.05), transparent 35%),
+    linear-gradient(180deg, #ffffff, #f5f3ef);
+  box-shadow: 0 38px 110px rgba(17, 17, 17, 0.1);
+}
+
+.arch-consultation-desk .desk-strip span {
+  border-color: rgba(184, 147, 79, 0.34);
+  color: rgba(17, 17, 17, 0.68);
+}
+
+.arch-consultation-desk input,
+.arch-consultation-desk select,
+.arch-consultation-desk textarea {
+  background: #ffffff;
+  color: #111111;
+}
+
+.arch-consultation-desk input:focus,
+.arch-consultation-desk select:focus,
+.arch-consultation-desk textarea:focus {
+  border-color: rgba(109, 16, 24, 0.74);
+  box-shadow: 0 0 0 1px rgba(109, 16, 24, 0.1);
+}
+
+.desk-action,
+.footer-cta-button {
+  background: #6d1018;
+  border-color: #6d1018;
+  color: #ffffff;
+}
+
+.desk-action:hover,
+.footer-cta-button:hover {
+  background: #111111;
+  border-color: #b8934f;
+  color: #ffffff;
+}
+
+.arch-footer {
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.052) 1px, transparent 1px),
+    #111111;
+  background-size: 9rem 9rem;
+}
+
+.arch-footer-title {
+  color: #ffffff;
+  font-size: 4.55rem;
+  line-height: 0.88;
+}
+
+.arch-footer-bottom {
+  border-top-color: rgba(255, 255, 255, 0.18);
+}
+
+@media (min-width: 768px) {
+  .arch-hero-title {
+    font-size: 6.55rem;
+  }
+
+  .arch-section-title {
+    font-size: 4.95rem;
+  }
+
+  .arch-footer-title {
+    font-size: 6.65rem;
+  }
+}
+
+@media (min-width: 1180px) {
+  .arch-hero-title {
+    font-size: 8.45rem;
+  }
+
+  .arch-section-title {
+    font-size: 6.25rem;
+  }
+
+  .arch-footer-title {
+    font-size: 8.2rem;
+  }
+}
+
+@media (max-width: 1023px) {
+  .arch-project-showcase,
+  .arch-project-showcase.is-reverse {
+    grid-template-columns: 1fr;
+  }
+
+  .arch-project-media {
+    min-height: 64svh;
+  }
+
+  .arch-project-copy {
+    padding: 2rem 1.25rem 4.5rem;
+  }
+
+  .arch-project-copy h3 {
+    max-width: 11ch;
+    font-size: 3.75rem;
+  }
+}
+
+@media (max-width: 720px) {
+  .architecture-nav nav {
+    gap: 0.8rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  .architecture-nav-links {
+    max-width: 12rem;
+    gap: 0.54rem 0.74rem;
+    font-size: 0.68rem;
+  }
+
+  .arch-hero-title {
+    font-size: 3.9rem;
+  }
+
+  .arch-section-title,
+  .arch-footer-title {
+    font-size: 3.18rem;
+  }
+
+  .arch-story-rows h3,
+  .arch-editorial-panels h3 {
+    font-size: 2.25rem;
+  }
+
+  .arch-project-copy h3 {
+    font-size: 3.05rem;
+  }
+
+  .arch-process-step {
+    width: 18rem;
+  }
+
+  .arch-works-section > .mx-auto {
+    padding-top: 7rem;
+    padding-bottom: 3.5rem;
+  }
+}
+
+@media (max-width: 390px) {
+  .arch-hero-title {
+    font-size: 3.22rem;
+  }
+
+  .arch-section-title,
+  .arch-footer-title {
+    font-size: 2.76rem;
+  }
+}
+
+.arch-skip-intro {
+  position: fixed;
+  top: 1.58rem;
+  right: max(1.25rem, calc((100vw - 80rem) / 2 + 3rem));
+  z-index: 50;
+  color: #000000;
+  font-family: var(--font-inter), Inter, system-ui, sans-serif;
+  font-size: clamp(0.75rem, 0.71rem + 0.15vw, 0.875rem);
+  font-weight: 500;
+  line-height: 1;
+  text-decoration: none;
+  text-shadow: 0 1px 22px rgba(255, 255, 255, 0.52);
+  transition:
+    opacity 220ms ease,
+    color 220ms ease;
+}
+
+.arch-skip-intro:hover,
+.arch-skip-intro:focus-visible {
+  color: #000000;
+  opacity: 1 !important;
+  outline: none;
+}
+
+.arch-skip-intro:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 0.32rem;
+}
+
+.arch-mask-reveal {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  padding-top: 0.16em;
+  padding-bottom: 0.06em;
+}
+
+.arch-draft-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.22;
+  transform-origin: left center;
+  will-change: transform, opacity;
+}
+
+.arch-hero-title .arch-draft-line,
+.arch-footer-title .arch-draft-line {
+  background: rgba(255, 255, 255, 0.86);
+  opacity: 0.28;
+}
+
+.arch-mask-reveal-copy {
+  display: block;
+  will-change: transform, opacity;
+}
+
+.arch-title-line {
+  display: block;
+}
+
+.arch-word-phrase {
+  display: inline-flex !important;
+  overflow: hidden;
+  white-space: nowrap;
+  vertical-align: baseline;
+}
+
+.arch-word {
+  display: inline-block !important;
+  white-space: pre;
+  will-change: transform, opacity;
+}
+
+.arch-mask-reveal .arch-word-phrase,
+.arch-mask-reveal .arch-word {
+  line-height: inherit;
+}
+
+.arch-image-reveal,
+.arch-project-board,
+.arch-process-window {
+  position: relative;
+  overflow: hidden;
+  will-change: clip-path;
+}
+
+.arch-image-reveal::before,
+.arch-project-board::before {
+  position: absolute;
+  inset: 0 auto 0 0;
+  z-index: 2;
+  width: 1px;
+  content: "";
+  pointer-events: none;
+  background: rgba(184, 147, 79, 0.54);
+}
+
+.arch-image-reveal-plane,
+.arch-project-image-plane {
+  transform-origin: center;
+  will-change: transform;
+}
+
+.arch-editorial-rule {
+  width: min(18rem, 100%);
+  height: 1px;
+  margin-top: 2rem;
+  background: rgba(109, 16, 24, 0.34);
+  transform-origin: left center;
+}
+
+.arch-consultation-desk label,
+.arch-consultation-desk .desk-strip,
+.arch-desk-footer {
+  will-change: transform, opacity;
+}
+
+@media (max-width: 720px) {
+  .arch-skip-intro {
+    top: auto;
+    bottom: 1.5rem;
+    right: 1.25rem;
+  }
+
+  .arch-mask-reveal {
+    padding-top: 0.18em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .arch-image-reveal,
+  .arch-project-board,
+  .arch-process-window {
+    clip-path: none !important;
+  }
+
+  .arch-draft-line,
+  .arch-editorial-rule {
+    transform: none !important;
+  }
+}
+
+/* Architecture final polish: editorial rhythm, curated crops, and section continuity */
+.architecture-site {
+  --arch-section-y: clamp(6.5rem, 8.6vw, 9.75rem);
+  --arch-section-y-tight: clamp(5.25rem, 7vw, 7.75rem);
+  --arch-column-gap: clamp(3rem, 6vw, 5.75rem);
+  --arch-copy-measure: 36rem;
+  --arch-soft-rule: rgba(17, 17, 17, 0.115);
+  --arch-gold-rule: rgba(184, 147, 79, 0.38);
+}
+
+.architecture-site :is(#studio, .arch-editorial-position, #process, #consultation) > .mx-auto {
+  padding-top: var(--arch-section-y);
+  padding-bottom: var(--arch-section-y);
+}
+
+.arch-works-section > .mx-auto {
+  padding-top: var(--arch-section-y-tight);
+  padding-bottom: clamp(3.75rem, 5.2vw, 5.4rem);
+}
+
+.arch-footer > .mx-auto {
+  padding-top: clamp(5.75rem, 7.8vw, 8rem);
+  padding-bottom: clamp(5.75rem, 7.8vw, 8rem);
+}
+
+.arch-studio-section,
+.arch-works-section,
+.arch-editorial-position,
+.arch-process-section,
+.arch-contact-section,
+.arch-footer {
+  position: relative;
+}
+
+.arch-studio-section::after,
+.arch-works-section::after,
+.arch-editorial-position::after,
+.arch-contact-section::after {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 1px;
+  content: "";
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgba(17, 17, 17, 0.12) 18%, rgba(17, 17, 17, 0.12) 82%, transparent);
+}
+
+.architecture-site :is(.arch-hero-title, .arch-section-title, .arch-footer-title) {
+  letter-spacing: 0;
+  text-wrap: balance;
+}
+
+.arch-section-title {
+  max-width: 11.5ch;
+  font-size: clamp(3.35rem, 6vw, 5.72rem);
+  line-height: 0.94;
+}
+
+#studio .arch-section-title,
+.arch-editorial-position .arch-section-title,
+.arch-contact-section .arch-section-title {
+  max-width: 10.2ch;
+  font-size: clamp(3.15rem, 5.2vw, 5rem);
+  line-height: 0.95;
+}
+
+.arch-contact-section .arch-section-title {
+  max-width: 9.4ch;
+}
+
+.arch-footer-title {
+  max-width: 11.2ch;
+  font-size: clamp(4.2rem, 7vw, 7.25rem);
+  line-height: 0.91;
+}
+
+.arch-kicker {
+  font-size: 0.72rem;
+  line-height: 1.05;
+}
+
+.arch-hero-subtitle,
+.arch-story-rows p:not(.arch-kicker),
+.arch-editorial-panels p,
+.arch-works-intro > p:last-child,
+.arch-project-copy p:not(.arch-kicker),
+.arch-process-step p,
+.arch-contact-copy,
+.arch-footer-bottom p,
+.desk-message {
+  max-width: var(--arch-copy-measure);
+  font-size: clamp(0.96rem, 0.2vw + 0.92rem, 1.04rem);
+  line-height: 1.82;
+}
+
+.arch-works-intro {
+  gap: clamp(1.3rem, 2vw, 1.8rem);
+}
+
+.arch-works-intro > p:last-child {
+  max-width: 41rem;
+}
+
+.arch-sticky-copy {
+  align-self: start;
+}
+
+.arch-studio-section > .mx-auto,
+.arch-editorial-position > .mx-auto,
+.arch-contact-section > .mx-auto {
+  gap: var(--arch-column-gap);
+}
+
+.arch-studio-image {
+  box-shadow: 0 28px 74px rgba(17, 17, 17, 0.08);
+}
+
+.arch-studio-image img {
+  object-position: 52% 36%;
+}
+
+.arch-story-rows {
+  margin-top: clamp(2.5rem, 4vw, 3.6rem);
+}
+
+.arch-story-rows article {
+  column-gap: clamp(1.35rem, 2.3vw, 2rem);
+  padding: clamp(2.35rem, 4.2vw, 3.4rem) 0;
+}
+
+.arch-story-rows h3,
+.arch-editorial-panels h3 {
+  max-width: 11.4ch;
+  font-size: clamp(2.45rem, 3.3vw, 3.05rem);
+  line-height: 1.02;
+}
+
+.arch-story-rows p:not(.arch-kicker),
+.arch-editorial-panels p {
+  margin-top: 0.85rem;
+  color: rgba(17, 17, 17, 0.62);
+}
+
+.arch-editorial-panels article {
+  grid-template-columns: 4rem minmax(18rem, 1fr);
+  column-gap: clamp(1.5rem, 2.8vw, 2.4rem);
+  padding: clamp(2.55rem, 4.6vw, 3.7rem) 0;
+}
+
+.arch-editorial-panels article > span {
+  grid-row: 1 / span 2;
+}
+
+.arch-editorial-panels article > .arch-mask-reveal,
+.arch-editorial-panels article > p {
+  grid-column: 2;
+}
+
+.arch-editorial-rule {
+  margin-top: clamp(1.65rem, 3vw, 2.35rem);
+}
+
+.arch-project-showcase {
+  min-height: min(100svh, 62rem);
+  grid-template-columns: minmax(0, 1.2fr) minmax(23rem, 0.8fr);
+  border-top-color: var(--arch-soft-rule);
+}
+
+.arch-project-showcase.is-reverse {
+  grid-template-columns: minmax(23rem, 0.8fr) minmax(0, 1.2fr);
+}
+
+.arch-project-media {
+  min-height: min(100svh, 62rem);
+}
+
+.arch-project-media::after {
+  background:
+    linear-gradient(180deg, transparent 45%, rgba(17, 17, 17, 0.2)),
+    linear-gradient(90deg, rgba(17, 17, 17, 0.1), transparent 36%);
+}
+
+.arch-project-media img {
+  filter: saturate(0.96) contrast(1.01);
+}
+
+.arch-project-showcase:nth-child(1) .arch-project-media img {
+  object-position: 46% 48%;
+}
+
+.arch-project-showcase:nth-child(2) .arch-project-media img {
+  object-position: 52% 50%;
+}
+
+.arch-project-showcase:nth-child(3) .arch-project-media img {
+  object-position: 48% 44%;
+}
+
+.arch-project-showcase:nth-child(4) .arch-project-media img {
+  object-position: 54% 50%;
+}
+
+.arch-project-showcase:nth-child(5) .arch-project-media img {
+  object-position: 52% 48%;
+}
+
+.arch-project-showcase:nth-child(6) .arch-project-media img {
+  object-position: 50% 52%;
+}
+
+.arch-project-showcase:hover .arch-project-media img {
+  filter: saturate(1.02) contrast(1.03);
+  transform: scale(1.025);
+}
+
+.arch-project-copy {
+  padding: clamp(3.4rem, 5.2vw, 5.2rem);
+}
+
+.arch-project-number {
+  margin-top: clamp(2.75rem, 4.6vw, 4.25rem);
+  font-size: clamp(3.45rem, 4.8vw, 4.15rem);
+}
+
+.arch-project-copy h3 {
+  max-width: 9.4ch;
+  font-size: clamp(3.75rem, 4.9vw, 4.7rem);
+  line-height: 0.93;
+}
+
+.arch-project-copy p:not(.arch-kicker) {
+  margin-top: 1.25rem;
+}
+
+.arch-project-meta {
+  margin-top: 2.1rem;
+  padding-top: 1.25rem;
+}
+
+.arch-process-head {
+  gap: 1.35rem;
+}
+
+.arch-process-head .arch-section-title {
+  max-width: 12.2ch;
+  color: #ffffff;
+}
+
+.arch-process-window {
+  margin-top: clamp(4rem, 6vw, 5.4rem);
+}
+
+.arch-process-track {
+  gap: clamp(2.5rem, 4.4vw, 4rem);
+  padding: clamp(2.75rem, 4.4vw, 3.4rem) 0;
+}
+
+.arch-process-step {
+  width: clamp(19rem, 24vw, 23rem);
+}
+
+.arch-process-step h3 {
+  font-size: clamp(2.85rem, 3.5vw, 3.25rem);
+  line-height: 0.98;
+}
+
+.arch-process-step p {
+  margin-top: 1rem;
+}
+
+.arch-consultation-desk {
+  padding: clamp(1.2rem, 2vw, 1.55rem);
+  box-shadow: 0 30px 88px rgba(17, 17, 17, 0.075);
+}
+
+.arch-consultation-desk .grid {
+  gap: clamp(0.95rem, 1.5vw, 1.15rem);
+}
+
+.arch-consultation-desk input,
+.arch-consultation-desk select,
+.arch-consultation-desk textarea {
+  min-height: 3.35rem;
+}
+
+.arch-desk-footer {
+  margin-top: 1.25rem;
+  padding-top: 1.25rem;
+}
+
+.arch-hero-cta,
+.desk-action,
+.footer-cta-button {
+  transition:
+    background 260ms ease,
+    border-color 260ms ease,
+    color 260ms ease,
+    transform 260ms ease,
+    box-shadow 260ms ease;
+}
+
+.arch-hero-cta:hover,
+.desk-action:hover,
+.footer-cta-button:hover {
+  transform: translateY(-1px);
+}
+
+.arch-hero-cta svg,
+.desk-action svg,
+.footer-cta-button svg {
+  transition: transform 260ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.arch-hero-cta:hover svg,
+.desk-action:hover svg,
+.footer-cta-button:hover svg {
+  transform: translate(2px, -2px);
+}
+
+.architecture-nav-link {
+  transition:
+    color 260ms ease,
+    opacity 260ms ease;
+}
+
+.brand-logo {
+  position: relative;
+  display: inline-block;
+  width: 2.85rem;
+  height: 2.85rem;
+  flex: 0 0 auto;
+  overflow: visible;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.brand-logo img {
+  padding: 0;
+  background: transparent;
+  object-fit: contain;
+}
+
+.architecture-nav.is-over-light .brand-logo {
+  border: 0;
+  outline: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.arch-footer .brand-logo {
+  border: 0;
+  outline: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+@media (max-width: 720px) {
+  .brand-logo {
+    width: 2.45rem;
+    height: 2.45rem;
+  }
+}
+
+@media (max-width: 1023px) {
+  .architecture-site :is(#studio, .arch-editorial-position, #process, #consultation) > .mx-auto {
+    padding-top: clamp(5.5rem, 12vw, 7.25rem);
+    padding-bottom: clamp(5.5rem, 12vw, 7.25rem);
+  }
+
+  .arch-project-showcase,
+  .arch-project-showcase.is-reverse {
+    min-height: auto;
+    grid-template-columns: 1fr;
+  }
+
+  .arch-project-media {
+    min-height: 58svh;
+    aspect-ratio: 16 / 11;
+  }
+
+  .arch-project-copy {
+    padding: clamp(2.3rem, 6vw, 4rem) 1.5rem clamp(4rem, 8vw, 5rem);
+  }
+}
+
+@media (max-width: 720px) {
+  .arch-hero-title {
+    max-width: 10.6ch;
+    line-height: 0.92;
+  }
+
+  .arch-section-title,
+  #studio .arch-section-title,
+  .arch-editorial-position .arch-section-title,
+  .arch-contact-section .arch-section-title,
+  .arch-footer-title {
+    max-width: 10.5ch;
+    font-size: clamp(2.85rem, 13vw, 3.35rem);
+    line-height: 0.98;
+  }
+
+  .arch-hero-subtitle,
+  .arch-story-rows p:not(.arch-kicker),
+  .arch-editorial-panels p,
+  .arch-works-intro > p:last-child,
+  .arch-project-copy p:not(.arch-kicker),
+  .arch-process-step p,
+  .arch-contact-copy,
+  .arch-footer-bottom p {
+    font-size: 0.98rem;
+    line-height: 1.76;
+  }
+
+  .arch-studio-image img,
+  .arch-project-showcase:nth-child(n) .arch-project-media img {
+    object-position: center;
+  }
+
+  .arch-project-media {
+    min-height: 52svh;
+    aspect-ratio: 4 / 3;
+  }
+
+  .arch-project-copy h3 {
+    max-width: 10.5ch;
+    font-size: clamp(2.85rem, 12vw, 3.2rem);
+    line-height: 0.96;
+  }
+
+  .arch-project-number {
+    margin-top: 2.15rem;
+    font-size: 3.15rem;
+  }
+
+  .arch-story-rows article,
+  .arch-editorial-panels article {
+    grid-template-columns: 1fr;
+  }
+
+  .arch-editorial-panels article > span,
+  .arch-editorial-panels article > .arch-mask-reveal,
+  .arch-editorial-panels article > p {
+    grid-column: 1;
+  }
+
+  .arch-editorial-panels article > span {
+    grid-row: auto;
+  }
+
+  .arch-process-window {
+    margin-top: 3.2rem;
+  }
+
+  .arch-process-step {
+    width: 17rem;
+  }
+}
+
+.architecture-site .arch-luxury-consultation {
+  --consultation-ink: #111111;
+  --consultation-muted: rgba(17, 17, 17, 0.62);
+  --consultation-ivory: #fbfaf6;
+  --consultation-stone: #efe8dc;
+  --consultation-rule: rgba(17, 17, 17, 0.12);
+  --consultation-red: #6d1018;
+  --consultation-gold: #b8934f;
+  position: relative;
+  overflow: hidden;
+  background:
+    linear-gradient(90deg, rgba(109, 16, 24, 0.028) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(17, 17, 17, 0.03) 1px, transparent 1px),
+    linear-gradient(135deg, #ffffff 0%, var(--consultation-ivory) 42%, var(--consultation-stone) 100%);
+  background-size:
+    8rem 8rem,
+    8rem 8rem,
+    auto;
+}
+
+.architecture-site .arch-luxury-consultation::before {
+  position: absolute;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+  opacity: 0.64;
+  background:
+    linear-gradient(90deg, transparent 0 11.9rem, rgba(184, 147, 79, 0.2) 12rem, transparent 12.1rem),
+    linear-gradient(180deg, transparent 0 6.9rem, rgba(109, 16, 24, 0.1) 7rem, transparent 7.1rem),
+    repeating-linear-gradient(45deg, transparent 0 1.8rem, rgba(17, 17, 17, 0.028) 1.86rem, transparent 1.92rem);
+  mask-image: linear-gradient(90deg, rgba(0, 0, 0, 0.76), transparent 72%);
+}
+
+.architecture-site .arch-luxury-consultation > .mx-auto {
+  position: relative;
+  z-index: 1;
+  align-items: start;
+}
+
+.architecture-site .arch-consultation-editorial {
+  position: relative;
+}
+
+.architecture-site .arch-consultation-label {
+  color: var(--consultation-red);
+  letter-spacing: 0;
+}
+
+.architecture-site .arch-luxury-consultation .arch-consultation-title {
+  max-width: 14ch;
+  color: var(--consultation-ink);
+  overflow-wrap: normal;
+  font-size: clamp(3.75rem, 5.85vw, 6.6rem);
+  line-height: 0.9;
+}
+
+.architecture-site .arch-consultation-title .arch-mask-reveal-copy {
+  display: grid;
+  gap: clamp(0.1rem, 0.5vw, 0.38rem);
+}
+
+.architecture-site .arch-consultation-title .arch-mask-reveal-copy > span {
+  display: block;
+  white-space: nowrap;
+}
+
+.architecture-site .arch-luxury-consultation .arch-contact-copy {
+  max-width: 35rem;
+  color: var(--consultation-muted);
+  font-size: clamp(1.02rem, 0.45vw + 0.92rem, 1.2rem);
+  line-height: 1.86;
+}
+
+.architecture-site .arch-consultation-image-shell {
+  position: relative;
+  min-height: clamp(24rem, 42vw, 38rem);
+  margin-top: clamp(3rem, 5.2vw, 5.75rem);
+  overflow: hidden;
+  border: 1px solid rgba(17, 17, 17, 0.13);
+  background: #e5ded4;
+  box-shadow: 0 34px 90px rgba(17, 17, 17, 0.12);
+  isolation: isolate;
+}
+
+.architecture-site .arch-consultation-image-shell::before {
+  position: absolute;
+  inset: clamp(1rem, 2vw, 1.4rem);
+  z-index: 2;
+  content: "";
+  pointer-events: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.46);
+  border-left: 1px solid rgba(255, 255, 255, 0.34);
+  opacity: 0.78;
+}
+
+.architecture-site .arch-consultation-image-shell::after {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  content: "";
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(17, 17, 17, 0.02), rgba(17, 17, 17, 0.34)),
+    linear-gradient(90deg, rgba(17, 17, 17, 0.28), transparent 42%);
+}
+
+.architecture-site .arch-consultation-image {
+  position: absolute;
+  inset: -8% 0;
+  will-change: transform;
+}
+
+.architecture-site .arch-consultation-image img {
+  object-position: 50% 48%;
+  filter: saturate(0.94) contrast(1.04);
+  transition:
+    filter 1000ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 1000ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.architecture-site .arch-consultation-image-shell:hover img {
+  filter: saturate(1.02) contrast(1.07);
+  transform: scale(1.035);
+}
+
+.architecture-site .arch-consultation-image-note {
+  position: absolute;
+  right: clamp(1rem, 2vw, 1.4rem);
+  bottom: clamp(1rem, 2vw, 1.4rem);
+  left: clamp(1rem, 2vw, 1.4rem);
+  z-index: 3;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem 1rem;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid rgba(255, 255, 255, 0.34);
+  padding-top: 0.9rem;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 0.76rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.architecture-site .arch-consultation-image-note span:first-child {
+  color: #ffffff;
+}
+
+.architecture-site .arch-consultation-form-stage {
+  position: relative;
+  width: 100%;
+  align-self: start;
+  animation: arch-consultation-stage-in 900ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.architecture-site .arch-luxury-consultation-desk {
+  position: relative;
+  align-self: start;
+  width: 100%;
+  overflow: hidden;
+  border: 1px solid rgba(17, 17, 17, 0.12);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0.58)),
+    linear-gradient(180deg, rgba(184, 147, 79, 0.08), rgba(109, 16, 24, 0.035));
+  padding: clamp(1.1rem, 2.2vw, 1.8rem);
+  box-shadow:
+    0 46px 120px rgba(17, 17, 17, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.78);
+  animation: arch-consultation-board-open 1100ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  backdrop-filter: blur(18px);
+}
+
+.architecture-site .arch-luxury-consultation-desk::before {
+  position: absolute;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+  opacity: 0.58;
+  background:
+    linear-gradient(90deg, rgba(17, 17, 17, 0.045) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(17, 17, 17, 0.035) 1px, transparent 1px),
+    linear-gradient(135deg, transparent 0 48%, rgba(109, 16, 24, 0.09) 48.2%, transparent 48.55%);
+  background-size:
+    5.5rem 5.5rem,
+    5.5rem 5.5rem,
+    auto;
+}
+
+.architecture-site .arch-luxury-consultation-desk::after {
+  position: absolute;
+  top: 0.7rem;
+  right: 0.7rem;
+  bottom: 0.7rem;
+  left: 0.7rem;
+  content: "";
+  pointer-events: none;
+  border: 1px solid rgba(184, 147, 79, 0.18);
+}
+
+.architecture-site .arch-luxury-consultation-desk > * {
+  position: relative;
+  z-index: 1;
+}
+
+.architecture-site .arch-luxury-consultation-desk .arch-consultation-strip {
+  justify-content: space-between;
+  margin-bottom: clamp(1.2rem, 2vw, 1.7rem);
+  color: var(--consultation-muted);
+}
+
+.architecture-site .arch-luxury-consultation-desk .arch-consultation-strip span {
+  border-color: rgba(184, 147, 79, 0.38);
+  background: rgba(255, 255, 255, 0.54);
+  color: rgba(17, 17, 17, 0.64);
+  padding: 0.54rem 0.72rem;
+}
+
+.architecture-site .arch-consultation-form-head {
+  margin-bottom: clamp(1.55rem, 2.4vw, 2.1rem);
+  padding-bottom: clamp(1.3rem, 2vw, 1.65rem);
+  border-bottom: 1px solid rgba(17, 17, 17, 0.12);
+}
+
+.architecture-site .arch-consultation-form-head p {
+  margin: 0;
+  color: var(--consultation-red);
+  font-size: 0.74rem;
+  font-weight: 800;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+
+.architecture-site .arch-consultation-form-head h3 {
+  margin: 0.55rem 0 0;
+  color: var(--consultation-ink);
+  font-size: clamp(2.5rem, 4.2vw, 4.1rem);
+  font-weight: 600;
+  line-height: 0.95;
+}
+
+.architecture-site .arch-consultation-form-head span {
+  display: block;
+  max-width: 33rem;
+  margin-top: 0.9rem;
+  color: rgba(17, 17, 17, 0.58);
+  font-size: 0.95rem;
+  line-height: 1.72;
+}
+
+.architecture-site .arch-luxury-consultation-desk .arch-consultation-field-grid {
+  gap: clamp(1.05rem, 1.7vw, 1.35rem);
+}
+
+.architecture-site .arch-luxury-consultation-desk label {
+  gap: 0.62rem;
+}
+
+.architecture-site .arch-luxury-consultation-desk label span {
+  color: rgba(17, 17, 17, 0.66);
+  font-size: 0.72rem;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.architecture-site .arch-luxury-consultation-desk input,
+.architecture-site .arch-luxury-consultation-desk select,
+.architecture-site .arch-luxury-consultation-desk textarea {
+  min-height: 3.75rem;
+  border: 1px solid rgba(17, 17, 17, 0.13);
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.7);
+  color: var(--consultation-ink);
+  padding: 1rem 1.05rem;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.72);
+  transition:
+    border-color 260ms ease,
+    background 260ms ease,
+    box-shadow 260ms ease,
+    transform 260ms ease;
+}
+
+.architecture-site .arch-luxury-consultation-desk textarea {
+  min-height: 10.8rem;
+  resize: vertical;
+}
+
+.architecture-site .arch-luxury-consultation-desk input::placeholder,
+.architecture-site .arch-luxury-consultation-desk textarea::placeholder {
+  color: rgba(17, 17, 17, 0.38);
+}
+
+.architecture-site .arch-luxury-consultation-desk input:focus,
+.architecture-site .arch-luxury-consultation-desk select:focus,
+.architecture-site .arch-luxury-consultation-desk textarea:focus {
+  border-color: rgba(109, 16, 24, 0.8);
+  background: #ffffff;
+  box-shadow:
+    0 0 0 1px rgba(109, 16, 24, 0.12),
+    0 18px 44px rgba(17, 17, 17, 0.07);
+  transform: translateY(-1px);
+}
+
+.architecture-site .arch-luxury-consultation-desk .arch-desk-footer {
+  align-items: end;
+  margin-top: clamp(1.45rem, 2.2vw, 1.95rem);
+  padding-top: clamp(1.25rem, 2vw, 1.6rem);
+  border-top-color: rgba(17, 17, 17, 0.13);
+}
+
+.architecture-site .arch-luxury-consultation-desk .desk-message {
+  color: rgba(17, 17, 17, 0.6);
+  font-size: 0.92rem;
+  line-height: 1.7;
+}
+
+.architecture-site .arch-luxury-consultation-desk .desk-message.is-success {
+  color: rgba(17, 77, 48, 0.9);
+}
+
+.architecture-site .arch-luxury-consultation-desk .desk-message.is-error {
+  color: var(--consultation-red);
+}
+
+.architecture-site .arch-consultation-submit {
+  position: relative;
+  min-height: 3.65rem;
+  overflow: hidden;
+  border-color: var(--consultation-red);
+  background: var(--consultation-red);
+  color: #ffffff;
+  padding: 1rem 1.18rem;
+  box-shadow: 0 22px 52px rgba(109, 16, 24, 0.18);
+}
+
+.architecture-site .arch-consultation-submit::before {
+  position: absolute;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+  background: linear-gradient(110deg, transparent 0 36%, rgba(255, 255, 255, 0.18) 48%, transparent 62% 100%);
+  transform: translateX(-120%);
+  transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.architecture-site .arch-consultation-submit span,
+.architecture-site .arch-consultation-submit svg {
+  position: relative;
+  z-index: 1;
+}
+
+.architecture-site .arch-consultation-submit:hover:not(:disabled) {
+  border-color: #111111;
+  background: #111111;
+  box-shadow: 0 28px 68px rgba(17, 17, 17, 0.18);
+}
+
+.architecture-site .arch-consultation-submit:hover:not(:disabled)::before {
+  transform: translateX(120%);
+}
+
+.architecture-site .arch-consultation-submit:hover:not(:disabled) svg:last-child {
+  transform: translate(4px, -4px);
+}
+
+.architecture-site .arch-consultation-submit:disabled {
+  opacity: 0.74;
+}
+
+/* ── Project Type custom select ── */
+
+.architecture-site .arch-luxury-consultation-desk .arch-projecttype-field {
+  display: grid;
+  gap: 0.62rem;
+}
+
+.architecture-site .arch-luxury-consultation-desk .arch-projecttype-label {
+  color: rgba(17, 17, 17, 0.66);
+  font-size: 0.72rem;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.architecture-site .arch-luxury-consultation-desk .arch-projecttype-control {
+  position: relative;
+  width: 100%;
+}
+
+.architecture-site .arch-luxury-consultation-desk .arch-projecttype-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 3.75rem;
+  border: 1px solid rgba(17, 17, 17, 0.13);
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.7);
+  color: var(--consultation-ink);
+  padding: 1rem 1.05rem;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.72);
+  cursor: pointer;
+  text-align: left;
+  font-size: inherit;
+  font-family: inherit;
+  gap: 0.5rem;
+  outline: none;
+  transition:
+    border-color 260ms ease,
+    background 260ms ease,
+    box-shadow 260ms ease,
+    transform 260ms ease;
+}
+
+.architecture-site .arch-luxury-consultation-desk .arch-projecttype-trigger-value {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: var(--consultation-ink);
+}
+
+.architecture-site .arch-luxury-consultation-desk .arch-projecttype-trigger-value[data-placeholder="true"] {
+  color: rgba(17, 17, 17, 0.38);
+}
+
+.architecture-site .arch-luxury-consultation-desk .arch-projecttype-chevron {
+  flex-shrink: 0;
+  width: 1.1rem;
+  height: 1.1rem;
+  color: rgba(17, 17, 17, 0.5);
+  transition: transform 260ms ease;
+}
+
+.architecture-site .arch-luxury-consultation-desk .is-open .arch-projecttype-chevron {
+  transform: rotate(180deg);
+}
+
+.architecture-site .arch-luxury-consultation-desk .arch-projecttype-trigger:focus {
+  border-color: rgba(109, 16, 24, 0.8);
+  background: #ffffff;
+  box-shadow:
+    0 0 0 1px rgba(109, 16, 24, 0.12),
+    0 18px 44px rgba(17, 17, 17, 0.07);
+  transform: translateY(-1px);
+}
+
+/* ── Dropdown panel ── */
+
+.architecture-site .arch-luxury-consultation-desk .arch-projecttype-panel {
+  position: absolute;
+  z-index: 9999;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  display: none;
+  overflow: visible;
+  border: 1px solid rgba(17, 17, 17, 0.13);
+  border-radius: 2px;
+  background: #ffffff;
+  box-shadow:
+    0 34px 90px rgba(17, 17, 17, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.78);
+}
+
+.architecture-site .arch-luxury-consultation-desk .arch-projecttype-search {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.72rem 0.85rem;
+  border-bottom: 1px solid rgba(17, 17, 17, 0.1);
+}
+
+.architecture-site .arch-luxury-consultation-desk .arch-projecttype-search svg {
+  flex-shrink: 0;
+  width: 1rem;
+  height: 1rem;
+  color: rgba(17, 17, 17, 0.4);
+}
+
+.architecture-site .arch-luxury-consultation-desk .arch-projecttype-search input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  color: var(--consultation-ink);
+  font-size: inherit;
+  font-family: inherit;
+  outline: none;
+  padding: 0;
+}
+
+.architecture-site .arch-luxury-consultation-desk .arch-projecttype-search input::placeholder {
+  color: rgba(17, 17, 17, 0.38);
+}
+
+.architecture-site .arch-luxury-consultation-desk .arch-projecttype-list {
+  max-height: 300px;
+  overflow-y: auto;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.architecture-site .arch-luxury-consultation-desk .arch-projecttype-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.72rem 0.85rem;
+  color: var(--consultation-ink);
+  cursor: pointer;
+  transition: background 160ms ease;
+}
+
+.architecture-site .arch-luxury-consultation-desk .arch-projecttype-option:hover,
+.architecture-site .arch-luxury-consultation-desk .arch-projecttype-option.is-active {
+  background: rgba(17, 17, 17, 0.05);
+}
+
+.architecture-site .arch-luxury-consultation-desk .arch-projecttype-option.is-selected {
+  font-weight: 700;
+  color: var(--consultation-red);
+}
+
+.architecture-site .arch-luxury-consultation-desk .arch-projecttype-option span {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.architecture-site .arch-luxury-consultation-desk .arch-projecttype-option .arch-projecttype-check {
+  flex-shrink: 0;
+  width: 1rem;
+  height: 1rem;
+  color: var(--consultation-red);
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+
+.architecture-site .arch-luxury-consultation-desk .arch-projecttype-option.is-selected .arch-projecttype-check {
+  opacity: 1;
+}
+
+.architecture-site .arch-luxury-consultation-desk .arch-projecttype-empty {
+  padding: 1.2rem 0.85rem;
+  color: rgba(17, 17, 17, 0.5);
+  text-align: center;
+}
+
+.architecture-site .arch-consultation-trust {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0;
+  margin-top: clamp(1.45rem, 2.4vw, 2rem);
+  border-top: 1px solid rgba(17, 17, 17, 0.12);
+  border-left: 1px solid rgba(17, 17, 17, 0.1);
+}
+
+.architecture-site .arch-consultation-trust > span {
+  display: flex;
+  flex-wrap: wrap;
+  min-height: 3.6rem;
+  align-items: center;
+  gap: 0.12rem 0.36rem;
+  border-right: 1px solid rgba(17, 17, 17, 0.1);
+  border-bottom: 1px solid rgba(17, 17, 17, 0.1);
+  color: rgba(17, 17, 17, 0.58);
+  font-size: 0.7rem;
+  font-weight: 850;
+  line-height: 1.35;
+  padding: 0.85rem;
+  text-transform: uppercase;
+  word-spacing: 0.16em;
+}
+
+.architecture-site .arch-consultation-trust .arch-trust-word {
+  display: inline-block;
+}
+
+.architecture-site .arch-consultation-trust > span:last-child {
+  grid-column: span 2;
+}
+
+@keyframes arch-consultation-stage-in {
+  from {
+    opacity: 0.001;
+    transform: translateY(24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes arch-consultation-board-open {
+  from {
+    clip-path: inset(0 100% 0 0);
+    opacity: 0.001;
+  }
+
+  to {
+    clip-path: inset(0);
+    opacity: 1;
+  }
+}
+
+@media (min-width: 1024px) {
+  .architecture-site .arch-consultation-editorial {
+    position: sticky;
+    top: clamp(6.5rem, 8vw, 8rem);
+  }
+}
+
+@media (max-width: 1023px) {
+  .architecture-site .arch-luxury-consultation > .mx-auto {
+    grid-template-columns: 1fr;
+  }
+
+  .architecture-site .arch-consultation-image-shell {
+    min-height: clamp(22rem, 64vw, 35rem);
+  }
+}
+
+@media (max-width: 720px) {
+  .architecture-site .arch-luxury-consultation .arch-consultation-title {
+    max-width: 14ch;
+    font-size: clamp(2.95rem, 11.5vw, 3.65rem);
+    line-height: 0.95;
+  }
+
+  .architecture-site .arch-luxury-consultation-desk {
+    padding: 1rem;
+  }
+
+  .architecture-site .arch-consultation-form-head h3 {
+    font-size: clamp(2.35rem, 11vw, 3.05rem);
+  }
+
+  .architecture-site .arch-luxury-consultation-desk .arch-desk-footer {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .architecture-site .arch-consultation-submit {
+    width: 100%;
+  }
+
+  .architecture-site .arch-consultation-trust {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .architecture-site .arch-consultation-image-note {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .architecture-site .arch-luxury-consultation-desk .arch-projecttype-field {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .architecture-site .arch-luxury-consultation-desk .arch-projecttype-control {
+    min-width: 0;
+    overflow: visible;
+    width: 100%;
+  }
+
+  .architecture-site .arch-luxury-consultation-desk .arch-projecttype-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    min-height: 56px;
+    padding: 16px 20px;
+    gap: 0;
+  }
+
+  .architecture-site .arch-luxury-consultation-desk .arch-projecttype-trigger-value {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .architecture-site .arch-luxury-consultation-desk .arch-projecttype-chevron {
+    flex-shrink: 0;
+    flex-grow: 0;
+    margin-left: 0.5rem;
+  }
+
+  .architecture-site .arch-luxury-consultation-desk .arch-projecttype-option {
+    min-height: 48px;
+    padding: 0.65rem 0.85rem;
+  }
+
+  .architecture-site .arch-luxury-consultation-desk .arch-projecttype-option span {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: clip;
+    line-height: 1.4;
+  }
+}
+
+@media (max-width: 430px) {
+  .architecture-site .arch-luxury-consultation-desk .arch-consultation-strip {
+    flex-direction: column;
+  }
+
+  .architecture-site .arch-consultation-trust {
+    grid-template-columns: 1fr;
+  }
+
+  .architecture-site .arch-consultation-trust > span:last-child {
+    grid-column: auto;
+  }
+}
+
+.arch-studio-spread {
+  align-items: start;
+}
+
+.arch-studio-visual {
+  position: relative;
+  order: 1;
+  align-self: start;
+}
+
+.arch-sticky-copy {
+  order: 2;
+}
+
+.arch-studio-image {
+  height: clamp(30rem, 72svh, 46rem);
+  min-height: 0;
+  overflow: hidden;
+  border-radius: 6px;
+  box-shadow: 0 34px 92px rgba(17, 17, 17, 0.13);
+}
+
+.arch-studio-image::after {
+  background:
+    linear-gradient(180deg, rgba(17, 17, 17, 0.02), rgba(17, 17, 17, 0.18)),
+    linear-gradient(90deg, rgba(17, 17, 17, 0.12), transparent 42%);
+}
+
+.arch-studio-image-plane {
+  top: -1.5rem;
+  height: calc(100% + 3rem);
+  width: 100%;
+}
+
+.arch-studio-image img {
+  object-position: 52% 47%;
+}
+
+@media (min-width: 1024px) {
+  .arch-studio-visual {
+    position: sticky;
+    top: clamp(5.75rem, 8vw, 7.25rem);
+    order: 2;
+  }
+
+  .arch-sticky-copy {
+    order: 1;
+  }
+
+  .arch-studio-image {
+    height: clamp(42rem, 82svh, 58rem);
+    box-shadow: 0 42px 112px rgba(17, 17, 17, 0.14);
+  }
+}
+
+@media (max-width: 720px) {
+  .arch-studio-spread {
+    gap: clamp(2.4rem, 9vw, 3.5rem);
+  }
+
+  .arch-studio-image {
+    height: clamp(27rem, 72svh, 36rem);
+    border-radius: 4px;
+    box-shadow: 0 26px 66px rgba(17, 17, 17, 0.12);
+  }
+
+  .arch-studio-image img {
+    object-position: 50% 50%;
+  }
+}
+
+/* Database portfolio system: editorial masonry, modal gallery, and mobile stack */
+.arch-portfolio-section {
+  background:
+    linear-gradient(90deg, rgba(17, 17, 17, 0.035) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(109, 16, 24, 0.035), transparent 42%),
+    #f7f5f0;
+  background-size: 8rem 8rem, auto, auto;
+}
+
+.arch-portfolio-section > .mx-auto {
+  padding-bottom: clamp(6rem, 8vw, 9rem);
+}
+
+.arch-portfolio-section .arch-works-intro {
+  max-width: 68rem;
+}
+
+.arch-portfolio-section .arch-section-title {
+  max-width: 12ch;
+}
+
+.arch-portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-auto-rows: clamp(5.8rem, 7.2vw, 7.6rem);
+  gap: clamp(1rem, 1.7vw, 1.45rem);
+  margin-top: clamp(4rem, 5.5vw, 5.75rem);
+}
+
+.arch-portfolio-card {
+  position: relative;
+  display: block;
+  min-height: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: 5px;
+  background: #111111;
+  color: #ffffff;
+  text-align: left;
+  cursor: pointer;
+  box-shadow: 0 28px 82px rgba(17, 17, 17, 0.11);
+  isolation: isolate;
+}
+
+.arch-portfolio-card:focus-visible {
+  outline: 2px solid #b8934f;
+  outline-offset: 4px;
+}
+
+.arch-portfolio-card.is-featured {
+  grid-column: span 7;
+  grid-row: span 6;
+}
+
+.arch-portfolio-card.is-wide {
+  grid-column: span 5;
+  grid-row: span 4;
+}
+
+.arch-portfolio-card.is-tall {
+  grid-column: span 4;
+  grid-row: span 5;
+}
+
+.arch-portfolio-card.is-quiet {
+  grid-column: span 4;
+  grid-row: span 3;
+}
+
+.arch-portfolio-card:not(.is-featured, .is-wide, .is-tall, .is-quiet) {
+  grid-column: span 4;
+  grid-row: span 4;
+}
+
+.arch-portfolio-image-mask,
+.arch-portfolio-image-plane {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
+.arch-portfolio-image-mask {
+  overflow: hidden;
+  will-change: clip-path;
+}
+
+.arch-portfolio-image-plane {
+  top: -7%;
+  height: 114%;
+  transform-origin: center;
+  will-change: transform;
+}
+
+.arch-portfolio-image-plane img {
+  filter: saturate(0.95) contrast(1.02);
+  transform: scale(1.01);
+  transition:
+    filter 1000ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 1000ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.arch-portfolio-card:hover .arch-portfolio-image-plane img {
+  filter: saturate(1.05) contrast(1.05);
+  transform: scale(1.08);
+}
+
+.arch-portfolio-shade {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(180deg, rgba(17, 17, 17, 0.02) 18%, rgba(17, 17, 17, 0.82) 100%),
+    linear-gradient(90deg, rgba(17, 17, 17, 0.32), transparent 56%);
+  transition: opacity 700ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.arch-portfolio-card:hover .arch-portfolio-shade {
+  opacity: 0.86;
+}
+
+.arch-portfolio-index,
+.arch-portfolio-content,
+.arch-portfolio-arrow {
+  position: absolute;
+  z-index: 2;
+}
+
+.arch-portfolio-index {
+  top: 1.15rem;
+  left: 1.15rem;
+  color: rgba(255, 255, 255, 0.72);
+  font-family: var(--font-display), "Bodoni Moda", Didot, Georgia, serif;
+  font-size: 1.42rem;
+  line-height: 1;
+}
+
+.arch-portfolio-content {
+  right: clamp(1.1rem, 2vw, 1.55rem);
+  bottom: clamp(1.1rem, 2vw, 1.55rem);
+  left: clamp(1.1rem, 2vw, 1.55rem);
+  display: grid;
+  gap: 0.45rem;
+  transform: translateY(0.35rem);
+  transition:
+    opacity 620ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 620ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.arch-portfolio-card:hover .arch-portfolio-content {
+  transform: translateY(0);
+}
+
+.arch-portfolio-kicker,
+.arch-portfolio-location {
+  display: block;
+  color: rgba(255, 255, 255, 0.74);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 1.25;
+  text-transform: uppercase;
+}
+
+.arch-portfolio-title {
+  display: block;
+  max-width: 12ch;
+  color: #ffffff;
+  font-family: var(--font-display), "Bodoni Moda", Didot, Georgia, serif;
+  font-size: 2.4rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 0.98;
+  overflow-wrap: anywhere;
+}
+
+.arch-portfolio-description {
+  display: none;
+}
+
+.arch-portfolio-card.is-featured .arch-portfolio-title {
+  max-width: 10ch;
+  font-size: 4.65rem;
+  line-height: 0.92;
+}
+
+.arch-portfolio-arrow {
+  top: 1.15rem;
+  right: 1.15rem;
+  display: grid;
+  width: 2.45rem;
+  height: 2.45rem;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  border-radius: 999px;
+  color: #ffffff;
+  opacity: 0;
+  transform: translate(-0.35rem, 0.35rem);
+  transition:
+    opacity 520ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 520ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.arch-portfolio-arrow svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.arch-portfolio-card:hover .arch-portfolio-arrow {
+  opacity: 1;
+  transform: translate(0, 0);
+}
+
+.arch-portfolio-empty {
+  margin-top: 4rem;
+  padding: 3rem 0;
+  border-top: 1px solid rgba(17, 17, 17, 0.12);
+  border-bottom: 1px solid rgba(17, 17, 17, 0.12);
+  color: rgba(17, 17, 17, 0.62);
+}
+
+.arch-project-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  display: grid;
+  place-items: center;
+  padding: clamp(0.7rem, 2vw, 1.4rem);
+  background:
+    radial-gradient(circle at 18% 16%, rgba(184, 147, 79, 0.14), transparent 24rem),
+    rgba(12, 10, 9, 0.78);
+  backdrop-filter: blur(22px);
+}
+
+.arch-project-modal-panel {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+  width: min(96vw, 86rem);
+  height: min(92svh, 58rem);
+  max-height: min(92svh, 58rem);
+  overflow: hidden;
+  border-radius: 6px;
+  background: #f7f5f0;
+  color: #111111;
+  box-shadow:
+    0 44px 140px rgba(0, 0, 0, 0.42),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.36);
+}
+
+.arch-project-modal-close {
+  position: absolute;
+  top: 1.15rem;
+  right: 1.15rem;
+  z-index: 5;
+  display: grid;
+  width: 3.05rem;
+  height: 3.05rem;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.48);
+  border-radius: 999px;
+  background: rgba(17, 17, 17, 0.28);
+  color: #ffffff;
+  box-shadow:
+    0 18px 44px rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(18px);
+  transition:
+    border-color 280ms ease,
+    background 280ms ease,
+    box-shadow 280ms ease,
+    transform 280ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.arch-project-modal-close:hover {
+  border-color: rgba(184, 147, 79, 0.76);
+  background: rgba(109, 16, 24, 0.72);
+  box-shadow:
+    0 24px 64px rgba(109, 16, 24, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+  transform: translateY(-2px) rotate(6deg);
+}
+
+.arch-project-modal-close svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.arch-project-modal-hero {
+  position: relative;
+  min-height: 100%;
+  overflow: hidden;
+  background: #111111;
+}
+
+.arch-project-modal-hero img {
+  filter: saturate(0.98) contrast(1.04);
+  transform: scale(1.01);
+}
+
+.arch-project-modal-hero::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(17, 17, 17, 0.04), rgba(17, 17, 17, 0.24)),
+    linear-gradient(90deg, rgba(17, 17, 17, 0.14), transparent 46%);
+}
+
+.arch-project-modal-body {
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: clamp(2rem, 3vw, 3rem);
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  padding: clamp(2.6rem, 4.8vw, 4.8rem);
+  touch-action: pan-y;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+  scrollbar-color: rgba(109, 16, 24, 0.42) rgba(17, 17, 17, 0.08);
+  scrollbar-width: thin;
+}
+
+.arch-project-modal-body::-webkit-scrollbar {
+  width: 0.45rem;
+}
+
+.arch-project-modal-body::-webkit-scrollbar-track {
+  background: rgba(17, 17, 17, 0.08);
+}
+
+.arch-project-modal-body::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(109, 16, 24, 0.62), rgba(184, 147, 79, 0.56));
+}
+
+.arch-project-modal-copy h3 {
+  max-width: 12ch;
+  margin-top: 0.75rem;
+  color: #111111;
+  font-size: 4rem;
+  line-height: 0.92;
+}
+
+.arch-project-modal-copy p:last-child {
+  max-width: 42rem;
+  margin-top: 1.2rem;
+  color: rgba(17, 17, 17, 0.66);
+  font-size: 1rem;
+  line-height: 1.82;
+}
+
+.arch-project-modal-meta {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.85rem;
+  margin: 0;
+}
+
+.arch-project-modal-meta div {
+  padding: 1rem 0;
+  border-top: 1px solid rgba(17, 17, 17, 0.13);
+}
+
+.arch-project-modal-meta dt {
+  color: rgba(17, 17, 17, 0.48);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.arch-project-modal-meta dd {
+  margin: 0.55rem 0 0;
+  color: #111111;
+  font-size: 0.98rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.arch-project-case-metrics {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  border-top: 1px solid rgba(17, 17, 17, 0.13);
+  border-bottom: 1px solid rgba(17, 17, 17, 0.13);
+}
+
+.arch-project-case-metric {
+  display: grid;
+  align-content: start;
+  gap: 0.62rem;
+  min-height: clamp(7.1rem, 8vw, 8.6rem);
+  padding: clamp(1.2rem, 2vw, 1.75rem);
+  border-right: 1px solid rgba(17, 17, 17, 0.1);
+  border-bottom: 1px solid rgba(17, 17, 17, 0.1);
+}
+
+.arch-project-case-metric:nth-child(2n) {
+  border-right: 0;
+}
+
+.arch-project-case-metric:nth-last-child(-n + 2) {
+  border-bottom: 0;
+}
+
+.arch-project-case-metric span {
+  color: #111111;
+  font-family: var(--font-display), "Bodoni Moda", Didot, Georgia, serif;
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: none;
+  font-size: clamp(1.55rem, 1vw + 1rem, 2.08rem);
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 0.98;
+}
+
+.arch-project-case-metric small {
+  color: rgba(17, 17, 17, 0.48);
+  font-size: 0.66rem;
+  font-weight: 850;
+  letter-spacing: 0;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.arch-project-story,
+.arch-project-features,
+.arch-project-gallery-section,
+.arch-project-modal-cta {
+  border-top: 1px solid rgba(17, 17, 17, 0.13);
+  padding-top: clamp(2rem, 3vw, 2.8rem);
+}
+
+.arch-project-story > span,
+.arch-project-features > span,
+.arch-project-gallery-head > span,
+.arch-project-modal-cta > span {
+  display: block;
+  color: #6d1018;
+  font-size: 0.72rem;
+  font-weight: 850;
+  letter-spacing: 0;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.arch-project-story h4,
+.arch-project-modal-cta h4 {
+  max-width: 11ch;
+  margin: 0.8rem 0 0;
+  color: #111111;
+  font-size: clamp(2.55rem, 4.2vw, 4.8rem);
+  font-weight: 600;
+  line-height: 0.92;
+}
+
+.arch-project-story p,
+.arch-project-gallery-head p,
+.arch-project-modal-cta p {
+  max-width: 42rem;
+  margin: 1rem 0 0;
+  color: rgba(17, 17, 17, 0.66);
+  font-size: 1rem;
+  line-height: 1.86;
+}
+
+.arch-project-features ul {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0;
+  margin: 1.1rem 0 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid rgba(17, 17, 17, 0.1);
+  border-left: 1px solid rgba(17, 17, 17, 0.08);
+}
+
+.arch-project-features li {
+  min-height: 4.2rem;
+  border-right: 1px solid rgba(17, 17, 17, 0.08);
+  border-bottom: 1px solid rgba(17, 17, 17, 0.08);
+  color: #111111;
+  font-size: clamp(1.05rem, 0.65vw + 0.92rem, 1.35rem);
+  font-weight: 650;
+  line-height: 1.25;
+  padding: 1rem;
+}
+
+.arch-project-gallery-head {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.arch-project-modal-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-auto-flow: dense;
+  gap: clamp(0.85rem, 1.4vw, 1.2rem);
+  margin-top: 1.35rem;
+}
+
+.arch-project-modal-gallery > button {
+  position: relative;
+  display: block;
+  min-height: clamp(13rem, 18vw, 19rem);
+  overflow: hidden;
+  border: 0;
+  border-radius: 4px;
+  background: #111111;
+  padding: 0;
+  cursor: zoom-in;
+  will-change: clip-path;
+}
+
+.arch-project-modal-gallery > button:nth-child(2n) {
+  min-height: clamp(16rem, 22vw, 23rem);
+}
+
+.arch-project-modal-gallery > button:nth-child(3n) {
+  min-height: clamp(12rem, 16vw, 17rem);
+}
+
+.arch-project-modal-gallery > button img {
+  transform: scale(1.01);
+  transition:
+    filter 1000ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 1000ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.arch-project-modal-gallery > button:hover img {
+  filter: saturate(1.06) contrast(1.05);
+  transform: scale(1.08);
+}
+
+.arch-project-modal-gallery > .is-large {
+  grid-column: span 2;
+  min-height: clamp(20rem, 30vw, 28rem);
+}
+
+.arch-project-modal-cta {
+  padding-bottom: 0.2rem;
+}
+
+.arch-project-modal-cta a {
+  position: relative;
+  display: inline-flex;
+  min-height: 3.75rem;
+  align-items: center;
+  gap: 0.85rem;
+  margin-top: 1.5rem;
+  overflow: hidden;
+  border: 1px solid rgba(17, 17, 17, 0.18);
+  background: #111111;
+  color: #ffffff;
+  padding: 1rem 1.2rem;
+  font-size: 0.78rem;
+  font-weight: 850;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition:
+    border-color 280ms ease,
+    background 280ms ease,
+    box-shadow 280ms ease,
+    transform 280ms ease;
+}
+
+.arch-project-modal-cta a::before {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background: linear-gradient(110deg, transparent 0 34%, rgba(184, 147, 79, 0.35) 48%, transparent 64% 100%);
+  transform: translateX(-120%);
+  transition: transform 760ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.arch-project-modal-cta a span,
+.arch-project-modal-cta a svg {
+  position: relative;
+  z-index: 1;
+}
+
+.arch-project-modal-cta a:hover {
+  border-color: rgba(184, 147, 79, 0.72);
+  background: #6d1018;
+  box-shadow: 0 22px 58px rgba(109, 16, 24, 0.2);
+  transform: translateY(-2px);
+}
+
+.arch-project-modal-cta a:hover::before {
+  transform: translateX(120%);
+}
+
+.arch-project-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 95;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(circle at 50% 18%, rgba(184, 147, 79, 0.12), transparent 28rem),
+    rgba(5, 5, 5, 0.92);
+  backdrop-filter: blur(18px);
+}
+
+.arch-project-lightbox-image {
+  position: relative;
+  width: min(88vw, 78rem);
+  height: min(78svh, 48rem);
+  overflow: hidden;
+}
+
+.arch-project-lightbox-image img {
+  filter: saturate(0.98) contrast(1.04);
+}
+
+.arch-project-lightbox-close,
+.arch-project-lightbox-arrow {
+  position: absolute;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.34);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  backdrop-filter: blur(14px);
+  transition:
+    border-color 280ms ease,
+    background 280ms ease,
+    transform 280ms ease;
+}
+
+.arch-project-lightbox-close {
+  top: 1.35rem;
+  right: 1.35rem;
+  width: 3.1rem;
+  height: 3.1rem;
+}
+
+.arch-project-lightbox-arrow {
+  top: 50%;
+  width: 3.25rem;
+  height: 3.25rem;
+  transform: translateY(-50%);
+}
+
+.arch-project-lightbox-arrow.is-prev {
+  left: clamp(1rem, 3vw, 2rem);
+}
+
+.arch-project-lightbox-arrow.is-next {
+  right: clamp(1rem, 3vw, 2rem);
+}
+
+.arch-project-lightbox-close:hover,
+.arch-project-lightbox-arrow:hover {
+  border-color: rgba(184, 147, 79, 0.78);
+  background: rgba(109, 16, 24, 0.74);
+}
+
+.arch-project-lightbox-arrow:hover {
+  transform: translateY(-50%) scale(1.04);
+}
+
+.arch-project-lightbox-caption {
+  position: absolute;
+  right: clamp(1rem, 3vw, 2rem);
+  bottom: 1.35rem;
+  left: clamp(1rem, 3vw, 2rem);
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+  padding-top: 1rem;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 0.75rem;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+@media (max-width: 1180px) {
+  .arch-portfolio-card.is-featured {
+    grid-column: span 8;
+    grid-row: span 5;
+  }
+
+  .arch-portfolio-card.is-wide,
+  .arch-portfolio-card.is-tall,
+  .arch-portfolio-card.is-quiet,
+  .arch-portfolio-card:not(.is-featured, .is-wide, .is-tall, .is-quiet) {
+    grid-column: span 6;
+    grid-row: span 4;
+  }
+}
+
+@media (max-width: 1023px) {
+  .arch-portfolio-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-auto-rows: auto;
+    gap: 1.4rem;
+  }
+
+  .arch-portfolio-card,
+  .arch-portfolio-card.is-featured,
+  .arch-portfolio-card.is-wide,
+  .arch-portfolio-card.is-tall,
+  .arch-portfolio-card.is-quiet,
+  .arch-portfolio-card:not(.is-featured, .is-wide, .is-tall, .is-quiet) {
+    grid-column: auto;
+    grid-row: auto;
+    min-height: 0;
+    aspect-ratio: auto;
+    background: #ffffff;
+    color: #111111;
+  }
+
+  .arch-portfolio-image-mask {
+    position: relative;
+    inset: auto;
+    aspect-ratio: 4 / 3;
+  }
+
+  .arch-portfolio-image-plane {
+    top: 0;
+    height: 100%;
+  }
+
+  .arch-portfolio-shade {
+    display: none;
+  }
+
+  .arch-portfolio-content {
+    position: static;
+    display: grid;
+    gap: 0.65rem;
+    padding: 1.15rem 1rem 1.35rem;
+    transform: none;
+  }
+
+  .arch-portfolio-title,
+  .arch-portfolio-card.is-featured .arch-portfolio-title {
+    max-width: 11ch;
+    color: #111111;
+    font-size: 3.15rem;
+    line-height: 0.96;
+  }
+
+  .arch-portfolio-kicker,
+  .arch-portfolio-location {
+    color: rgba(17, 17, 17, 0.72);
+  }
+
+  .arch-portfolio-description {
+    display: block;
+    max-width: 36rem;
+    color: rgba(17, 17, 17, 0.64);
+    font-size: 0.98rem;
+    line-height: 1.7;
+  }
+
+  .arch-portfolio-arrow {
+    opacity: 1;
+    transform: translate(0, 0);
+    border-color: rgba(255, 255, 255, 0.36);
+    background: rgba(17, 17, 17, 0.34);
+    color: #ffffff;
+    backdrop-filter: blur(10px);
+  }
+
+  .arch-project-modal-panel {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto minmax(0, 1fr);
+    width: min(94vw, 42rem);
+    height: 90svh;
+    max-height: 90svh;
+  }
+
+  .arch-project-modal-hero {
+    min-height: 24rem;
+    aspect-ratio: 16 / 11;
+  }
+
+  .arch-project-case-metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .arch-project-case-metric:nth-child(2n) {
+    border-right: 0;
+  }
+}
+
+@media (max-width: 720px) {
+  .arch-portfolio-section > .mx-auto {
+    padding-bottom: 5.5rem;
+  }
+
+  .arch-portfolio-grid {
+    margin-top: 3.25rem;
+  }
+
+  .arch-portfolio-card,
+  .arch-portfolio-card.is-featured {
+    border-radius: 4px;
+  }
+
+  .arch-portfolio-index {
+    font-size: 1.2rem;
+  }
+
+  .arch-portfolio-title,
+  .arch-portfolio-card.is-featured .arch-portfolio-title {
+    max-width: 12ch;
+    font-size: 2.65rem;
+    line-height: 0.98;
+  }
+
+  .arch-project-modal {
+    padding: 0;
+    place-items: stretch;
+  }
+
+  .arch-project-modal-panel {
+    width: 100%;
+    height: 100svh;
+    max-height: 100svh;
+    border-radius: 0;
+  }
+
+  .arch-project-modal-hero {
+    min-height: 14rem;
+    aspect-ratio: 4 / 3;
+  }
+
+  .arch-project-modal-body {
+    gap: 1.45rem;
+    padding: 1.35rem;
+  }
+
+  .arch-project-modal-copy h3 {
+    max-width: 11ch;
+    font-size: 2.85rem;
+    line-height: 0.98;
+  }
+
+  .arch-project-modal-meta,
+  .arch-project-modal-gallery {
+    grid-template-columns: 1fr;
+  }
+
+  .arch-project-case-metrics,
+  .arch-project-features ul {
+    grid-template-columns: 1fr;
+  }
+
+  .arch-project-case-metric,
+  .arch-project-case-metric:nth-child(2n) {
+    min-height: 5.3rem;
+    border-right: 0;
+    border-bottom: 1px solid rgba(17, 17, 17, 0.1);
+  }
+
+  .arch-project-case-metric:nth-last-child(-n + 2) {
+    border-bottom: 1px solid rgba(17, 17, 17, 0.1);
+  }
+
+  .arch-project-case-metric:last-child {
+    border-bottom: 0;
+  }
+
+  .arch-project-story h4,
+  .arch-project-modal-cta h4 {
+    font-size: clamp(2.5rem, 12vw, 3.25rem);
+  }
+
+  .arch-project-modal-gallery > button,
+  .arch-project-modal-gallery > button:nth-child(2n),
+  .arch-project-modal-gallery > button:nth-child(3n) {
+    min-height: 18rem;
+  }
+
+  .arch-project-modal-gallery > .is-large {
+    grid-column: auto;
+    min-height: 20rem;
+  }
+
+  .arch-project-lightbox-image {
+    width: 100vw;
+    height: 72svh;
+  }
+
+  .arch-project-lightbox-arrow {
+    top: auto;
+    bottom: 5rem;
+    transform: none;
+  }
+
+  .arch-project-lightbox-arrow:hover {
+    transform: scale(1.04);
+  }
+
+  .arch-project-lightbox-caption {
+    align-items: start;
+    flex-direction: column;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .arch-portfolio-image-mask {
+    clip-path: none !important;
+  }
+
+  .arch-portfolio-image-plane {
+    top: 0;
+    height: 100%;
+    transform: none !important;
+  }
+}
+
+/* Studio editorial chapters */
+.arch-studio-section {
+  overflow: clip;
+  background: #ffffff;
+}
+
+.arch-studio-section::before {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  content: "";
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, #111111 1px, transparent 1px),
+    linear-gradient(180deg, #111111 1px, transparent 1px);
+  background-size: 5.5rem 5.5rem;
+  opacity: 0.03;
+}
+
+.arch-studio-section > .mx-auto {
+  position: relative;
+  z-index: 1;
+}
+
+.architecture-site .arch-studio-spread {
+  align-items: start;
+  grid-template-columns: minmax(18rem, 0.38fr) minmax(0, 0.62fr);
+  gap: clamp(3.5rem, 6vw, 6.5rem);
+}
+
+.architecture-site .arch-sticky-copy {
+  order: 1;
+  align-self: start;
+}
+
+.architecture-site .arch-story-rows {
+  order: 2;
+  display: grid;
+  gap: clamp(4.5rem, 7vw, 7rem);
+  margin-top: 0;
+}
+
+.arch-story-rows article.arch-story-chapter {
+  display: grid;
+  align-items: center;
+  grid-template-columns: minmax(0, 0.96fr) minmax(0, 1.04fr);
+  gap: clamp(1.6rem, 3.3vw, 3.3rem);
+  padding: 0 0 clamp(4.25rem, 6vw, 6.25rem);
+  border-top: 0;
+  border-bottom: 1px solid rgba(17, 17, 17, 0.12);
+}
+
+.arch-story-rows article.arch-story-chapter.is-featured {
+  grid-template-columns: 1fr;
+  gap: clamp(1.8rem, 3vw, 2.8rem);
+}
+
+.arch-story-chapter.is-image-left .arch-story-media,
+.arch-story-chapter.is-image-right .arch-story-content {
+  order: 1;
+}
+
+.arch-story-chapter.is-image-left .arch-story-content,
+.arch-story-chapter.is-image-right .arch-story-media {
+  order: 2;
+}
+
+.arch-story-media {
+  position: relative;
+  min-height: clamp(23rem, 34vw, 34rem);
+  overflow: hidden;
+  border-radius: 5px;
+  background: #f5f3ef;
+  box-shadow: 0 28px 78px rgba(17, 17, 17, 0.1);
+  will-change: clip-path;
+}
+
+.arch-story-chapter.is-featured .arch-story-media {
+  min-height: clamp(31rem, 54vw, 45rem);
+}
+
+.arch-story-media::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(17, 17, 17, 0.02), rgba(17, 17, 17, 0.2)),
+    linear-gradient(90deg, rgba(17, 17, 17, 0.12), transparent 46%);
+}
+
+.arch-story-media-plane {
+  position: absolute;
+  inset: -4% 0;
+  transform-origin: center;
+  will-change: transform;
+}
+
+.arch-story-media-plane img {
+  filter: saturate(0.96) contrast(1.02);
+}
+
+.arch-story-content {
+  display: grid;
+  align-content: center;
+  gap: 0.9rem;
+  min-width: 0;
+}
+
+.arch-story-chapter.is-featured .arch-story-content {
+  max-width: 45rem;
+}
+
+.arch-story-number {
+  display: block;
+  color: #b8934f;
+  font-family: var(--font-display), "Bodoni Moda", Didot, Georgia, serif;
+  font-size: clamp(3.15rem, 5vw, 4.55rem);
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 0.86;
+}
+
+.arch-story-rows .arch-story-content h3 {
+  max-width: 10.8ch;
+  margin-top: 0.2rem;
+  color: #111111;
+  font-size: clamp(2.65rem, 3.9vw, 3.7rem);
+  line-height: 0.98;
+}
+
+.arch-story-chapter.is-featured .arch-story-content h3 {
+  max-width: 10.5ch;
+  font-size: clamp(3.15rem, 5vw, 4.65rem);
+  line-height: 0.94;
+}
+
+.arch-story-rows .arch-story-content p:not(.arch-kicker) {
+  max-width: 35rem;
+  margin-top: 0.45rem;
+  color: rgba(17, 17, 17, 0.64);
+  font-size: clamp(0.98rem, 0.25vw + 0.94rem, 1.06rem);
+  line-height: 1.82;
+}
+
+@media (min-width: 1024px) {
+  .architecture-site .arch-sticky-copy {
+    position: sticky;
+    top: clamp(6.25rem, 8vw, 8rem);
+  }
+}
+
+@media (max-width: 1023px) {
+  .architecture-site .arch-studio-spread {
+    grid-template-columns: 1fr;
+    gap: clamp(3rem, 8vw, 4.5rem);
+  }
+
+  .architecture-site .arch-story-rows {
+    gap: clamp(3.25rem, 8vw, 4.5rem);
+  }
+
+  .arch-story-rows article.arch-story-chapter,
+  .arch-story-rows article.arch-story-chapter.is-featured {
+    grid-template-columns: 1fr;
+    gap: 1.6rem;
+    padding-bottom: clamp(3.25rem, 8vw, 4.5rem);
+  }
+
+  .arch-story-chapter.is-image-left .arch-story-media,
+  .arch-story-chapter.is-image-right .arch-story-media {
+    order: 1;
+  }
+
+  .arch-story-chapter.is-image-left .arch-story-content,
+  .arch-story-chapter.is-image-right .arch-story-content {
+    order: 2;
+  }
+
+  .arch-story-media,
+  .arch-story-chapter.is-featured .arch-story-media {
+    min-height: clamp(24rem, 68vw, 34rem);
+  }
+}
+
+@media (max-width: 720px) {
+  .arch-story-media,
+  .arch-story-chapter.is-featured .arch-story-media {
+    min-height: clamp(22rem, 78vw, 28rem);
+    border-radius: 4px;
+  }
+
+  .arch-story-number {
+    font-size: 3.2rem;
+  }
+
+  .arch-story-rows .arch-story-content h3,
+  .arch-story-chapter.is-featured .arch-story-content h3 {
+    max-width: 11ch;
+    font-size: clamp(2.6rem, 11vw, 3.15rem);
+    line-height: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .arch-story-media {
+    clip-path: none !important;
+  }
+
+  .arch-story-media-plane {
+    inset: 0;
+    transform: none !important;
+  }
+}
+
+/* Architecture closing experience */
+.architecture-site .arch-documentary-footer {
+  position: relative;
+  min-height: 80vh;
+  min-height: 80svh;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 18% 18%, rgba(138, 29, 44, 0.22), transparent 28rem),
+    radial-gradient(circle at 82% 70%, rgba(184, 147, 79, 0.14), transparent 30rem),
+    linear-gradient(180deg, #0a0a0a 0%, #050505 38%, #050505 100%);
+  color: #ffffff;
+  isolation: isolate;
+}
+
+.architecture-site .arch-footer-grid-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.03;
+  background:
+    linear-gradient(90deg, #ffffff 1px, transparent 1px),
+    linear-gradient(180deg, #ffffff 1px, transparent 1px);
+  background-size: clamp(4.5rem, 8vw, 8rem) clamp(4.5rem, 8vw, 8rem);
+  mask-image: linear-gradient(180deg, transparent 0%, black 18%, black 82%, transparent 100%);
+}
+
+.architecture-site .arch-documentary-footer::before {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  content: "";
+  pointer-events: none;
+  background:
+    linear-gradient(115deg, transparent 0 42%, rgba(184, 147, 79, 0.08) 42.1%, transparent 42.5%),
+    linear-gradient(72deg, transparent 0 58%, rgba(138, 29, 44, 0.09) 58.1%, transparent 58.5%);
+}
+
+.architecture-site .arch-footer-moving-line {
+  position: absolute;
+  z-index: 0;
+  display: block;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(184, 147, 79, 0.62), rgba(138, 29, 44, 0.42), transparent);
+  opacity: 0.34;
+  animation: arch-footer-line-drift 15s ease-in-out infinite;
+}
+
+.architecture-site .arch-footer-moving-line.is-one {
+  top: 18%;
+  left: -18%;
+  width: 62%;
+}
+
+.architecture-site .arch-footer-moving-line.is-two {
+  top: 48%;
+  right: -20%;
+  width: 82%;
+  animation-delay: -5s;
+}
+
+.architecture-site .arch-footer-moving-line.is-three {
+  bottom: 23%;
+  left: 8%;
+  width: 44%;
+  animation-delay: -9s;
+}
+
+.architecture-site .arch-documentary-footer-inner,
+.architecture-site .arch-footer-closing-strip {
+  position: relative;
+  z-index: 1;
+}
+
+.architecture-site .arch-documentary-footer-inner {
+  justify-content: space-between;
+  gap: clamp(3.5rem, 6vw, 6rem);
+}
+
+.architecture-site .arch-footer-top {
+  display: grid;
+  gap: clamp(1.5rem, 2.5vw, 2.4rem);
+}
+
+.architecture-site .arch-footer-kicker {
+  color: #b8934f;
+}
+
+.architecture-site .arch-editorial-footer .arch-documentary-footer-title {
+  max-width: 9.4ch;
+  margin: 0;
+  color: #ffffff;
+  font-size: clamp(4.4rem, 11vw, 11.5rem);
+  line-height: 0.82;
+  letter-spacing: 0;
+  text-align: left;
+  text-wrap: balance;
+}
+
+.architecture-site .arch-documentary-footer-title span {
+  display: block;
+  overflow: hidden;
+  text-shadow: 0 0 36px rgba(184, 147, 79, 0.08);
+  will-change: transform, opacity;
+}
+
+.architecture-site .arch-footer-directory {
+  display: grid;
+  grid-template-columns: minmax(0, 1.18fr) minmax(12rem, 0.72fr) minmax(0, 1fr);
+  gap: clamp(2rem, 5vw, 5.5rem);
+  padding: clamp(2rem, 4vw, 3.2rem) 0;
+  border-top: 1px solid rgba(184, 147, 79, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+}
+
+.architecture-site .arch-footer-directory-column {
+  min-width: 0;
+}
+
+.architecture-site .arch-footer-directory-column h3 {
+  margin: 0 0 1.35rem;
+  color: rgba(255, 255, 255, 0.48);
+  font-size: 0.72rem;
+  font-weight: 850;
+  letter-spacing: 0;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.architecture-site .arch-footer-directory-column nav,
+.architecture-site .arch-footer-locations ul {
+  display: grid;
+  gap: 0.82rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.architecture-site .arch-footer-directory-column a,
+.architecture-site .arch-footer-locations li,
+.architecture-site .arch-footer-closing-strip a {
+  position: relative;
+  width: fit-content;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: clamp(1.08rem, 1vw + 0.92rem, 1.42rem);
+  font-weight: 650;
+  line-height: 1.25;
+  text-decoration: none;
+  transition:
+    color 300ms ease,
+    text-shadow 300ms ease;
+}
+
+.architecture-site .arch-footer-directory-column a::after,
+.architecture-site .arch-footer-closing-strip a::after {
+  position: absolute;
+  right: 0;
+  bottom: -0.28rem;
+  left: 0;
+  height: 1px;
+  content: "";
+  background: linear-gradient(90deg, #8a1d2c, #b8934f);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 360ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.architecture-site .arch-footer-directory-column a:hover,
+.architecture-site .arch-footer-locations li:hover,
+.architecture-site .arch-footer-closing-strip a:hover {
+  color: #ffffff;
+  text-shadow: 0 0 28px rgba(184, 147, 79, 0.18);
+}
+
+.architecture-site .arch-footer-directory-column a:hover::after,
+.architecture-site .arch-footer-closing-strip a:hover::after {
+  transform: scaleX(1);
+}
+
+.architecture-site .arch-footer-locations li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.82rem;
+  cursor: default;
+}
+
+.architecture-site .arch-footer-locations li > span {
+  display: inline-block;
+  width: 0.54rem;
+  height: 0.54rem;
+  border: 1px solid rgba(184, 147, 79, 0.82);
+  border-radius: 999px;
+  background: rgba(138, 29, 44, 0.7);
+  box-shadow:
+    0 0 0 0 rgba(184, 147, 79, 0.22),
+    0 0 22px rgba(184, 147, 79, 0.22);
+  transition:
+    background 300ms ease,
+    box-shadow 300ms ease,
+    transform 300ms ease;
+}
+
+.architecture-site .arch-footer-locations li:hover > span {
+  background: #b8934f;
+  box-shadow:
+    0 0 0 8px rgba(184, 147, 79, 0.08),
+    0 0 32px rgba(184, 147, 79, 0.32);
+  transform: scale(1.1);
+}
+
+.architecture-site .arch-footer-logo-stage {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(1.6rem, 4vw, 3.5rem);
+  margin-top: auto;
+  padding-top: clamp(1rem, 2vw, 2rem);
+}
+
+.architecture-site .arch-footer-logo-mark {
+  display: grid;
+  place-items: center;
+  width: clamp(8rem, 15vw, 13rem);
+  height: clamp(8rem, 15vw, 13rem);
+}
+
+.architecture-site .arch-footer-logo-mark .brand-logo {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 0 42px rgba(184, 147, 79, 0.24)) drop-shadow(0 30px 80px rgba(0, 0, 0, 0.65));
+  animation: arch-footer-logo-glow 6.5s ease-in-out infinite;
+}
+
+.architecture-site .arch-footer-final-copy {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.architecture-site .arch-footer-final-copy h3 {
+  margin: 0;
+  color: #ffffff;
+  font-size: clamp(2.35rem, 4.8vw, 5rem);
+  line-height: 0.9;
+}
+
+.architecture-site .arch-footer-final-copy p {
+  max-width: 34rem;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: clamp(1rem, 0.5vw + 0.92rem, 1.25rem);
+  line-height: 1.55;
+}
+
+.architecture-site .arch-footer-final-copy span {
+  color: #b8934f;
+  font-size: 0.78rem;
+  font-weight: 850;
+  letter-spacing: 0;
+  line-height: 1.25;
+  text-transform: uppercase;
+}
+
+.architecture-site .arch-footer-closing-strip {
+  display: flex;
+  justify-content: center;
+  gap: clamp(1.2rem, 4vw, 4rem);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 1.2rem 1.25rem;
+  background: rgba(10, 10, 10, 0.72);
+  backdrop-filter: blur(12px);
+}
+
+.architecture-site .arch-footer-closing-strip a {
+  color: rgba(255, 255, 255, 0.56);
+  font-size: 0.78rem;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+@media (max-width: 1023px) {
+  .architecture-site .arch-footer-directory {
+    grid-template-columns: 1fr;
+    gap: 2.4rem;
+  }
+
+  .architecture-site .arch-footer-logo-stage {
+    grid-template-columns: 1fr;
+    justify-items: start;
+  }
+}
+
+@media (max-width: 720px) {
+  .architecture-site .arch-documentary-footer-inner {
+    min-height: 86svh;
+    padding-top: 5rem;
+    padding-bottom: 4rem;
+  }
+
+  .architecture-site .arch-editorial-footer .arch-documentary-footer-title {
+    font-size: clamp(3.65rem, 17vw, 5.4rem);
+    line-height: 0.88;
+  }
+
+  .architecture-site .arch-footer-logo-mark {
+    width: clamp(7rem, 34vw, 9rem);
+    height: clamp(7rem, 34vw, 9rem);
+  }
+
+  .architecture-site .arch-footer-closing-strip {
+    flex-wrap: wrap;
+    gap: 0.9rem 1.4rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .architecture-site .arch-footer-moving-line,
+  .architecture-site .arch-footer-logo-mark .brand-logo {
+    animation: none;
+    transform: none !important;
+  }
+}
+
+/* Premium architecture contact experience */
+.architecture-site .arch-contact-experience {
+  --contact-ink: #111111;
+  --contact-soft-ink: rgba(17, 17, 17, 0.64);
+  --contact-red: #6d1018;
+  --contact-gold: #b8934f;
+  --contact-ivory: #fbfaf6;
+  --contact-stone: #eee7dc;
+  --contact-rule: rgba(17, 17, 17, 0.12);
+  background:
+    linear-gradient(90deg, rgba(109, 16, 24, 0.035) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(17, 17, 17, 0.035) 1px, transparent 1px),
+    linear-gradient(180deg, #ffffff 0%, #fbfaf6 46%, #efe8dc 100%);
+  background-size: 8rem 8rem, 8rem 8rem, auto;
+}
+
+.architecture-site .arch-contact-hero {
+  position: relative;
+  display: flex;
+  min-height: 100vh;
+  min-height: 100svh;
+  align-items: center;
+  overflow: hidden;
+  background: #111111;
+  color: #ffffff;
+  isolation: isolate;
+}
+
+.architecture-site .arch-contact-hero-video {
+  position: absolute;
+  inset: -6% 0 0;
+  width: 100%;
+  height: 112%;
+  object-fit: cover;
+  object-position: 50% 48%;
+  filter: saturate(0.92) contrast(1.05);
+  will-change: transform;
+}
+
+.architecture-site .arch-contact-hero-shade {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.72), rgba(0, 0, 0, 0.28) 45%, rgba(0, 0, 0, 0.62)),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.62), transparent 42%, rgba(0, 0, 0, 0.78)),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+  background-size: auto, auto, 8rem 8rem;
+}
+
+.architecture-site .arch-contact-hero-copy {
+  position: relative;
+  z-index: 2;
+  width: min(100%, 82rem);
+  margin: 0 auto;
+  padding: 9rem 1.25rem 8rem;
+}
+
+.architecture-site .arch-contact-hero-lockup {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.9rem;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 0.76rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.architecture-site .arch-contact-hero-lockup .brand-logo {
+  width: 3.2rem;
+  height: 3.2rem;
+}
+
+.architecture-site .arch-contact-hero-title {
+  max-width: 11ch;
+  margin: 2rem 0 0;
+  color: #ffffff;
+  font-size: 6.5rem;
+  font-weight: 600;
+  line-height: 0.9;
+  text-wrap: balance;
+}
+
+.architecture-site .arch-contact-hero-title span {
+  display: block;
+}
+
+.architecture-site .arch-contact-hero-copy p {
+  max-width: 42rem;
+  margin: 2rem 0 0;
+  color: rgba(255, 255, 255, 0.76);
+  font-size: 1.08rem;
+  font-weight: 500;
+  line-height: 1.88;
+}
+
+.architecture-site .arch-contact-hero-cta {
+  position: relative;
+  display: inline-flex;
+  min-height: 3.8rem;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2.4rem;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+  padding: 1rem 1.2rem;
+  font-size: 0.82rem;
+  font-weight: 850;
+  text-decoration: none;
+  text-transform: uppercase;
+  backdrop-filter: blur(16px);
+  transition:
+    border-color 260ms ease,
+    background 260ms ease,
+    transform 260ms ease;
+}
+
+.architecture-site .arch-contact-hero-cta::before {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background: linear-gradient(110deg, transparent 0 35%, rgba(255, 255, 255, 0.2) 48%, transparent 64% 100%);
+  transform: translateX(-120%);
+  transition: transform 760ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.architecture-site .arch-contact-hero-cta span,
+.architecture-site .arch-contact-hero-cta svg {
+  position: relative;
+  z-index: 1;
+}
+
+.architecture-site .arch-contact-hero-cta:hover {
+  border-color: rgba(184, 147, 79, 0.82);
+  background: rgba(109, 16, 24, 0.86);
+  transform: translateY(-2px);
+}
+
+.architecture-site .arch-contact-hero-cta:hover::before {
+  transform: translateX(120%);
+}
+
+.architecture-site .arch-contact-hero-cta:hover svg {
+  transform: translate(4px, -4px);
+}
+
+.architecture-site .arch-contact-hero-meta {
+  position: absolute;
+  right: 1.25rem;
+  bottom: 1.4rem;
+  left: 1.25rem;
+  z-index: 2;
+  display: flex;
+  max-width: 82rem;
+  justify-content: space-between;
+  margin: 0 auto;
+  border-top: 1px solid rgba(255, 255, 255, 0.22);
+  padding-top: 1rem;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.74rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.architecture-site .arch-consultation-private-grid {
+  position: relative;
+  align-items: start;
+}
+
+.architecture-site .arch-contact-experience .arch-consultation-image-shell {
+  min-height: 44rem;
+  margin-top: 0;
+  border-color: rgba(17, 17, 17, 0.16);
+  box-shadow: 0 48px 120px rgba(17, 17, 17, 0.16);
+}
+
+.architecture-site .arch-contact-experience .arch-consultation-image {
+  inset: -9% 0;
+}
+
+.architecture-site .arch-contact-experience .arch-luxury-consultation-desk {
+  border-color: rgba(17, 17, 17, 0.14);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.94), rgba(255, 255, 255, 0.68)),
+    linear-gradient(180deg, rgba(184, 147, 79, 0.1), rgba(109, 16, 24, 0.05));
+  padding: 2rem;
+}
+
+.architecture-site .arch-contact-experience .arch-consultation-form-head {
+  margin-bottom: 2rem;
+  padding-bottom: 1.75rem;
+}
+
+.architecture-site .arch-contact-experience .arch-consultation-form-head h3 {
+  max-width: 10ch;
+  font-size: 4.35rem;
+  line-height: 0.92;
+}
+
+.architecture-site .arch-contact-experience .arch-consultation-form-head h3 span {
+  display: block;
+}
+
+.architecture-site .arch-contact-experience .arch-consultation-form-head > span {
+  max-width: 34rem;
+  color: var(--contact-soft-ink);
+  font-size: 1rem;
+  line-height: 1.8;
+}
+
+.architecture-site .arch-contact-experience .arch-consultation-field-grid {
+  gap: 1.25rem;
+}
+
+.architecture-site .arch-contact-experience .arch-luxury-consultation-desk label {
+  gap: 0.72rem;
+}
+
+.architecture-site .arch-contact-experience .arch-luxury-consultation-desk input,
+.architecture-site .arch-contact-experience .arch-luxury-consultation-desk select,
+.architecture-site .arch-contact-experience .arch-luxury-consultation-desk textarea {
+  min-height: 4.15rem;
+  border-color: rgba(17, 17, 17, 0.16);
+  background: rgba(255, 255, 255, 0.78);
+  padding: 1.08rem 1.12rem;
+}
+
+.architecture-site .arch-contact-experience .arch-luxury-consultation-desk textarea {
+  min-height: 11.5rem;
+}
+
+.architecture-site .arch-consultation-success {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.35rem 0.9rem;
+  margin-top: 1.35rem;
+  border: 1px solid rgba(17, 77, 48, 0.22);
+  border-radius: 2px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.84), rgba(243, 250, 246, 0.72)),
+    #ffffff;
+  padding: 1rem;
+  color: rgba(17, 77, 48, 0.92);
+  box-shadow: 0 22px 48px rgba(17, 77, 48, 0.08);
+}
+
+.architecture-site .arch-consultation-success svg {
+  grid-row: span 2;
+  width: 1.05rem;
+  height: 1.05rem;
+  margin-top: 0.18rem;
+}
+
+.architecture-site .arch-consultation-success strong {
+  font-size: 0.94rem;
+  font-weight: 850;
+}
+
+.architecture-site .arch-consultation-success span {
+  color: rgba(17, 77, 48, 0.72);
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
+.architecture-site .arch-contact-section-head {
+  max-width: 58rem;
+}
+
+.architecture-site .arch-contact-editorial-title {
+  max-width: 12ch;
+  color: var(--contact-ink);
+}
+
+.architecture-site .arch-contact-pillar-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  margin-top: 3rem;
+  border: 1px solid rgba(17, 17, 17, 0.12);
+  background: rgba(17, 17, 17, 0.12);
+}
+
+.architecture-site .arch-contact-pillar-card {
+  position: relative;
+  min-height: 42rem;
+  overflow: hidden;
+  border-radius: 4px;
+  background: #111111;
+  color: #ffffff;
+  padding: 1.25rem;
+  isolation: isolate;
+}
+
+.architecture-site .arch-contact-pillar-card::after {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  content: "";
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.82)),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.5), transparent 66%);
+}
+
+.architecture-site .arch-contact-pillar-image {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  overflow: hidden;
+}
+
+.architecture-site .arch-contact-pillar-image img {
+  filter: saturate(0.95) contrast(1.05);
+  transition:
+    filter 900ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 900ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.architecture-site .arch-contact-pillar-card:hover img {
+  filter: saturate(1.04) contrast(1.08);
+  transform: scale(1.04);
+}
+
+.architecture-site .arch-contact-pillar-card > span {
+  color: var(--contact-gold);
+  font-family: var(--font-display), "Bodoni Moda", Didot, Georgia, serif;
+  font-size: 2.35rem;
+  line-height: 1;
+}
+
+.architecture-site .arch-contact-pillar-card > p {
+  margin: 15rem 0 0;
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.74rem;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.architecture-site .arch-contact-pillar-card h3 {
+  max-width: 11ch;
+  margin: 0.85rem 0 0;
+  color: #ffffff;
+  font-size: 2.75rem;
+  line-height: 0.98;
+}
+
+.architecture-site .arch-contact-pillar-card small {
+  display: block;
+  max-width: 25rem;
+  margin-top: 1rem;
+  color: rgba(255, 255, 255, 0.74);
+  font-size: 0.95rem;
+  line-height: 1.72;
+}
+
+.architecture-site .arch-contact-trust-panel {
+  border-top: 1px solid rgba(17, 17, 17, 0.12);
+  border-bottom: 1px solid rgba(17, 17, 17, 0.12);
+}
+
+.architecture-site .arch-contact-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0;
+  margin-top: 2.5rem;
+  border-top: 1px solid rgba(17, 17, 17, 0.13);
+  border-left: 1px solid rgba(17, 17, 17, 0.13);
+}
+
+.architecture-site .arch-contact-stat {
+  min-height: 13rem;
+  border-right: 1px solid rgba(17, 17, 17, 0.13);
+  border-bottom: 1px solid rgba(17, 17, 17, 0.13);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.32)),
+    rgba(255, 255, 255, 0.22);
+  padding: 1.25rem;
+}
+
+.architecture-site .arch-contact-stat span {
+  display: block;
+  color: var(--contact-red);
+  font-family: var(--font-display), "Bodoni Moda", Didot, Georgia, serif;
+  font-size: 4.4rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.architecture-site .arch-contact-stat small {
+  display: block;
+  max-width: 12rem;
+  margin-top: 1rem;
+  color: var(--contact-soft-ink);
+  font-size: 0.82rem;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.architecture-site .arch-contact-process {
+  align-items: start;
+}
+
+.architecture-site .arch-contact-process-list {
+  position: relative;
+  display: grid;
+  gap: 0;
+  margin-top: 1rem;
+  padding-left: 2.25rem;
+}
+
+.architecture-site .arch-contact-process-line {
+  position: absolute;
+  top: 0.8rem;
+  bottom: 0.8rem;
+  left: 0.5rem;
+  width: 1px;
+  background: var(--contact-red);
+  transform-origin: top;
+}
+
+.architecture-site .arch-contact-process-list article {
+  position: relative;
+  display: grid;
+  grid-template-columns: 4.5rem minmax(0, 1fr);
+  gap: 1.5rem;
+  padding: 0 0 2.35rem;
+}
+
+.architecture-site .arch-contact-process-list article::before {
+  position: absolute;
+  top: 0.78rem;
+  left: -2.08rem;
+  width: 0.72rem;
+  height: 0.72rem;
+  content: "";
+  border: 1px solid var(--contact-red);
+  border-radius: 50%;
+  background: var(--contact-ivory);
+}
+
+.architecture-site .arch-contact-process-list article > span {
+  color: var(--contact-gold);
+  font-family: var(--font-display), "Bodoni Moda", Didot, Georgia, serif;
+  font-size: 2.7rem;
+  line-height: 1;
+}
+
+.architecture-site .arch-contact-process-list h3 {
+  margin: 0;
+  color: var(--contact-ink);
+  font-size: 2.6rem;
+  line-height: 0.98;
+}
+
+.architecture-site .arch-contact-process-list p {
+  max-width: 35rem;
+  margin: 0.85rem 0 0;
+  color: var(--contact-soft-ink);
+  font-size: 0.98rem;
+  line-height: 1.78;
+}
+
+.architecture-site .arch-contact-location-panel {
+  align-items: stretch;
+  padding-bottom: 8rem;
+}
+
+.architecture-site .arch-contact-map {
+  position: relative;
+  min-height: 34rem;
+  overflow: hidden;
+  border: 1px solid rgba(17, 17, 17, 0.14);
+  border-radius: 4px;
+  background:
+    linear-gradient(135deg, rgba(109, 16, 24, 0.18), transparent 34%),
+    linear-gradient(180deg, #171717, #24201b);
+  box-shadow: 0 38px 96px rgba(17, 17, 17, 0.16);
+}
+
+.architecture-site .arch-map-grid {
+  position: absolute;
+  inset: 0;
+  opacity: 0.62;
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+  background-size: 4.5rem 4.5rem;
+}
+
+.architecture-site .arch-map-route {
+  position: absolute;
+  left: 14%;
+  width: 72%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(184, 147, 79, 0.84), transparent);
+  transform-origin: left;
+}
+
+.architecture-site .arch-map-route.is-one {
+  top: 42%;
+  transform: rotate(-13deg);
+}
+
+.architecture-site .arch-map-route.is-two {
+  top: 62%;
+  transform: rotate(17deg);
+}
+
+.architecture-site .arch-map-pin {
+  position: absolute;
+  width: 1rem;
+  height: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.68);
+  border-radius: 50%;
+  background: var(--contact-red);
+  box-shadow: 0 0 0 0.7rem rgba(109, 16, 24, 0.16), 0 0 42px rgba(184, 147, 79, 0.28);
+}
+
+.architecture-site .arch-map-pin.is-primary {
+  top: 38%;
+  left: 54%;
+}
+
+.architecture-site .arch-map-pin.is-secondary {
+  top: 58%;
+  left: 34%;
+  background: var(--contact-gold);
+}
+
+.architecture-site .arch-map-caption {
+  position: absolute;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  left: 1.25rem;
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  border-top: 1px solid rgba(255, 255, 255, 0.22);
+  padding-top: 1rem;
+  color: rgba(255, 255, 255, 0.76);
+  font-size: 0.74rem;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.architecture-site .arch-map-caption strong {
+  color: #ffffff;
+  font-family: var(--font-display), "Bodoni Moda", Didot, Georgia, serif;
+  font-size: 2.35rem;
+  font-weight: 600;
+  line-height: 1;
+  text-transform: none;
+}
+
+.architecture-site .arch-contact-office {
+  align-self: center;
+}
+
+.architecture-site .arch-office-lines {
+  display: grid;
+  margin-top: 2rem;
+  border-top: 1px solid rgba(17, 17, 17, 0.13);
+}
+
+.architecture-site .arch-office-lines div {
+  display: grid;
+  grid-template-columns: 8rem minmax(0, 1fr);
+  gap: 1rem;
+  padding: 1.15rem 0;
+  border-bottom: 1px solid rgba(17, 17, 17, 0.13);
+}
+
+.architecture-site .arch-office-lines span {
+  color: var(--contact-red);
+  font-size: 0.74rem;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.architecture-site .arch-office-lines strong {
+  color: rgba(17, 17, 17, 0.76);
+  font-size: 0.96rem;
+  font-weight: 700;
+  line-height: 1.55;
+}
+
+.architecture-site .arch-editorial-footer {
+  position: relative;
+  overflow: hidden;
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.075) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(135deg, #080807, #151313 58%, #0d0b0b);
+  background-size: 7rem 7rem, 7rem 7rem, auto;
+}
+
+.architecture-site .arch-editorial-footer::before {
+  position: absolute;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+  background:
+    linear-gradient(135deg, transparent 0 44%, rgba(109, 16, 24, 0.28) 44.2%, transparent 44.6%),
+    linear-gradient(90deg, rgba(184, 147, 79, 0.12), transparent 46%);
+}
+
+.architecture-site .arch-editorial-footer > .mx-auto {
+  position: relative;
+  z-index: 1;
+}
+
+.architecture-site .arch-editorial-footer .arch-footer-title {
+  max-width: 11ch;
+}
+
+.architecture-site .arch-footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 1.6rem;
+  align-items: center;
+}
+
+.architecture-site .arch-footer-links a {
+  position: relative;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 0.82rem;
+  font-weight: 850;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 260ms ease;
+}
+
+.architecture-site .arch-footer-links a::after {
+  position: absolute;
+  right: 0;
+  bottom: -0.42rem;
+  left: 0;
+  height: 1px;
+  content: "";
+  background: var(--contact-gold);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 360ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.architecture-site .arch-footer-links a:hover {
+  color: #ffffff;
+}
+
+.architecture-site .arch-footer-links a:hover::after {
+  transform: scaleX(1);
+}
+
+@media (min-width: 1024px) {
+  .architecture-site .arch-contact-experience .arch-consultation-form-stage {
+    position: sticky;
+    top: 7rem;
+  }
+}
+
+@media (max-width: 1180px) {
+  .architecture-site .arch-contact-hero-title {
+    font-size: 5.4rem;
+  }
+
+  .architecture-site .arch-contact-pillar-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .architecture-site .arch-contact-pillar-card {
+    min-height: 34rem;
+  }
+
+  .architecture-site .arch-contact-pillar-card > p {
+    margin-top: 11rem;
+  }
+
+  .architecture-site .arch-contact-stat-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 900px) {
+  .architecture-site .arch-contact-hero-copy {
+    padding-top: 8rem;
+  }
+
+  .architecture-site .arch-contact-hero-title {
+    font-size: 4.25rem;
+  }
+
+  .architecture-site .arch-contact-hero-meta,
+  .architecture-site .arch-map-caption {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .architecture-site .arch-contact-experience .arch-consultation-image-shell {
+    min-height: 32rem;
+  }
+
+  .architecture-site .arch-contact-location-panel {
+    padding-bottom: 5.5rem;
+  }
+}
+
+@media (max-width: 720px) {
+  .architecture-site .arch-contact-hero {
+    min-height: 94svh;
+  }
+
+  .architecture-site .arch-contact-hero-copy {
+    padding: 7rem 1rem 7.5rem;
+  }
+
+  .architecture-site .arch-contact-hero-title {
+    max-width: 10.5ch;
+    font-size: 3.25rem;
+    line-height: 0.96;
+  }
+
+  .architecture-site .arch-contact-hero-copy p {
+    font-size: 0.98rem;
+    line-height: 1.72;
+  }
+
+  .architecture-site .arch-contact-hero-cta,
+  .architecture-site .arch-consultation-submit {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .architecture-site .arch-contact-experience .arch-luxury-consultation-desk {
+    padding: 1rem;
+  }
+
+  .architecture-site .arch-contact-experience .arch-consultation-form-head h3 {
+    font-size: 3rem;
+  }
+
+  .architecture-site .arch-contact-pillar-card h3,
+  .architecture-site .arch-contact-process-list h3 {
+    font-size: 2.15rem;
+  }
+
+  .architecture-site .arch-contact-stat-grid,
+  .architecture-site .arch-contact-process-list article,
+  .architecture-site .arch-office-lines div {
+    grid-template-columns: 1fr;
+  }
+
+  .architecture-site .arch-contact-stat {
+    min-height: 10rem;
+  }
+
+  .architecture-site .arch-contact-process-list {
+    padding-left: 1.5rem;
+  }
+
+  .architecture-site .arch-contact-process-list article {
+    gap: 0.75rem;
+    padding: 0 0 2rem;
+  }
+
+  .architecture-site .arch-contact-process-list p {
+    font-size: 0.92rem;
+    line-height: 1.65;
+  }
+
+  .architecture-site .arch-contact-process-line {
+    left: 0.2rem;
+  }
+
+  .architecture-site .arch-contact-process-list article::before {
+    left: -1.66rem;
+  }
+}
+
+@media (max-width: 430px) {
+  .architecture-site .arch-contact-hero-title {
+    font-size: 2.75rem;
+  }
+
+  .architecture-site .arch-contact-hero-meta {
+    font-size: 0.68rem;
+  }
+
+  .architecture-site .arch-contact-pillar-card {
+    min-height: 31rem;
+  }
+
+  .architecture-site .arch-contact-stat span {
+    font-size: 3.35rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .architecture-site .arch-contact-hero-video,
+  .architecture-site .arch-consultation-image,
+  .architecture-site .arch-contact-pillar-image img {
+    transform: none !important;
+  }
+}
+
+/* Architecture contact final luxury sequence */
+.architecture-site .arch-contact-editorial-pillars {
+  position: relative;
+  padding-top: clamp(6rem, 10vw, 9rem);
+  padding-bottom: clamp(4rem, 8vw, 7rem);
+}
+
+.architecture-site .arch-contact-editorial-pillars::before {
+  position: absolute;
+  top: 0;
+  right: 1.25rem;
+  left: 1.25rem;
+  height: 1px;
+  content: "";
+  background: linear-gradient(90deg, transparent, rgba(17, 17, 17, 0.2), transparent);
+}
+
+.architecture-site .arch-contact-pillar-editorial-list {
+  display: grid;
+  gap: clamp(4.5rem, 8vw, 7rem);
+  margin-top: clamp(4rem, 7vw, 6rem);
+}
+
+.architecture-site .arch-contact-pillar-block {
+  position: relative;
+  display: grid;
+  min-height: 34rem;
+  grid-template-columns: minmax(0, 0.94fr) minmax(0, 1.06fr);
+  align-items: center;
+  gap: clamp(2rem, 5vw, 6rem);
+  border-top: 1px solid rgba(17, 17, 17, 0.13);
+  padding-top: clamp(2rem, 4vw, 3rem);
+}
+
+.architecture-site .arch-contact-pillar-block.is-reverse {
+  grid-template-columns: minmax(0, 1.06fr) minmax(0, 0.94fr);
+}
+
+.architecture-site .arch-contact-pillar-block.is-reverse .arch-contact-pillar-media {
+  order: 2;
+}
+
+.architecture-site .arch-contact-pillar-block.is-reverse .arch-contact-pillar-copy {
+  order: 1;
+}
+
+.architecture-site .arch-contact-pillar-media {
+  position: relative;
+  min-height: clamp(24rem, 42vw, 38rem);
+  overflow: hidden;
+  background: #111111;
+  box-shadow: 0 34px 110px rgba(17, 17, 17, 0.12);
+}
+
+.architecture-site .arch-contact-pillar-media::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, transparent 42%, rgba(17, 17, 17, 0.34)),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+  background-size: auto, 5.5rem 5.5rem;
+}
+
+.architecture-site .arch-contact-pillar-image {
+  position: absolute;
+  inset: -10% 0;
+}
+
+.architecture-site .arch-contact-pillar-image img {
+  filter: saturate(0.94) contrast(1.04);
+  transform: scale(1.03);
+}
+
+.architecture-site .arch-contact-pillar-copy {
+  max-width: 40rem;
+}
+
+.architecture-site .arch-contact-pillar-copy > span {
+  display: block;
+  color: var(--contact-gold);
+  font-family: var(--font-display), "Bodoni Moda", Didot, Georgia, serif;
+  font-size: clamp(3.2rem, 6vw, 6.6rem);
+  line-height: 0.86;
+}
+
+.architecture-site .arch-contact-pillar-copy h3 {
+  max-width: min(100%, 13ch);
+  margin-top: clamp(1.25rem, 2vw, 1.8rem);
+  color: #111111;
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: none;
+  font-size: clamp(3.1rem, 5.6vw, 5.8rem);
+  line-height: 0.9;
+}
+
+.architecture-site .arch-contact-pillar-copy p {
+  max-width: 29rem;
+  margin-top: 1.45rem;
+  color: rgba(17, 17, 17, 0.62);
+  font-size: clamp(1rem, 0.35vw + 0.95rem, 1.14rem);
+  font-weight: 500;
+  line-height: 1.82;
+}
+
+.architecture-site .arch-contact-philosophy {
+  position: relative;
+  min-height: 112svh;
+  overflow: hidden;
+  background: #080808;
+  color: #ffffff;
+  isolation: isolate;
+}
+
+.architecture-site .arch-contact-philosophy-media {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  overflow: hidden;
+}
+
+.architecture-site .arch-contact-philosophy-image {
+  position: absolute;
+  inset: -10% 0;
+}
+
+.architecture-site .arch-contact-philosophy-image img {
+  filter: saturate(0.9) contrast(1.06) brightness(0.72);
+}
+
+.architecture-site .arch-contact-philosophy::after {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  content: "";
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.74), rgba(0, 0, 0, 0.26) 48%, rgba(0, 0, 0, 0.68)),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.28), rgba(0, 0, 0, 0.86)),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+  background-size: auto, auto, 8rem 8rem;
+}
+
+.architecture-site .arch-contact-philosophy-copy {
+  display: flex;
+  min-height: 112svh;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: clamp(7rem, 12vw, 10rem);
+  padding-bottom: clamp(7rem, 12vw, 10rem);
+}
+
+.architecture-site .arch-contact-philosophy-title {
+  max-width: 9.8ch;
+  margin-top: 1.35rem;
+  color: #ffffff;
+  font-size: clamp(4.2rem, 10vw, 10rem);
+  font-weight: 600;
+  line-height: 0.86;
+}
+
+.architecture-site .arch-contact-philosophy-description {
+  max-width: 33rem;
+  margin-top: 2rem;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: clamp(1.06rem, 0.7vw + 0.95rem, 1.32rem);
+  font-weight: 500;
+  line-height: 1.78;
+}
+
+.architecture-site .arch-contact-final-cta {
+  position: relative;
+  text-align: center;
+}
+
+.architecture-site .arch-contact-final-cta::before {
+  position: absolute;
+  top: 0;
+  right: 1.25rem;
+  left: 1.25rem;
+  height: 1px;
+  content: "";
+  background: linear-gradient(90deg, transparent, rgba(109, 16, 24, 0.24), transparent);
+}
+
+.architecture-site .arch-contact-final-title {
+  max-width: min(100%, 28ch);
+  margin: 1.35rem auto 0;
+  color: #111111;
+  font-size: clamp(3rem, 7vw, 7rem);
+  line-height: 0.9;
+  overflow: visible;
+}
+
+.architecture-site .arch-contact-final-copy {
+  max-width: 48rem;
+  margin: 2rem auto 0;
+  color: rgba(17, 17, 17, 0.64);
+  font-size: clamp(1rem, 0.35vw + 0.96rem, 1.16rem);
+  font-weight: 500;
+  line-height: 1.88;
+}
+
+.architecture-site .arch-contact-final-button {
+  position: relative;
+  display: inline-flex;
+  min-height: 4rem;
+  align-items: center;
+  gap: 0.9rem;
+  justify-content: center;
+  margin-top: 2.5rem;
+  overflow: hidden;
+  border: 1px solid rgba(17, 17, 17, 0.22);
+  background: #111111;
+  color: #ffffff;
+  padding: 1rem 1.35rem;
+  font-size: 0.82rem;
+  font-weight: 850;
+  text-decoration: none;
+  text-transform: uppercase;
+  box-shadow: 0 24px 68px rgba(17, 17, 17, 0.18);
+  transition:
+    border-color 320ms ease,
+    background 320ms ease,
+    box-shadow 320ms ease,
+    transform 320ms ease;
+}
+
+.architecture-site .arch-contact-final-button::before {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background: linear-gradient(110deg, transparent 0 34%, rgba(184, 147, 79, 0.35) 48%, transparent 64% 100%);
+  transform: translateX(-120%);
+  transition: transform 850ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.architecture-site .arch-contact-final-button span,
+.architecture-site .arch-contact-final-button svg {
+  position: relative;
+  z-index: 1;
+}
+
+.architecture-site .arch-contact-final-button svg {
+  transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.architecture-site .arch-contact-final-button:hover {
+  border-color: rgba(184, 147, 79, 0.74);
+  background: #6d1018;
+  box-shadow: 0 30px 88px rgba(109, 16, 24, 0.28);
+  transform: translateY(-3px);
+}
+
+.architecture-site .arch-contact-final-button:hover::before {
+  transform: translateX(120%);
+}
+
+.architecture-site .arch-contact-final-button:hover svg {
+  transform: translate(4px, -4px);
+}
+
+.architecture-site .arch-journal-footer {
+  position: relative;
+  min-height: 500px;
+  overflow: hidden;
+  isolation: isolate;
+  background: #050505;
+  color: #f5f0e7;
+}
+
+.architecture-site .arch-journal-footer-grid {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image:
+    linear-gradient(rgba(245, 240, 231, 0.72) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(245, 240, 231, 0.72) 1px, transparent 1px),
+    linear-gradient(45deg, transparent 49.6%, rgba(184, 147, 79, 0.34) 50%, transparent 50.4%);
+  background-size:
+    84px 84px,
+    84px 84px,
+    168px 168px;
+  mask-image: linear-gradient(180deg, transparent 0%, black 16%, black 88%, transparent 100%);
+}
+
+.architecture-site .arch-journal-footer::after {
+  position: absolute;
+  inset: auto 0 0;
+  z-index: 0;
+  height: 44%;
+  pointer-events: none;
+  content: "";
+  background:
+    radial-gradient(circle at 18% 62%, rgba(139, 16, 24, 0.16), transparent 24rem),
+    radial-gradient(circle at 82% 72%, rgba(184, 147, 79, 0.08), transparent 26rem);
+}
+
+.architecture-site .arch-journal-footer-inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  min-height: 500px;
+  width: 100%;
+  max-width: 100vw;
+  margin: 0 auto;
+  padding: 3rem 20px 1.1rem;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+.architecture-site .arch-journal-footer-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.25rem;
+  align-self: start;
+}
+
+.architecture-site .arch-journal-footer-brand {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  gap: 0.7rem;
+  color: rgba(245, 240, 231, 0.76);
+  font-size: 0.78rem;
+  font-weight: 800;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.architecture-site .arch-journal-footer-brand .brand-logo {
+  width: 2.1rem;
+  height: 2.1rem;
+  border-color: rgba(245, 240, 231, 0.12);
+  background: rgba(255, 255, 255, 0.035);
+  box-shadow: none;
+}
+
+.architecture-site .arch-journal-footer-brand > span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.architecture-site .arch-journal-footer-brand > span > span {
+  color: #b8934f;
+  font-size: 0.72rem;
+}
+
+.architecture-site .arch-journal-footer-group-link {
+  position: relative;
+  display: inline-grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.2rem 0.75rem;
+  min-width: 12.5rem;
+  max-width: 15.5rem;
+  border: 1px solid rgba(245, 240, 231, 0.12);
+  background: rgba(255, 255, 255, 0.035);
+  padding: 0.82rem 0.9rem;
+  color: rgba(245, 240, 231, 0.82);
+  text-decoration: none;
+  transition:
+    border-color 340ms cubic-bezier(0.22, 1, 0.36, 1),
+    background 340ms cubic-bezier(0.22, 1, 0.36, 1),
+    color 340ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 340ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.architecture-site .arch-journal-footer-group-link::after {
+  position: absolute;
+  right: 0.9rem;
+  bottom: 0.62rem;
+  left: 0.9rem;
+  height: 1px;
+  content: "";
+  background: linear-gradient(90deg, rgba(184, 147, 79, 0.95), transparent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.architecture-site .arch-journal-footer-group-link span {
+  overflow: hidden;
+  font-size: 0.78rem;
+  font-weight: 850;
+  line-height: 1.1;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.architecture-site .arch-journal-footer-group-link small {
+  grid-column: 1 / 2;
+  color: rgba(245, 240, 231, 0.42);
+  font-size: 0.64rem;
+  font-weight: 750;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.architecture-site .arch-journal-footer-group-link svg {
+  grid-column: 2 / 3;
+  grid-row: 1 / 3;
+  width: 1rem;
+  height: 1rem;
+  align-self: center;
+  color: #b8934f;
+  transition: transform 340ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.architecture-site .arch-journal-footer-group-link:hover {
+  border-color: rgba(184, 147, 79, 0.46);
+  background: rgba(184, 147, 79, 0.08);
+  color: #ffffff;
+  transform: translate3d(0, -2px, 0);
+}
+
+.architecture-site .arch-journal-footer-group-link:hover::after {
+  transform: scaleX(1);
+}
+
+.architecture-site .arch-journal-footer-group-link:hover svg {
+  transform: translate3d(3px, -3px, 0);
+}
+
+.architecture-site .arch-journal-footer-statement {
+  display: grid;
+  max-width: 100%;
+  width: 100%;
+  align-self: center;
+  margin: 3rem 0;
+  color: #ffffff;
+  font-size: clamp(2.5rem, 10vw, 5rem);
+  font-weight: 500;
+  line-height: 0.9;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  text-wrap: balance;
+}
+
+.architecture-site .arch-journal-footer-statement span {
+  display: block;
+  overflow: visible;
+  line-height: 1.1;
+  padding-block: 0.02em;
+}
+
+.architecture-site .arch-journal-newsletter {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(20rem, 31rem);
+  gap: clamp(1.25rem, 3vw, 2.5rem);
+  align-items: end;
+  border-top: 1px solid rgba(245, 240, 231, 0.12);
+  padding: 2rem 0;
+}
+
+.architecture-site .arch-journal-newsletter-copy {
+  display: grid;
+  gap: 0.55rem;
+  max-width: 31rem;
+}
+
+.architecture-site .arch-journal-newsletter-copy span {
+  color: rgba(184, 147, 79, 0.86);
+  font-size: 0.72rem;
+  font-weight: 850;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.architecture-site .arch-journal-newsletter-copy p {
+  margin: 0;
+  color: rgba(245, 240, 231, 0.58);
+  font-size: clamp(0.94rem, 0.25vw + 0.88rem, 1.02rem);
+  line-height: 1.75;
+}
+
+.architecture-site .arch-journal-newsletter-shell {
+  position: relative;
+  min-height: 3.35rem;
+}
+
+.architecture-site .arch-journal-newsletter-form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.72rem;
+  min-height: 3.35rem;
+  transition:
+    opacity 520ms cubic-bezier(0.22, 1, 0.36, 1),
+    filter 520ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 520ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.architecture-site .arch-journal-newsletter-shell.is-success .arch-journal-newsletter-form {
+  pointer-events: none;
+  opacity: 0;
+  filter: blur(8px);
+  transform: scale(0.985) translateY(-0.2rem);
+}
+
+.architecture-site .arch-journal-newsletter-input-wrap {
+  position: relative;
+  display: block;
+  min-width: 0;
+}
+
+.architecture-site .arch-journal-newsletter-input-wrap svg {
+  position: absolute;
+  top: 50%;
+  left: 1.05rem;
+  width: 1rem;
+  height: 1rem;
+  color: rgba(245, 240, 231, 0.42);
+  pointer-events: none;
+  transform: translateY(-50%);
+}
+
+.architecture-site .arch-journal-newsletter-form input {
+  width: 100%;
+  min-height: 3.35rem;
+  border: 1px solid rgba(245, 240, 231, 0.14);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.045);
+  padding: 0.2rem 1rem 0.2rem 2.95rem;
+  color: #ffffff;
+  font-size: 0.92rem;
+  font-weight: 700;
+  line-height: 1.2;
+  outline: none;
+  backdrop-filter: blur(18px);
+  transition:
+    border-color 320ms cubic-bezier(0.22, 1, 0.36, 1),
+    background 320ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 320ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.architecture-site .arch-journal-newsletter-form input::placeholder {
+  color: rgba(245, 240, 231, 0.36);
+}
+
+.architecture-site .arch-journal-newsletter-form input:focus {
+  border-color: rgba(184, 147, 79, 0.5);
+  background: rgba(255, 255, 255, 0.07);
+  box-shadow: 0 0 0 4px rgba(184, 147, 79, 0.1);
+}
+
+.architecture-site .arch-journal-newsletter-form button,
+.architecture-site .arch-journal-newsletter-success {
+  min-height: 3.35rem;
+  border-radius: 999px;
+}
+
+.architecture-site .arch-journal-newsletter-form button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.48rem;
+  min-width: 9.6rem;
+  border: 1px solid rgba(184, 147, 79, 0.45);
+  background: #b8934f;
+  padding: 0.2rem 1.35rem;
+  color: #120d07;
+  font-size: 0.78rem;
+  font-weight: 900;
+  line-height: 1;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    background 320ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 320ms cubic-bezier(0.22, 1, 0.36, 1),
+    color 320ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.architecture-site .arch-journal-newsletter-form button svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+.architecture-site .arch-journal-newsletter-form button:hover {
+  border-color: rgba(245, 240, 231, 0.65);
+  background: #f5f0e7;
+  transform: translate3d(0, -2px, 0);
+}
+
+.architecture-site .arch-journal-newsletter-form button:disabled {
+  cursor: not-allowed;
+  border-color: rgba(245, 240, 231, 0.14);
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(245, 240, 231, 0.5);
+  transform: none;
+}
+
+.architecture-site .arch-journal-newsletter-success {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  border: 1px solid rgba(184, 147, 79, 0.35);
+  background: rgba(245, 240, 231, 0.105);
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 850;
+  line-height: 1.2;
+  box-shadow: 0 22px 70px rgba(184, 147, 79, 0.15);
+  backdrop-filter: blur(24px);
+}
+
+.architecture-site .arch-journal-newsletter-success svg {
+  width: 1rem;
+  height: 1rem;
+  color: #d7b777;
+}
+
+.architecture-site .arch-journal-newsletter-status {
+  min-height: 1.25rem;
+  margin: 0.52rem 0 0;
+  color: rgba(245, 240, 231, 0.55);
+  font-size: 0.72rem;
+  font-weight: 750;
+  line-height: 1.45;
+}
+
+.architecture-site .arch-journal-newsletter-status.is-error {
+  color: #ffb4a8;
+}
+
+.architecture-site .arch-journal-footer-columns {
+  display: grid;
+  gap: 2rem;
+  align-self: end;
+  border-top: 1px solid rgba(245, 240, 231, 0.12);
+  padding-top: 2rem;
+}
+
+.architecture-site .arch-journal-footer-column h3 {
+  color: rgba(184, 147, 79, 0.82);
+  font-size: 0.72rem;
+  font-weight: 850;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.architecture-site .arch-journal-footer-column > div {
+  display: grid;
+  gap: 0.72rem;
+  margin-top: 1.2rem;
+}
+
+.architecture-site .arch-journal-footer-link,
+.architecture-site .arch-journal-footer-location {
+  position: relative;
+  width: fit-content;
+  color: rgba(245, 240, 231, 0.68);
+  font-size: 1rem;
+  line-height: 1.5;
+  text-decoration: none;
+}
+
+.architecture-site .arch-journal-footer-link {
+  transition:
+    color 340ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 340ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.architecture-site .arch-journal-footer-link::after {
+  position: absolute;
+  right: 0;
+  bottom: -0.18rem;
+  left: 0;
+  height: 1px;
+  content: "";
+  background: linear-gradient(90deg, #b8934f, rgba(184, 147, 79, 0.2));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.architecture-site .arch-journal-footer-link:hover {
+  color: #ffffff;
+  transform: translate3d(0, -2px, 0);
+}
+
+.architecture-site .arch-journal-footer-link:hover::after {
+  transform: scaleX(1);
+}
+
+.architecture-site .arch-journal-footer-strip {
+  display: grid;
+  gap: 0.55rem;
+  align-self: end;
+  border-top: 1px solid rgba(245, 240, 231, 0.1);
+  margin-top: 2rem;
+  padding-top: 1rem;
+  color: rgba(245, 240, 231, 0.42);
+  font-size: 0.72rem;
+  font-weight: 750;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+@media (min-width: 768px) {
+  .architecture-site .arch-journal-footer-inner {
+    padding: 3.5rem 3rem 1.1rem;
+  }
+
+  .architecture-site .arch-journal-footer-columns,
+  .architecture-site .arch-journal-footer-strip {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .architecture-site .arch-journal-footer-strip {
+    align-items: center;
+  }
+
+  .architecture-site .arch-journal-footer-strip span:nth-child(2) {
+    text-align: center;
+  }
+
+  .architecture-site .arch-journal-footer-strip span:last-child {
+    text-align: right;
+  }
+}
+
+@media (max-width: 1023px) {
+  .architecture-site .arch-journal-footer-statement {
+    font-size: clamp(2.5rem, 8vw, 4.4rem);
+  }
+}
+
+@media (max-width: 720px) {
+  .architecture-site .arch-journal-footer {
+    min-height: auto;
+  }
+
+  .architecture-site .arch-journal-footer-top {
+    display: grid;
+    gap: 1rem;
+    text-align: center;
+    justify-items: center;
+  }
+
+  .architecture-site .arch-journal-footer-group-link {
+    width: min(100%, 15.5rem);
+    min-width: 0;
+    text-align: center;
+    justify-items: center;
+  }
+
+  .architecture-site .arch-journal-footer-group-link span,
+  .architecture-site .arch-journal-footer-group-link small {
+    text-align: center;
+  }
+
+  .architecture-site .arch-journal-footer-group-link small {
+    display: none;
+  }
+
+  .architecture-site .arch-journal-footer-inner {
+    min-height: auto;
+    padding: 2.3rem 20px 1.1rem;
+  }
+
+  .architecture-site .arch-journal-footer-statement {
+    margin: 2rem 0;
+    font-size: clamp(2.5rem, 10vw, 3.25rem);
+    line-height: 0.9;
+    text-align: center;
+    justify-items: center;
+  }
+
+  .architecture-site .arch-journal-footer-statement span {
+    display: inline;
+  }
+
+  .architecture-site .arch-journal-footer-brand {
+    justify-content: center;
+  }
+
+  .architecture-site .arch-journal-footer-brand .brand-logo {
+    flex-shrink: 0;
+  }
+
+  .architecture-site .arch-journal-footer p {
+    text-align: center;
+  }
+
+  .architecture-site .arch-journal-newsletter {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    padding-bottom: 1.6rem;
+  }
+
+  .architecture-site .arch-journal-newsletter-copy {
+    text-align: center;
+  }
+
+  .architecture-site .arch-journal-newsletter-form {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .architecture-site .arch-journal-newsletter-form input {
+    width: 100%;
+  }
+
+  .architecture-site .arch-journal-newsletter-form button {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .architecture-site .arch-journal-footer-columns {
+    grid-template-columns: 1fr;
+    gap: 1.55rem;
+    text-align: center;
+    justify-items: center;
+  }
+
+  .architecture-site .arch-journal-footer-column > div {
+    align-items: center;
+    justify-items: center;
+  }
+
+  .architecture-site .arch-journal-footer-link,
+  .architecture-site .arch-journal-footer-location {
+    width: auto;
+  }
+
+  .architecture-site .arch-journal-footer-strip {
+    text-align: center;
+    justify-items: center;
+  }
+
+  .architecture-site .arch-journal-footer-strip span:nth-child(2) {
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+
+  .architecture-site .arch-journal-footer-statement {
+    max-width: 100%;
+  }
+}
+
+.architecture-site .arch-documentary-footer {
+  position: relative;
+  min-height: 100svh;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 26%, rgba(184, 147, 79, 0.14), transparent 28rem),
+    linear-gradient(135deg, #030303, #0b0a09 48%, #11100f);
+  isolation: isolate;
+}
+
+.architecture-site .arch-footer-grid-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0.48;
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.07) 1px, transparent 1px);
+  background-size: clamp(4rem, 9vw, 8rem) clamp(4rem, 9vw, 8rem);
+  mask-image: radial-gradient(circle at center, black, transparent 74%);
+}
+
+.architecture-site .arch-footer-moving-line {
+  position: absolute;
+  z-index: 0;
+  display: block;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(184, 147, 79, 0.72), transparent);
+  opacity: 0.44;
+  animation: arch-footer-line-drift 12s ease-in-out infinite;
+}
+
+.architecture-site .arch-footer-moving-line.is-one {
+  top: 24%;
+  left: -12%;
+  width: 58%;
+}
+
+.architecture-site .arch-footer-moving-line.is-two {
+  top: 54%;
+  right: -16%;
+  width: 72%;
+  animation-delay: -4s;
+}
+
+.architecture-site .arch-footer-moving-line.is-three {
+  bottom: 22%;
+  left: 12%;
+  width: 38%;
+  animation-delay: -7s;
+}
+
+.architecture-site .arch-documentary-footer-inner,
+.architecture-site .arch-footer-closing-strip {
+  position: relative;
+  z-index: 1;
+}
+
+.architecture-site .arch-footer-large-lockup {
+  display: grid;
+  justify-items: center;
+  gap: 1.2rem;
+}
+
+.architecture-site .arch-footer-large-lockup .brand-logo {
+  width: clamp(6.5rem, 12vw, 10rem);
+  height: clamp(6.5rem, 12vw, 10rem);
+  border-color: rgba(184, 147, 79, 0.42);
+  box-shadow:
+    0 0 0 1px rgba(184, 147, 79, 0.08),
+    0 0 72px rgba(184, 147, 79, 0.28),
+    0 28px 96px rgba(0, 0, 0, 0.42);
+  animation: arch-footer-logo-glow 5.8s ease-in-out infinite;
+}
+
+.architecture-site .arch-footer-large-lockup small {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.72rem;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.architecture-site .arch-editorial-footer .arch-documentary-footer-title {
+  max-width: 11ch;
+  margin-right: auto;
+  margin-left: auto;
+  color: #ffffff;
+  font-size: clamp(4.4rem, 11vw, 11rem);
+  line-height: 0.84;
+  text-align: center;
+}
+
+.architecture-site .arch-documentary-footer-links {
+  display: block;
+  margin-top: clamp(2.5rem, 5vw, 4.5rem);
+}
+
+.architecture-site .arch-documentary-footer-links .arch-footer-links {
+  justify-content: center;
+  gap: 1.1rem clamp(1.4rem, 3vw, 3rem);
+}
+
+.architecture-site .arch-documentary-footer-links .arch-footer-links a {
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 0.82rem;
+  transition:
+    color 300ms ease,
+    transform 300ms ease;
+}
+
+.architecture-site .arch-documentary-footer-links .arch-footer-links a:hover {
+  color: #ffffff;
+  transform: translateY(-3px);
+}
+
+.architecture-site .arch-footer-closing-strip {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 1.15rem 1.25rem;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.72rem;
+  font-weight: 850;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+@keyframes arch-footer-line-drift {
+  0%,
+  100% {
+    transform: translate3d(-8%, 0, 0) scaleX(0.72);
+  }
+
+  50% {
+    transform: translate3d(12%, 0, 0) scaleX(1);
+  }
+}
+
+@keyframes arch-footer-logo-glow {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 1px rgba(184, 147, 79, 0.08),
+      0 0 58px rgba(184, 147, 79, 0.2),
+      0 28px 96px rgba(0, 0, 0, 0.42);
+  }
+
+  50% {
+    box-shadow:
+      0 0 0 1px rgba(184, 147, 79, 0.18),
+      0 0 92px rgba(184, 147, 79, 0.34),
+      0 34px 112px rgba(0, 0, 0, 0.5);
+  }
+}
+
+@media (max-width: 1023px) {
+  .architecture-site .arch-contact-pillar-block,
+  .architecture-site .arch-contact-pillar-block.is-reverse {
+    grid-template-columns: 1fr;
+  }
+
+  .architecture-site .arch-contact-pillar-block.is-reverse .arch-contact-pillar-media,
+  .architecture-site .arch-contact-pillar-block.is-reverse .arch-contact-pillar-copy {
+    order: initial;
+  }
+}
+
+@media (max-width: 720px) {
+  .architecture-site .arch-contact-pillar-media {
+    min-height: 22rem;
+  }
+
+  .architecture-site .arch-contact-pillar-copy h3,
+  .architecture-site .arch-contact-final-title {
+    font-size: clamp(3rem, 16vw, 4.25rem);
+  }
+
+  .architecture-site .arch-contact-philosophy {
+    min-height: 92svh;
+  }
+
+  .architecture-site .arch-contact-philosophy-copy {
+    min-height: 92svh;
+  }
+
+  .architecture-site .arch-contact-philosophy-title,
+  .architecture-site .arch-editorial-footer .arch-documentary-footer-title {
+    font-size: clamp(3.6rem, 17vw, 5.2rem);
+  }
+
+  .architecture-site .arch-contact-final-button {
+    width: 100%;
+  }
+
+  .architecture-site .arch-footer-closing-strip {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .architecture-site .arch-contact-pillar-image,
+  .architecture-site .arch-contact-pillar-copy,
+  .architecture-site .arch-contact-philosophy-image,
+  .architecture-site .arch-contact-philosophy-copy,
+  .architecture-site .arch-footer-moving-line,
+  .architecture-site .arch-footer-large-lockup .brand-logo {
+    animation: none;
+    transform: none !important;
+  }
+}
+
+@media (max-width: 720px) {
+  .architecture-site .arch-contact-pillar-copy {
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .architecture-site .arch-contact-pillar-copy h3 {
+    max-width: 100%;
+    font-size: clamp(2.55rem, 10.5vw, 3.1rem);
+    line-height: 0.94;
+  }
+
+  .architecture-site .arch-contact-pillar-copy p {
+    max-width: 100%;
+  }
+
+  .architecture-site .arch-contact-philosophy-title {
+    max-width: 100%;
+    font-size: clamp(2.85rem, 11vw, 3.35rem);
+    line-height: 0.94;
+  }
+
+  .architecture-site .arch-editorial-footer .arch-documentary-footer-title {
+    max-width: 100%;
+    font-size: clamp(2.9rem, 12vw, 3.45rem);
+    line-height: 0.92;
+  }
+}
+
+/* Final footer cascade lock */
+.architecture-site .arch-documentary-footer {
+  min-height: 80vh;
+  min-height: 80svh;
+  background-color: #050505;
+  background-image:
+    radial-gradient(circle at 18% 18%, rgba(138, 29, 44, 0.22), transparent 28rem),
+    radial-gradient(circle at 82% 70%, rgba(184, 147, 79, 0.14), transparent 30rem),
+    linear-gradient(180deg, #0a0a0a 0%, #050505 38%, #050505 100%);
+}
+
+.architecture-site .arch-footer-grid-overlay {
+  opacity: 0.03;
+}
+
+@media (max-width: 720px) {
+  .architecture-site .arch-documentary-footer {
+    min-height: 80vh;
+    min-height: 80svh;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .architecture-site .arch-footer-logo-mark .brand-logo {
+    animation: none;
+    transform: none !important;
+  }
+}
+
+/* Hero opening content update */
+.architecture-site .arch-hero-content {
+  width: 100%;
+  max-width: 900px;
+  align-items: center;
+  padding-inline: clamp(1rem, 4vw, 4rem);
+}
+
+.architecture-site .arch-hero-overlay {
+  background:
+    radial-gradient(circle at 50% 46%, rgba(5, 5, 5, 0.12), rgba(5, 5, 5, 0.68) 72%),
+    linear-gradient(180deg, rgba(5, 5, 5, 0.72) 0%, rgba(5, 5, 5, 0.18) 38%, rgba(5, 5, 5, 0.78) 100%),
+    linear-gradient(90deg, rgba(5, 5, 5, 0.58), rgba(5, 5, 5, 0.16) 34%, rgba(5, 5, 5, 0.56));
+}
+
+.architecture-site .arch-hero-title {
+  width: 100%;
+  max-width: 10ch;
+  margin: 6vh auto 0;
+  color: #ffffff;
+  font-size: clamp(4rem, 7vw, 8rem);
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  line-height: 0.88;
+  text-align: center;
+  text-wrap: balance;
+  overflow-wrap: normal;
+  word-break: normal;
+  overflow: visible;
+}
+
+.architecture-site .arch-hero-subtitle {
+  width: min(100%, 600px);
+  max-width: 600px;
+  margin-top: 4vh;
+  color: rgba(255, 255, 255, 0.82);
+  font-size: clamp(1.125rem, 0.35vw + 1.02rem, 1.25rem);
+  font-weight: 500;
+  line-height: 1.7;
+  text-align: center;
+}
+
+@media (max-width: 1023px) {
+  .architecture-site .arch-hero-title {
+    line-height: 0.9;
+  }
+}
+
+@media (max-width: 720px) {
+  .architecture-site .arch-hero-title {
+    line-height: 0.92;
+    text-align: left;
+    margin-inline: 0;
+  }
+
+  .architecture-site .arch-title-line:not(:last-child) {
+    margin-right: 2rem;
+  }
+
+  .architecture-site .arch-hero-subtitle {
+    font-size: 1.05rem;
+    line-height: 1.62;
+    text-align: left;
+  }
+
+  .architecture-site .arch-hero-content {
+    align-items: flex-start;
+  }
+
+  .architecture-site .arch-hero-actions {
+    justify-content: flex-start;
+  }
+}
+
+/* Architecture typography audit: keep editorial headings balanced without splitting words. */
+.architecture-site :is(h1, h2, h3, h4),
+.architecture-site :is(
+  .arch-hero-title,
+  .arch-section-title,
+  .arch-footer-title,
+  .arch-title-line,
+  .arch-mask-reveal-copy,
+  .arch-portfolio-title,
+  .arch-project-modal-copy h3,
+  .arch-project-story h4,
+  .arch-project-modal-cta h4,
+  .arch-contact-hero-title,
+  .arch-contact-philosophy-title,
+  .arch-contact-final-title,
+  .arch-journal-footer-statement,
+  .arch-documentary-footer-title
+) {
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: none;
+  text-wrap: balance;
+}
+
+.architecture-site .arch-hero-title {
+  max-width: min(100%, 20ch);
+}
+
+.architecture-site .arch-section-title {
+  max-width: min(100%, 14.5ch);
+  font-size: clamp(3rem, 5.2vw, 4.95rem);
+}
+
+.architecture-site #studio .arch-section-title,
+.architecture-site .arch-editorial-position .arch-section-title,
+.architecture-site .arch-contact-section .arch-section-title {
+  max-width: min(100%, 15ch);
+  font-size: clamp(2.75rem, 4vw, 3.85rem);
+}
+
+.architecture-site .arch-portfolio-section .arch-section-title {
+  max-width: min(100%, 16ch);
+  font-size: clamp(3rem, 5vw, 5.45rem);
+}
+
+.architecture-site .arch-story-rows .arch-story-content h3 {
+  max-width: min(100%, 15.5ch);
+  font-size: clamp(2.25rem, 2.9vw, 2.85rem);
+}
+
+.architecture-site .arch-story-chapter.is-featured .arch-story-content h3 {
+  max-width: min(100%, 14.5ch);
+  font-size: clamp(2.85rem, 4.3vw, 4.05rem);
+}
+
+.architecture-site .arch-story-rows article.arch-story-chapter:not(.is-featured) {
+  grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
+  gap: clamp(1.4rem, 2.8vw, 2.8rem);
+}
+
+.architecture-site .arch-story-rows .arch-story-content {
+  max-width: 38rem;
+}
+
+.architecture-site .arch-editorial-panels h3 {
+  max-width: min(100%, 15ch);
+  font-size: clamp(2.25rem, 2.95vw, 2.75rem);
+}
+
+.architecture-site .arch-process-step h3 {
+  max-width: min(100%, 11.5ch);
+  font-size: clamp(2.45rem, 3vw, 2.95rem);
+}
+
+.architecture-site .arch-project-copy h3 {
+  max-width: min(100%, 11.5ch);
+  font-size: clamp(3.35rem, 4.35vw, 4.2rem);
+}
+
+.architecture-site .arch-portfolio-title {
+  max-width: min(100%, 13.5ch);
+}
+
+.architecture-site .arch-portfolio-card.is-featured .arch-portfolio-title {
+  max-width: min(100%, 12.5ch);
+  font-size: clamp(3.6rem, 4.9vw, 4.15rem);
+}
+
+.architecture-site .arch-contact-hero-title {
+  max-width: min(100%, 12ch);
+  font-size: clamp(4.5rem, 6.2vw, 5.85rem);
+}
+
+.architecture-site .arch-contact-experience .arch-consultation-form-head h3 {
+  max-width: min(100%, 12ch);
+  font-size: clamp(3.35rem, 4.6vw, 3.9rem);
+}
+
+.architecture-site .arch-project-story h4,
+.architecture-site .arch-project-modal-cta h4 {
+  max-width: min(100%, 15ch);
+  font-size: clamp(2.25rem, 3.2vw, 3.55rem);
+}
+
+.architecture-site .arch-contact-pillar-copy {
+  max-width: 42rem;
+}
+
+.architecture-site .arch-contact-pillar-copy h3 {
+  max-width: min(100%, 14.5ch);
+  font-size: clamp(2.85rem, 5vw, 5.25rem);
+}
+
+.architecture-site .arch-contact-process-list h3 {
+  font-size: clamp(2.25rem, 2.45vw, 2.35rem);
+}
+
+.architecture-site .arch-contact-philosophy-title {
+  max-width: min(100%, 11ch);
+  font-size: clamp(3.65rem, 8.4vw, 8.6rem);
+}
+
+.architecture-site .arch-contact-final-title {
+  max-width: min(100%, 28ch);
+  font-size: clamp(2.5rem, 5.5vw, 5.5rem);
+  overflow: visible;
+}
+
+.architecture-site .arch-journal-footer-statement {
+  max-width: 100%;
+  width: 100%;
+  font-size: clamp(2.5rem, 10vw, 5rem);
+  line-height: 0.9;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  text-wrap: balance;
+}
+
+.architecture-site :is(
+  .arch-title-line,
+  .arch-contact-hero-title span,
+  .arch-contact-experience .arch-consultation-form-head h3 span
+) {
+  white-space: nowrap;
+}
+
+.architecture-site .arch-editorial-footer .arch-documentary-footer-title {
+  max-width: min(100%, 12ch);
+  font-size: clamp(3.8rem, 9.6vw, 9.35rem);
+}
+
+@media (max-width: 1023px) {
+  .architecture-site .arch-section-title,
+  .architecture-site #studio .arch-section-title,
+  .architecture-site .arch-editorial-position .arch-section-title,
+  .architecture-site .arch-contact-section .arch-section-title,
+  .architecture-site .arch-portfolio-section .arch-section-title {
+    max-width: min(100%, 14ch);
+    font-size: clamp(2.8rem, 8vw, 4.4rem);
+  }
+
+  .architecture-site .arch-story-rows .arch-story-content h3,
+  .architecture-site .arch-story-chapter.is-featured .arch-story-content h3 {
+    max-width: min(100%, 14ch);
+    font-size: clamp(2.55rem, 6.6vw, 3.55rem);
+  }
+
+  .architecture-site .arch-project-copy h3,
+  .architecture-site .arch-portfolio-title,
+  .architecture-site .arch-portfolio-card.is-featured .arch-portfolio-title {
+    max-width: min(100%, 14ch);
+    font-size: clamp(2.85rem, 7vw, 3.55rem);
+  }
+
+  .architecture-site .arch-contact-hero-title {
+    max-width: min(100%, 12ch);
+    font-size: clamp(3.75rem, 8vw, 4.75rem);
+  }
+}
+
+@media (max-width: 720px) {
+  .architecture-site .arch-section-title,
+  .architecture-site #studio .arch-section-title,
+  .architecture-site .arch-editorial-position .arch-section-title,
+  .architecture-site .arch-contact-section .arch-section-title,
+  .architecture-site .arch-portfolio-section .arch-section-title {
+    max-width: 100%;
+    font-size: clamp(2.45rem, 10.8vw, 3.05rem);
+    line-height: 0.98;
+  }
+
+  .architecture-site .arch-story-rows .arch-story-content h3,
+  .architecture-site .arch-story-chapter.is-featured .arch-story-content h3,
+  .architecture-site .arch-editorial-panels h3,
+  .architecture-site .arch-process-step h3,
+  .architecture-site .arch-project-copy h3,
+  .architecture-site .arch-contact-pillar-copy h3,
+  .architecture-site .arch-contact-process-list h3 {
+    max-width: 100%;
+    font-size: clamp(2.2rem, 9.4vw, 2.9rem);
+    line-height: 1;
+  }
+
+  .architecture-site .arch-portfolio-title,
+  .architecture-site .arch-portfolio-card.is-featured .arch-portfolio-title {
+    max-width: 100%;
+    font-size: clamp(2.25rem, 9.6vw, 2.85rem);
+    line-height: 1;
+  }
+
+  .architecture-site .arch-contact-hero-title,
+  .architecture-site .arch-contact-philosophy-title,
+  .architecture-site .arch-contact-final-title,
+  .architecture-site .arch-journal-footer-statement,
+  .architecture-site .arch-editorial-footer .arch-documentary-footer-title {
+    max-width: 100%;
+    font-size: clamp(2.8rem, 12vw, 3.65rem);
+    line-height: 1;
+  }
+}

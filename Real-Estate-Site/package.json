@@ -1,0 +1,45 @@
+{
+  "name": "ractysh-real-estate-site",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "prisma:generate": "node scripts/generate-prisma-client.mjs",
+    "predev": "npm run prisma:generate",
+    "dev": "next dev",
+    "prebuild": "npm run prisma:generate",
+    "build": "next build",
+    "start": "next start",
+    "pretypecheck": "npm run prisma:generate",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@prisma/adapter-pg": "^6.19.3",
+    "@prisma/client": "^6.19.3",
+    "@react-map/india": "^1.0.21",
+    "clsx": "^2.1.1",
+    "dotenv": "^16.6.1",
+    "framer-motion": "^12.0.1",
+    "gsap": "^3.15.0",
+    "face-api.js": "^0.22.2",
+    "lucide-react": "^0.471.1",
+    "postprocessing": "^6.36.0",
+    "next": "^15.5.18",
+    "ogl": "^1.0.11",
+    "react": "^19.0.0",
+    "three": "^0.169.0",
+    "react-dom": "^19.0.0",
+    "resend": "^6.12.3",
+    "tailwind-merge": "^3.6.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.7",
+    "@types/react": "^19.0.7",
+    "@types/react-dom": "^19.0.3",
+    "autoprefixer": "^10.4.20",
+    "eslint": "^9.18.0",
+    "eslint-config-next": "^15.5.18",
+    "postcss": "^8.5.14",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.7.3"
+  }
+}
