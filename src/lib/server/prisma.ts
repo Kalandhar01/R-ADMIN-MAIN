@@ -628,8 +628,18 @@ const prisma = {
     },
     async createMany({ data }: { data: Doc[] }): Promise<{ count: number }> {
       const m = await getModel("Notification");
-      const docs = await m.insertMany(data.map(ensureId));
-      return { count: docs.length };
+      const docs = data.map(ensureId);
+      const dedupeKeys = docs.map((d) => d.dedupeKey).filter(Boolean) as string[];
+      if (dedupeKeys.length) {
+        const existing = await m.find({ dedupeKey: { $in: dedupeKeys } }, { dedupeKey: 1 }).lean();
+        const existingKeys = new Set(existing.map((e: any) => e.dedupeKey));
+        const filtered = docs.filter((d) => !existingKeys.has(d.dedupeKey));
+        if (!filtered.length) return { count: 0 };
+        const inserted = await m.insertMany(filtered);
+        return { count: inserted.length };
+      }
+      const inserted = await m.insertMany(docs);
+      return { count: inserted.length };
     },
     async updateMany({ where, data }: { where: Doc; data: Doc }): Promise<{ count: number }> {
       const m = await getModel("Notification");
