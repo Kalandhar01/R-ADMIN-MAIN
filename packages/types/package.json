@@ -9,9 +9,6 @@
     ".": "./src/index.ts",
     "./admin": "./src/admin.ts"
   },
-  "dependencies": {
-    "@prisma/client": "^6.19.3"
-  },
   "devDependencies": {
     "typescript": "^5.7.3"
   }
