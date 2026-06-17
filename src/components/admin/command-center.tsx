@@ -990,10 +990,15 @@ function ActivityFeed({ activities }: { activities: ActivityRow[] }) {
                 <Icon className="h-3.5 w-3.5" />
               </div>
               <div className="min-w-0 flex-1">
-                <p className="truncate text-sm text-white">{activity.title}</p>
+                <div className="flex items-center gap-2">
+                  <p className="truncate text-sm text-white">{activity.title}</p>
+                  <span className="shrink-0 text-[11px] text-[#555] sm:hidden">
+                    {formatRelativeTime(activity.createdAt)}
+                  </span>
+                </div>
                 <p className="truncate text-xs text-[#555]">{activity.detail}</p>
               </div>
-              <span className="shrink-0 text-[11px] text-[#555]">
+              <span className="hidden sm:inline shrink-0 text-[11px] text-[#555]">
                 {formatRelativeTime(activity.createdAt)}
               </span>
             </motion.div>
@@ -1067,7 +1072,7 @@ function ChatbotOverview({ queries }: { queries: ChatbotQueryRow[] }) {
 
 function DashboardOverview({ data }: { data: AdminCommandCenterData }) {
   return (
-    <div className="space-y-6 p-4 lg:p-6">
+    <div className="space-y-6 px-3 py-4 sm:px-4 lg:p-6">
       <HeroSection data={data} />
       <KpiGrid data={data} />
       <AnalyticsCharts analytics={data.analytics} />
@@ -1641,7 +1646,7 @@ export function AdminCommandCenter({
         navItems={navItems}
       />
 
-      <div className="flex flex-1 flex-col overflow-hidden">
+      <div className="flex flex-1 flex-col overflow-hidden w-full max-w-full">
         <Header
           activeView={activeView}
           onMenuClick={() => setMobileSidebarOpen(true)}
@@ -1649,7 +1654,7 @@ export function AdminCommandCenter({
           navItems={navItems}
         />
 
-        <main className="flex-1 overflow-y-auto">
+        <main className="flex-1 overflow-y-auto overflow-x-hidden">
           <AnimatePresence mode="wait">
             <motion.div
               key={activeView}
