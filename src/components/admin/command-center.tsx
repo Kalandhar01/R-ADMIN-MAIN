@@ -990,13 +990,13 @@ function ActivityFeed({ activities }: { activities: ActivityRow[] }) {
                 <Icon className="h-3.5 w-3.5" />
               </div>
               <div className="min-w-0 flex-1">
-                <div className="flex items-center gap-2">
-                  <p className="truncate text-sm text-white">{activity.title}</p>
-                  <span className="shrink-0 text-[11px] text-[#555] sm:hidden">
+                <p className="truncate text-sm text-white">{activity.title}</p>
+                <div className="flex items-center gap-1.5">
+                  <p className="truncate text-xs text-[#555]">{activity.detail}</p>
+                  <span className="shrink-0 text-[10px] text-[#444] sm:hidden">
                     {formatRelativeTime(activity.createdAt)}
                   </span>
                 </div>
-                <p className="truncate text-xs text-[#555]">{activity.detail}</p>
               </div>
               <span className="hidden sm:inline shrink-0 text-[11px] text-[#555]">
                 {formatRelativeTime(activity.createdAt)}
