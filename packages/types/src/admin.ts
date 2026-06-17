@@ -1,4 +1,4 @@
-type JsonValue = string | number | boolean | null | JsonValue[] | { [key: string]: JsonValue };
+type JsonValue = string | number | boolean | null | unknown[] | Record<string, unknown>;
 
 export type AdminView =
   | "home"
