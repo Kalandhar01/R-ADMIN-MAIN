@@ -375,7 +375,7 @@ function Header({
   const currentNav = navItems.find((n) => n.key === activeView);
 
   return (
-    <header className="sticky top-0 z-30 border-b border-white/[0.06] bg-[#050505]/80 backdrop-blur-xl">
+    <header className="sticky top-0 z-30 border-b border-white/[0.06] bg-[#050505]/80 backdrop-blur-xl overflow-x-hidden">
       <div className="flex h-16 items-center gap-4 px-4 lg:px-6">
         <button
           onClick={onMenuClick}
@@ -1089,7 +1089,7 @@ function DashboardOverview({ data }: { data: AdminCommandCenterData }) {
 
 function NotificationsView({ data }: { data: AdminCommandCenterData }) {
   return (
-    <div className="space-y-4 p-4 lg:p-6">
+    <div className="space-y-4 px-3 py-4 sm:px-4 lg:p-6">
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
@@ -1106,7 +1106,7 @@ function NotificationsView({ data }: { data: AdminCommandCenterData }) {
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.03 }}
-              className="flex items-start gap-3 px-5 py-4 transition-colors hover:bg-white/[0.02]"
+              className="flex items-start gap-3 px-3 sm:px-5 py-4 transition-colors hover:bg-white/[0.02]"
             >
               <div
                 className={cn(
@@ -1115,14 +1115,14 @@ function NotificationsView({ data }: { data: AdminCommandCenterData }) {
                 )}
               />
               <div className="min-w-0 flex-1">
-                <p className="text-sm font-medium text-white">{n.title}</p>
-                <p className="mt-0.5 text-xs text-[#666]">{n.message}</p>
+                <p className="truncate text-sm font-medium text-white">{n.title}</p>
+                <p className="mt-0.5 truncate text-xs text-[#666]">{n.message}</p>
               </div>
               <span className="shrink-0 text-[11px] text-[#555]">{formatRelativeTime(n.createdAt)}</span>
             </motion.div>
           ))}
           {data.notifications.length === 0 && (
-            <div className="px-5 py-8 text-center text-sm text-[#555]">No notifications yet.</div>
+            <div className="px-3 sm:px-5 py-8 text-center text-sm text-[#555]">No notifications yet.</div>
           )}
         </div>
       </div>
@@ -1132,7 +1132,7 @@ function NotificationsView({ data }: { data: AdminCommandCenterData }) {
 
 function ServicesView({ data }: { data: AdminCommandCenterData }) {
   return (
-    <div className="space-y-4 p-4 lg:p-6">
+    <div className="space-y-4 px-3 py-4 sm:px-4 lg:p-6">
       <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="mb-6">
         <h1 className="text-2xl font-semibold text-white">Services</h1>
         <p className="text-sm text-[#888]">Manage your service offerings</p>
@@ -1172,7 +1172,7 @@ function ServicesView({ data }: { data: AdminCommandCenterData }) {
 
 function BlogsView({ data }: { data: AdminCommandCenterData }) {
   return (
-    <div className="space-y-4 p-4 lg:p-6">
+    <div className="space-y-4 px-3 py-4 sm:px-4 lg:p-6">
       <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="mb-6">
         <h1 className="text-2xl font-semibold text-white">Blogs</h1>
         <p className="text-sm text-[#888]">Manage blog posts and content</p>
@@ -1211,7 +1211,7 @@ function BlogsView({ data }: { data: AdminCommandCenterData }) {
 function CareersView({ data }: { data: AdminCommandCenterData }) {
   const activeJobs = data.jobs.filter((j) => j.status === "active");
   return (
-    <div className="space-y-4 p-4 lg:p-6">
+    <div className="space-y-4 px-3 py-4 sm:px-4 lg:p-6">
       <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="mb-6">
         <h1 className="text-2xl font-semibold text-white">Careers</h1>
         <p className="text-sm text-[#888]">Manage job openings and applications</p>
@@ -1221,12 +1221,12 @@ function CareersView({ data }: { data: AdminCommandCenterData }) {
           <h3 className="mb-3 text-sm font-semibold text-white">Open Positions ({activeJobs.length})</h3>
           <div className="space-y-2">
             {activeJobs.map((job) => (
-              <div key={job.id} className="flex items-center justify-between rounded-lg bg-white/[0.03] px-3 py-2.5">
-                <div>
-                  <p className="text-sm font-medium text-white">{job.title}</p>
-                  <p className="text-xs text-[#555]">{job.location} · {job.type}</p>
+              <div key={job.id} className="flex items-center gap-3 rounded-lg bg-white/[0.03] px-3 py-2.5">
+                <div className="min-w-0 flex-1">
+                  <p className="truncate text-sm font-medium text-white">{job.title}</p>
+                  <p className="truncate text-xs text-[#555]">{job.location} · {job.type}</p>
                 </div>
-                <span className="text-[11px] text-[#555]">{job.summary}</span>
+                <span className="shrink-0 text-[11px] text-[#555]">{job.summary}</span>
               </div>
             ))}
             {activeJobs.length === 0 && (
@@ -1238,12 +1238,12 @@ function CareersView({ data }: { data: AdminCommandCenterData }) {
           <h3 className="mb-3 text-sm font-semibold text-white">Recent Applications ({data.applications.length})</h3>
           <div className="space-y-2">
             {data.applications.slice(0, 8).map((app) => (
-              <div key={app.id} className="flex items-center justify-between rounded-lg bg-white/[0.03] px-3 py-2.5">
-                <div>
-                  <p className="text-sm font-medium text-white">{app.fullName}</p>
-                  <p className="text-xs text-[#555]">{app.position}</p>
+              <div key={app.id} className="flex items-center gap-3 rounded-lg bg-white/[0.03] px-3 py-2.5">
+                <div className="min-w-0 flex-1">
+                  <p className="truncate text-sm font-medium text-white">{app.fullName}</p>
+                  <p className="truncate text-xs text-[#555]">{app.position}</p>
                 </div>
-                <span className="text-[11px] text-[#555]">{formatRelativeTime(app.createdAt)}</span>
+                <span className="shrink-0 text-[11px] text-[#555]">{formatRelativeTime(app.createdAt)}</span>
               </div>
             ))}
             {data.applications.length === 0 && (
@@ -1258,7 +1258,7 @@ function CareersView({ data }: { data: AdminCommandCenterData }) {
 
 function NewsletterView({ data }: { data: AdminCommandCenterData }) {
   return (
-    <div className="space-y-4 p-4 lg:p-6">
+    <div className="space-y-4 px-3 py-4 sm:px-4 lg:p-6">
       <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="mb-6">
         <h1 className="text-2xl font-semibold text-white">Newsletter</h1>
         <p className="text-sm text-[#888]">Manage newsletters and subscribers</p>
@@ -1268,9 +1268,9 @@ function NewsletterView({ data }: { data: AdminCommandCenterData }) {
           <h3 className="mb-3 text-sm font-semibold text-white">Published Newsletters ({data.newsletters.length})</h3>
           <div className="space-y-2">
             {data.newsletters.slice(0, 8).map((nl) => (
-              <div key={nl.id} className="flex items-center justify-between rounded-lg bg-white/[0.03] px-3 py-2.5">
-                <p className="text-sm font-medium text-white">{nl.title}</p>
-                <span className="text-[11px] text-[#555]">{nl.views} views</span>
+              <div key={nl.id} className="flex items-center gap-3 rounded-lg bg-white/[0.03] px-3 py-2.5">
+                <p className="min-w-0 flex-1 truncate text-sm font-medium text-white">{nl.title}</p>
+                <span className="shrink-0 text-[11px] text-[#555]">{nl.views} views</span>
               </div>
             ))}
             {data.newsletters.length === 0 && (
@@ -1282,9 +1282,9 @@ function NewsletterView({ data }: { data: AdminCommandCenterData }) {
           <h3 className="mb-3 text-sm font-semibold text-white">Subscribers ({data.subscribers.length})</h3>
           <div className="space-y-2">
             {data.subscribers.slice(0, 8).map((sub) => (
-              <div key={sub.id} className="flex items-center justify-between rounded-lg bg-white/[0.03] px-3 py-2.5">
-                <p className="text-sm text-white">{sub.email}</p>
-                <span className="text-[11px] text-[#555]">{formatRelativeTime(sub.createdAt)}</span>
+              <div key={sub.id} className="flex items-center gap-3 rounded-lg bg-white/[0.03] px-3 py-2.5">
+                <p className="min-w-0 flex-1 truncate text-sm text-white">{sub.email}</p>
+                <span className="shrink-0 text-[11px] text-[#555]">{formatRelativeTime(sub.createdAt)}</span>
               </div>
             ))}
             {data.subscribers.length === 0 && (
@@ -1314,7 +1314,7 @@ function SubscribersView({ data }: { data: AdminCommandCenterData }) {
   }, [data.subscribers, searchQuery]);
 
   return (
-    <div className="space-y-4 p-4 lg:p-6">
+    <div className="space-y-4 px-3 py-4 sm:px-4 lg:p-6">
       <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-2xl font-semibold text-white">Subscribers</h1>
@@ -1346,21 +1346,21 @@ function SubscribersView({ data }: { data: AdminCommandCenterData }) {
                 initial={{ opacity: 0, y: 6 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.02 }}
-                className="flex items-center gap-4 px-5 py-4 transition-colors hover:bg-white/[0.02]"
+                className="flex items-center gap-4 px-3 sm:px-5 py-4 transition-colors hover:bg-white/[0.02]"
               >
                 <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-rose-500/20 to-rose-500/5 text-sm font-semibold text-rose-400">
                   {sub.email.charAt(0).toUpperCase()}
                 </div>
                 <div className="min-w-0 flex-1">
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm font-medium text-white">{sub.email}</span>
+                  <div className="flex min-w-0 items-center gap-2">
+                    <span className="min-w-0 flex-1 truncate text-sm font-medium text-white">{sub.email}</span>
                     {sub.source && (
-                      <span className="inline-flex rounded-full bg-white/[0.04] px-2 py-0.5 text-[10px] text-[#555]">
+                      <span className="shrink-0 inline-flex rounded-full bg-white/[0.04] px-2 py-0.5 text-[10px] text-[#555]">
                         {sub.source}
                       </span>
                     )}
                     <span className={cn(
-                      "ml-auto inline-flex rounded-full px-2 py-0.5 text-[10px] font-medium",
+                      "shrink-0 inline-flex rounded-full px-2 py-0.5 text-[10px] font-medium",
                       sub.status === "active" ? "bg-emerald-500/10 text-emerald-400" : "bg-amber-500/10 text-amber-400"
                     )}>
                       {sub.status}
@@ -1374,7 +1374,7 @@ function SubscribersView({ data }: { data: AdminCommandCenterData }) {
               </motion.div>
             ))
           ) : (
-            <div className="px-5 py-16 text-center text-sm text-[#555]">
+            <div className="px-3 sm:px-5 py-16 text-center text-sm text-[#555]">
               {searchQuery ? "No subscribers match your search." : "No subscribers yet."}
             </div>
           )}
@@ -1386,7 +1386,7 @@ function SubscribersView({ data }: { data: AdminCommandCenterData }) {
 
 function AnalyticsView({ data }: { data: AdminCommandCenterData }) {
   return (
-    <div className="space-y-4 p-4 lg:p-6">
+    <div className="space-y-4 px-3 py-4 sm:px-4 lg:p-6">
       <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="mb-6">
         <h1 className="text-2xl font-semibold text-white">Analytics</h1>
         <p className="text-sm text-[#888]">Full analytics and performance metrics</p>
@@ -1398,7 +1398,7 @@ function AnalyticsView({ data }: { data: AdminCommandCenterData }) {
 
 function ChatbotView({ data }: { data: AdminCommandCenterData }) {
   return (
-    <div className="space-y-4 p-4 lg:p-6">
+    <div className="space-y-4 px-3 py-4 sm:px-4 lg:p-6">
       <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="mb-6">
         <h1 className="text-2xl font-semibold text-white">Chatbot</h1>
         <p className="text-sm text-[#888]">Manage chatbot conversations and settings</p>
@@ -1409,10 +1409,10 @@ function ChatbotView({ data }: { data: AdminCommandCenterData }) {
           <div className="space-y-2">
             {data.chatbotQueries.slice(0, 10).map((q) => (
               <div key={q.id} className="rounded-lg bg-white/[0.03] p-3">
-                <p className="text-sm text-white">
+                <p className="text-sm text-white break-words">
                   <span className="font-medium">Q:</span> {q.question}
                 </p>
-                <p className="mt-0.5 text-xs text-[#555]">
+                <p className="mt-0.5 text-xs text-[#555] break-words">
                   <span className="font-medium">A:</span> {q.answer}
                 </p>
               </div>
@@ -1450,7 +1450,7 @@ function ContactsView({ data }: { data: AdminCommandCenterData }) {
   }, [data.contacts, searchQuery]);
 
   return (
-    <div className="space-y-4 p-4 lg:p-6">
+    <div className="space-y-4 px-3 py-4 sm:px-4 lg:p-6">
       <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-2xl font-semibold text-white">Contacts</h1>
@@ -1485,7 +1485,7 @@ function ContactsView({ data }: { data: AdminCommandCenterData }) {
                   transition={{ delay: i * 0.02 }}
                   onClick={() => setSelected(selected?.id === contact.id ? null : contact)}
                   className={cn(
-                    "flex w-full items-start gap-4 px-5 py-4 text-left transition-colors hover:bg-white/[0.02]",
+                    "flex w-full items-start gap-4 px-3 sm:px-5 py-4 text-left transition-colors hover:bg-white/[0.02]",
                     selected?.id === contact.id && "bg-[#D4AF37]/[0.04]"
                   )}
                 >
@@ -1493,11 +1493,11 @@ function ContactsView({ data }: { data: AdminCommandCenterData }) {
                     {contact.name.charAt(0).toUpperCase()}
                   </div>
                   <div className="min-w-0 flex-1">
-                    <div className="flex items-center gap-2">
-                      <span className="text-sm font-medium text-white">{contact.name}</span>
-                      <span className="text-xs text-[#555]">{contact.email}</span>
+                    <div className="flex min-w-0 items-center gap-2">
+                      <span className="min-w-0 truncate text-sm font-medium text-white">{contact.name}</span>
+                      <span className="hidden sm:inline shrink-0 truncate text-xs text-[#555]">{contact.email}</span>
                       <span className={cn(
-                        "ml-auto inline-flex rounded-full px-2 py-0.5 text-[10px] font-medium",
+                        "shrink-0 inline-flex rounded-full px-2 py-0.5 text-[10px] font-medium",
                         contact.status === "new" ? "bg-sky-500/10 text-sky-400" :
                         contact.status === "read" ? "bg-amber-500/10 text-amber-400" :
                         "bg-emerald-500/10 text-emerald-400"
@@ -1505,7 +1505,7 @@ function ContactsView({ data }: { data: AdminCommandCenterData }) {
                         {contact.status}
                       </span>
                     </div>
-                    <p className="mt-0.5 line-clamp-1 text-xs text-[#555]">
+                    <p className="mt-0.5 line-clamp-1 text-xs text-[#555] break-words">
                       {contact.subject || contact.message.slice(0, 80)}
                     </p>
                     <div className="mt-1 flex items-center gap-3 text-[10px] text-[#444]">
@@ -1517,7 +1517,7 @@ function ContactsView({ data }: { data: AdminCommandCenterData }) {
                 </motion.button>
               ))
             ) : (
-              <div className="px-5 py-16 text-center text-sm text-[#555]">No contacts found.</div>
+              <div className="px-3 sm:px-5 py-16 text-center text-sm text-[#555]">No contacts found.</div>
             )}
           </div>
         </motion.div>
@@ -1575,7 +1575,7 @@ function ContactsView({ data }: { data: AdminCommandCenterData }) {
                 )}
                 <div>
                   <p className="text-[10px] font-medium uppercase tracking-wider text-[#555]">Message</p>
-                  <p className="mt-1 text-sm leading-relaxed text-[#aaa]">{selected.message}</p>
+                  <p className="mt-1 text-sm leading-relaxed text-[#aaa] break-words">{selected.message}</p>
                 </div>
                 {selected.sourcePage && (
                   <div>
