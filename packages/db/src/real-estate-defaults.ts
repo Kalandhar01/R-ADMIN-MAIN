@@ -413,7 +413,7 @@ export async function ensureRealEstateDefaults(db: RealEstateSeederClient) {
           url,
           provider: "local",
           position: index,
-          metadata: { seeded: true, propertySlug: seed.slug } as Prisma.InputJsonValue
+          metadata: { seeded: true, propertySlug: seed.slug }
         }))
       });
     }
