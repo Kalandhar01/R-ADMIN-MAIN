@@ -126,7 +126,7 @@ const preferredArchitectureHero = {
   description: heroSupportingContent.description
 };
 
-const preferredHeroVideoUrl = "/videos/architecture/ractysh-architecture-hero.mp4";
+const preferredHeroVideoUrl = "/videos/architecture/villa-orbit-golden-hour.mp4";
 
 const defaultHero: ArchitectureHeroView = {
   heading: preferredArchitectureHero.heading,
