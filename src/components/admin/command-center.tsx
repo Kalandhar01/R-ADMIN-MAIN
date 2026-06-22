@@ -75,6 +75,7 @@ import type {
 import { adminProjectRoutes, groupProjectKey } from "@/lib/admin/projects";
 import { cn } from "@/lib/utils";
 import { ProjectSwitcher } from "@/components/admin/project-switcher";
+import { NotificationDetailDrawer } from "@/components/admin/notification-detail-drawer";
 
 type CommandResponse = {
   success: boolean;
@@ -1087,7 +1088,13 @@ function DashboardOverview({ data }: { data: AdminCommandCenterData }) {
 
 // ─── View Placeholders ─────────────────────────────────────────────────────────
 
-function NotificationsView({ data }: { data: AdminCommandCenterData }) {
+function NotificationsView({
+  data,
+  onNotificationClick,
+}: {
+  data: AdminCommandCenterData;
+  onNotificationClick: (notification: NotificationRow) => void;
+}) {
   return (
     <div className="space-y-4 px-3 py-4 sm:px-4 lg:p-6">
       <motion.div
@@ -1101,25 +1108,26 @@ function NotificationsView({ data }: { data: AdminCommandCenterData }) {
       <div className="rounded-xl border border-white/[0.06] bg-white/[0.02]">
         <div className="divide-y divide-white/[0.04]">
           {data.notifications.slice(0, 10).map((n, i) => (
-            <motion.div
+            <motion.button
               key={n.id}
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.03 }}
-              className="flex items-start gap-3 px-3 sm:px-5 py-4 transition-colors hover:bg-white/[0.02]"
+              onClick={() => onNotificationClick(n)}
+              className="flex w-full items-start gap-3 px-3 sm:px-5 py-4 text-left transition-colors hover:bg-white/[0.02]"
             >
               <div
                 className={cn(
-                  "mt-0.5 flex h-2 w-2 shrink-0 rounded-full",
+                  "mt-1 flex h-2 w-2 shrink-0 rounded-full",
                   n.status === "unread" ? "bg-[#D4AF37]" : "bg-transparent border border-[#444]"
                 )}
               />
               <div className="min-w-0 flex-1">
-                <p className="truncate text-sm font-medium text-white">{n.title}</p>
+                <p className={cn("truncate text-sm", n.status === "unread" ? "font-semibold text-white" : "font-medium text-[#aaa]")}>{n.title}</p>
                 <p className="mt-0.5 truncate text-xs text-[#666]">{n.message}</p>
               </div>
               <span className="shrink-0 text-[11px] text-[#555]">{formatRelativeTime(n.createdAt)}</span>
-            </motion.div>
+            </motion.button>
           ))}
           {data.notifications.length === 0 && (
             <div className="px-3 sm:px-5 py-8 text-center text-sm text-[#555]">No notifications yet.</div>
@@ -1628,10 +1636,58 @@ export function AdminCommandCenter({
     [isGroup]
   );
 
-  const [data] = React.useState<AdminCommandCenterData>(initialData);
+  const [data, setData] = React.useState<AdminCommandCenterData>(initialData);
   const [activeView, setActiveView] = React.useState<AdminView>("overview");
   const [sidebarCollapsed, setSidebarCollapsed] = React.useState(false);
   const [mobileSidebarOpen, setMobileSidebarOpen] = React.useState(false);
+  const [selectedNotification, setSelectedNotification] = React.useState<NotificationRow | null>(null);
+
+  async function handleNotificationAction(intent: string, id: string) {
+    try {
+      const res = await fetch("/api/admin/command-center", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ intent, id }),
+      });
+      const result = await res.json();
+      if (result.success && result.data) {
+        setData(result.data);
+      }
+    } catch {
+      // ignore
+    }
+  }
+
+  async function handleMarkRead(id: string) {
+    await handleNotificationAction("notification.markRead", id);
+    setSelectedNotification((prev) =>
+      prev?.id === id ? { ...prev, status: "read" as const, readAt: new Date().toISOString() } : prev
+    );
+  }
+
+  async function handleMarkUnread(id: string) {
+    await handleNotificationAction("notification.markUnread", id);
+    setSelectedNotification((prev) =>
+      prev?.id === id ? { ...prev, status: "unread" as const, readAt: null } : prev
+    );
+  }
+
+  async function handleArchive(id: string) {
+    await handleNotificationAction("notification.archive", id);
+    setSelectedNotification(null);
+  }
+
+  async function handleDelete(id: string) {
+    await handleNotificationAction("notification.delete", id);
+    setSelectedNotification(null);
+  }
+
+  function handleNotificationClick(n: NotificationRow) {
+    setSelectedNotification(n);
+    if (n.status === "unread") {
+      handleMarkRead(n.id);
+    }
+  }
 
   return (
     <div className="flex min-h-screen bg-[#050505] text-white">
@@ -1664,7 +1720,7 @@ export function AdminCommandCenter({
               transition={{ duration: 0.2 }}
             >
               {activeView === "overview" && <DashboardOverview data={data} />}
-              {activeView === "notifications" && <NotificationsView data={data} />}
+              {activeView === "notifications" && <NotificationsView data={data} onNotificationClick={handleNotificationClick} />}
               {activeView === "analytics" && <AnalyticsView data={data} />}
               {activeView === "contacts" && <ContactsView data={data} />}
               {isGroup && activeView === "services" && <ServicesView data={data} />}
@@ -1677,6 +1733,16 @@ export function AdminCommandCenter({
           </AnimatePresence>
         </main>
       </div>
+
+      <NotificationDetailDrawer
+        notification={selectedNotification}
+        isOpen={!!selectedNotification}
+        onClose={() => setSelectedNotification(null)}
+        onMarkRead={handleMarkRead}
+        onMarkUnread={handleMarkUnread}
+        onArchive={handleArchive}
+        onDelete={handleDelete}
+      />
     </div>
   );
 }

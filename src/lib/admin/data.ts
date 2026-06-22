@@ -300,9 +300,9 @@ async function ensureEnterpriseAdminStorage() {
 
 async function syncDerivedNotifications(input: {
   adminId: string;
-  contacts: Array<{ id: string; division: string; name: string; service: string | null; subject: string | null; createdAt: Date }>;
-  consultations: Array<{ id: string; division: string; fullName: string; serviceType: string; createdAt: Date }>;
-  applications: Array<{ id: string; division: string; fullName: string; position: string; createdAt: Date }>;
+  contacts: Array<{ id: string; division: string; name: string; email: string; service: string | null; subject: string | null; createdAt: Date }>;
+  consultations: Array<{ id: string; division: string; fullName: string; emailAddress: string; serviceType: string; companyName: string; createdAt: Date }>;
+  applications: Array<{ id: string; division: string; fullName: string; email: string; position: string; createdAt: Date }>;
   subscribers: SubscriberRow[];
   blogs: Array<{ id: string; division: string; title: string; category: string; status: string; updatedAt: Date }>;
   services: Array<{ id: string; division: string; title: string; category: string; updatedAt: Date; company: { name: string } }>;
@@ -321,7 +321,9 @@ async function syncDerivedNotifications(input: {
       division,
       priority: "high",
       entity: "ContactInquiry",
+      entityType: "ContactInquiry",
       entityId: contact.id,
+      metadata: { name: contact.name, email: contact.email, service: contact.service, subject: contact.subject },
       createdAt: contact.createdAt
     });
   }
@@ -337,7 +339,9 @@ async function syncDerivedNotifications(input: {
       division,
       priority: "critical",
       entity: "Consultation",
+      entityType: "Consultation",
       entityId: consultation.id,
+      metadata: { name: consultation.fullName, email: consultation.emailAddress, service: consultation.serviceType, company: consultation.companyName },
       createdAt: consultation.createdAt
     });
   }
@@ -353,7 +357,9 @@ async function syncDerivedNotifications(input: {
       division,
       priority: "high",
       entity: "CareerApplication",
+      entityType: "CareerApplication",
       entityId: application.id,
+      metadata: { name: application.fullName, email: application.email, position: application.position },
       createdAt: application.createdAt
     });
   }
@@ -364,12 +370,14 @@ async function syncDerivedNotifications(input: {
       adminId: input.adminId,
       dedupeKey: `${input.adminId}:subscriber:${subscriber.table}:${subscriber.id}`,
       title: "New Newsletter Subscriber",
-      message: `${subscriber.email} joined from ${subscriber.source}.`,
+      message: `${subscriber.email} joined from ${subscriber.source || "website"}.`,
       project: division,
       division,
       priority: "medium",
       entity: subscriber.table,
+      entityType: subscriber.table,
       entityId: subscriber.id,
+      metadata: { email: subscriber.email, source: subscriber.source || "website" },
       createdAt: new Date(subscriber.createdAt)
     });
   }
@@ -680,6 +688,7 @@ export async function getAdminCommandCenterData(
     contactCount,
     consultationCount,
     applicationCount,
+    demoCount,
     blogCount,
     publishedBlogCount,
     publishedServiceCount,
@@ -704,11 +713,13 @@ export async function getAdminCommandCenterData(
     documents,
     ingestionEvents,
     domainMappings,
-    pendingComments
+    pendingComments,
+    demos
   ] = await Promise.all([
     prisma.contactInquiry.count({ where: dw }),
     prisma.consultation.count({ where: dw }),
     prisma.careerApplication.count({ where: dw }),
+    prisma.demoInquiry.count({ where: dw }),
     prisma.blog.count({ where: { ...dw } }),
     prisma.blog.count({ where: { ...dw, status: "published" } }),
     prisma.serviceOffer.count({ where: { ...dw, status: "published" } }),
@@ -722,6 +733,7 @@ export async function getAdminCommandCenterData(
     prisma.contactInquiry.findMany({ where: { ...dw }, orderBy: { createdAt: "desc" }, take: 80 }),
     prisma.consultation.findMany({ where: { ...dw }, orderBy: { createdAt: "desc" }, take: 80 }),
     prisma.careerApplication.findMany({ where: { ...dw }, orderBy: { createdAt: "desc" }, take: 80 }),
+    prisma.demoInquiry.findMany({ where: { ...dw }, orderBy: { createdAt: "desc" }, take: 80 }),
     prisma.serviceOffer.findMany({ where: { ...dw }, include: { company: { select: { name: true } } }, orderBy: [{ position: "asc" }, { updatedAt: "desc" }] }),
     prisma.mediaAsset.findMany({ where: { ...dw }, orderBy: { updatedAt: "desc" }, take: 120 }),
     prisma.careerJob.findMany({ where: { ...dw }, orderBy: { updatedAt: "desc" }, take: 100 }),
@@ -804,7 +816,24 @@ export async function getAdminCommandCenterData(
     take: 160
   });
 
-  const totalLeads = contactCount + consultationCount + applicationCount;
+  const demoInquiryCount = demos.length;
+  const demoLeadRows: LeadRow[] = demos.map((demo) => ({
+    id: `demo:${demo.id}`,
+    entityId: demo.id,
+    division: resolveDivision(demo.division, demo.discussionTopic, demo.fullName),
+    kind: "Contact",
+    name: demo.fullName,
+    email: demo.email,
+    phone: demo.phone,
+    company: demo.companyName,
+    service: demo.discussionTopic,
+    message: demo.message || demo.discussionTopic,
+    status: contactLeadStatus(demo.status),
+    rawStatus: demo.status,
+    createdAt: demo.createdAt.toISOString()
+  }));
+
+  const totalLeads = contactCount + consultationCount + applicationCount + demoInquiryCount;
   const newLeads =
     groupCount(contactGroups, ["new"]) +
     groupCount(consultationGroups, ["new"]) +
@@ -889,21 +918,38 @@ export async function getAdminCommandCenterData(
     createdAt: q.createdAt.toISOString()
   }));
 
-  const contactRows: ContactRow[] = contacts.map((contact) => ({
-    id: contact.id,
-    division: resolveDivision(contact.division, contact.service, contact.company, contact.subject, contact.message),
-    name: contact.name,
-    email: contact.email,
-    phone: contact.phone,
-    company: contact.company,
-    service: contact.service,
-    subject: contact.subject,
-    message: contact.message,
-    sourcePage: contact.sourcePage,
-    status: contact.status,
-    notes: contact.notes,
-    createdAt: contact.createdAt.toISOString()
-  }));
+  const contactRows: ContactRow[] = [
+    ...contacts.map((contact) => ({
+      id: contact.id,
+      division: resolveDivision(contact.division, contact.service, contact.company, contact.subject, contact.message),
+      name: contact.name,
+      email: contact.email,
+      phone: contact.phone,
+      company: contact.company,
+      service: contact.service,
+      subject: contact.subject,
+      message: contact.message,
+      sourcePage: contact.sourcePage,
+      status: contact.status,
+      notes: contact.notes,
+      createdAt: contact.createdAt.toISOString()
+    })),
+    ...demos.map((demo) => ({
+      id: `demo:${demo.id}`,
+      division: resolveDivision(demo.division, demo.discussionTopic, demo.fullName),
+      name: demo.fullName,
+      email: demo.email,
+      phone: demo.phone,
+      company: demo.companyName,
+      service: demo.discussionTopic,
+      subject: null,
+      message: demo.message || demo.discussionTopic,
+      sourcePage: "book-demo",
+      status: demo.status || "new",
+      notes: null,
+      createdAt: demo.createdAt.toISOString()
+    }))
+  ];
 
   const mediaRows: MediaRow[] = media.map((asset) => ({
     id: asset.id,
@@ -1005,7 +1051,9 @@ export async function getAdminCommandCenterData(
       status: notification.status,
       entity: notification.entity,
       entityId: notification.entityId,
+      entityType: notification.entityType || notification.entity,
       actionUrl: notification.actionUrl,
+      metadata: notification.metadata || null,
       createdAt: notification.createdAt.toISOString(),
       readAt: iso(notification.readAt),
       archivedAt: iso(notification.archivedAt)
@@ -1216,6 +1264,7 @@ export async function getAdminCommandCenterData(
       { key: "totalBusinesses", label: "Total Businesses", value: businesses.length, detail: "Active enterprise divisions" },
       { key: "contactRequests", label: "Contact Requests", value: contactCount, detail: "ContactInquiry records" },
       { key: "consultationRequests", label: "Consultation Requests", value: consultationCount, detail: "Consultation records" },
+      { key: "demoRequests", label: "Demo Requests", value: demoInquiryCount, detail: "DemoInquiry records" },
       { key: "careerApplications", label: "Career Applications", value: applicationCount, detail: "CareerApplication records" },
       { key: "newsletterSubscribers", label: "Newsletter Subscribers", value: subscribers.length, detail: "Unique subscriber emails" },
       { key: "blogPosts", label: "Blog Posts", value: blogCount, detail: "Blog records" },
@@ -1238,7 +1287,7 @@ export async function getAdminCommandCenterData(
     ],
     revenuePipeline,
     openOpportunities,
-    leads: [...contactLeadRows, ...consultationLeadRows, ...careerLeadRows].sort(
+    leads: [...contactLeadRows, ...consultationLeadRows, ...careerLeadRows, ...demoLeadRows].sort(
       (first, second) => Date.parse(second.createdAt) - Date.parse(first.createdAt)
     ),
     projects: projectRows,

@@ -778,8 +778,27 @@ export async function POST(request: NextRequest) {
       return responseWithData(admin);
     }
 
+    if (intent === "notification.markUnread") {
+      const parsed = z.object({ id: z.string() }).parse(body);
+      await prisma.notification.updateMany({
+        where: { id: parsed.id, adminId: admin.id },
+        data: { status: "unread", readAt: null }
+      });
+      return responseWithData(admin);
+    }
+
     if (intent === "notification.archive") {
       const parsed = z.object({ id: z.string() }).parse(body);
+      await prisma.notification.updateMany({
+        where: { id: parsed.id, adminId: admin.id },
+        data: { status: "archived", archivedAt: new Date() }
+      });
+      return responseWithData(admin);
+    }
+
+    if (intent === "notification.delete") {
+      const parsed = z.object({ id: z.string() }).parse(body);
+      const m = (await import("@/lib/server/prisma")).prisma;
       await prisma.notification.updateMany({
         where: { id: parsed.id, adminId: admin.id },
         data: { status: "archived", archivedAt: new Date() }

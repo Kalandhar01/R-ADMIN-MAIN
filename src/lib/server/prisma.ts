@@ -616,6 +616,21 @@ const prisma = {
       return removeIds(docs as Doc[]);
     }
   },
+  demoInquiry: {
+    async count({ where }: { where?: Doc } = {}): Promise<number> {
+      const m = await getModel("DemoInquiry");
+      return m.countDocuments(where ? convertWhere(where) : {});
+    },
+    async findMany({ where, orderBy, take }: { where?: Doc; orderBy?: Record<string, string> | Record<string, string>[]; take?: number } = {}): Promise<Doc[]> {
+      const m = await getModel("DemoInquiry");
+      let query = m.find(where ? convertWhere(where) : {});
+      const sort = convertOrderBy(orderBy);
+      if (Object.keys(sort).length) query = query.sort(sort);
+      if (take) query = query.limit(take);
+      const docs = await query.lean();
+      return removeIds(docs as Doc[]);
+    }
+  },
   notification: {
     async findMany({ where, orderBy, take }: { where?: Doc; orderBy?: Record<string, string> | Record<string, string>[]; take?: number } = {}): Promise<Doc[]> {
       const m = await getModel("Notification");
