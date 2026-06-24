@@ -25,7 +25,7 @@ import {
 import { cn } from "@/lib/utils";
 import { projectSwitcherItems, adminProjectRouteBySlug, fallbackProjectRoute, type ProjectSwitcherItem } from "@/lib/admin/projects";
 
-const iconMap: Record<string, LucideIcon> = {
+export const iconMap: Record<string, LucideIcon> = {
   Landmark,
   HardHat,
   Globe2,
@@ -98,6 +98,8 @@ export function ProjectSwitcher() {
   const [highlightedIndex, setHighlightedIndex] = React.useState(0);
   const inputRef = React.useRef<HTMLInputElement>(null);
   const dropdownRef = React.useRef<HTMLDivElement>(null);
+  const triggerRef = React.useRef<HTMLButtonElement>(null);
+  const [dropdownPosition, setDropdownPosition] = React.useState({ top: 0, left: 0, width: 340 });
 
   const isMobile = React.useSyncExternalStore(
     (cb) => {
@@ -130,6 +132,33 @@ export function ProjectSwitcher() {
     }
     setHighlightedIndex(0);
   }, [open]);
+
+  React.useEffect(() => {
+    if (open && !isMobile && triggerRef.current) {
+      const rect = triggerRef.current.getBoundingClientRect();
+      setDropdownPosition({
+        top: rect.bottom + 6,
+        left: rect.left,
+        width: Math.max(340, rect.width),
+      });
+    }
+  }, [open, isMobile]);
+
+  React.useEffect(() => {
+    if (!open || isMobile) return;
+    function handleScroll() {
+      if (triggerRef.current) {
+        const rect = triggerRef.current.getBoundingClientRect();
+        setDropdownPosition({
+          top: rect.bottom + 6,
+          left: rect.left,
+          width: Math.max(340, rect.width),
+        });
+      }
+    }
+    window.addEventListener('scroll', handleScroll, true);
+    return () => window.removeEventListener('scroll', handleScroll, true);
+  }, [open, isMobile]);
 
   React.useEffect(() => {
     function handleClick(e: MouseEvent) {
@@ -204,6 +233,7 @@ export function ProjectSwitcher() {
 
   const trigger = (
     <button
+      ref={triggerRef}
       onClick={() => setOpen(!open)}
       className={cn(
         "flex items-center gap-2 rounded-lg px-2.5 py-1.5 text-sm transition-all duration-200",
@@ -237,7 +267,7 @@ export function ProjectSwitcher() {
           onClick={() => selectProject(project)}
           onMouseEnter={() => setHighlightedIndex(idx)}
           className={cn(
-            "group relative flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left transition-all duration-150",
+            "group relative flex w-full items-center gap-3 rounded-lg px-3 py-3 lg:py-2.5 text-left transition-all duration-150",
             isHighlighted && !isActive && "bg-white/[0.04]",
             isActive ? "bg-[#D4AF37]/10" : "hover:bg-white/[0.04]"
           )}
@@ -262,10 +292,6 @@ export function ProjectSwitcher() {
               )}>
                 {project.label}
               </span>
-              <span className={cn(
-                "h-1.5 w-1.5 shrink-0 rounded-full",
-                statusColors[project.status] || "bg-emerald-400"
-              )} />
             </div>
             <p className="truncate text-xs text-[#555]">{project.description}</p>
           </div>
@@ -278,7 +304,7 @@ export function ProjectSwitcher() {
                 exit={{ opacity: 0, scale: 0.8 }}
                 transition={{ duration: 0.15 }}
                 onClick={(e) => toggleFavorite(e, project.slug)}
-                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-md text-[#555] hover:bg-white/[0.06] hover:text-[#D4AF37]"
+                className="flex h-8 w-8 lg:h-7 lg:w-7 shrink-0 items-center justify-center rounded-md text-[#555] hover:bg-white/[0.06] hover:text-[#D4AF37]"
               >
                 <Star className={cn("h-3.5 w-3.5", isFav && "fill-[#D4AF37] text-[#D4AF37]")} />
               </motion.button>
@@ -310,7 +336,7 @@ export function ProjectSwitcher() {
         </kbd>
       </div>
 
-      <div className="max-h-[340px] overflow-y-auto space-y-0.5 pr-1">
+      <div className="max-h-[70vh] overflow-y-auto space-y-0.5 pr-1">
         {search.trim() ? (
           filtered.length > 0 ? (
             renderProjectList(filtered, 0)
@@ -353,41 +379,14 @@ export function ProjectSwitcher() {
 
   if (isMobile) {
     return (
-      <>
-        {trigger}
-        <AnimatePresence>
-          {open && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm"
-              onClick={() => setOpen(false)}
-            >
-              <motion.div
-                initial={{ y: "100%" }}
-                animate={{ y: 0 }}
-                exit={{ y: "100%" }}
-                transition={{ type: "spring", stiffness: 400, damping: 35 }}
-                className="absolute bottom-0 left-0 right-0 rounded-t-2xl border-t border-white/[0.06] bg-[#0a0a0a] p-4 pb-8"
-                onClick={(e) => e.stopPropagation()}
-              >
-                <div className="mx-auto mb-4 h-1 w-10 rounded-full bg-white/[0.12]" />
-                <div className="flex items-center justify-between mb-3">
-                  <p className="text-sm font-semibold text-white">Switch Project</p>
-                  <button
-                    onClick={() => setOpen(false)}
-                    className="flex h-8 w-8 items-center justify-center rounded-lg text-[#666] hover:bg-white/[0.06]"
-                  >
-                    <X className="h-4 w-4" />
-                  </button>
-                </div>
-                {dropdown}
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </>
+      <div className="flex items-center gap-2 rounded-lg px-2.5 py-1.5">
+        <div className="flex h-7 w-7 items-center justify-center rounded-md border border-white/[0.06] bg-white/[0.04]">
+          <CurrentIcon className="h-3.5 w-3.5 text-[#D4AF37]" />
+        </div>
+        <span className="font-semibold text-white max-w-[140px] truncate lg:max-w-[180px] text-sm">
+          {currentProject?.label || "Select Project"}
+        </span>
+      </div>
     );
   }
 
@@ -401,7 +400,14 @@ export function ProjectSwitcher() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 4, scale: 0.96 }}
             transition={{ duration: 0.15, ease: "easeOut" }}
-            className="absolute left-0 top-full mt-1.5 w-[340px] origin-top-left rounded-xl border border-white/[0.06] bg-[#0a0a0a]/95 backdrop-blur-2xl p-3 shadow-[0_20px_60px_rgba(0,0,0,0.6)]"
+            style={{
+              position: 'fixed',
+              top: dropdownPosition.top,
+              left: dropdownPosition.left,
+              width: dropdownPosition.width,
+              zIndex: 9999,
+            }}
+            className="origin-top-left rounded-xl border border-white/[0.06] bg-[#0a0a0a]/95 backdrop-blur-2xl p-3 shadow-[0_20px_60px_rgba(0,0,0,0.6)]"
           >
             {dropdown}
           </motion.div>

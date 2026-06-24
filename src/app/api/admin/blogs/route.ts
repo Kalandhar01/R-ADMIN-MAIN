@@ -49,6 +49,8 @@ export async function GET(request: NextRequest) {
   if (!admin) return NextResponse.json({ success: false, message: "Unauthorized." }, { status: 401 });
 
   const { searchParams } = new URL(request.url);
+  const page = Math.max(1, parseInt(searchParams.get("page") || "1"));
+  const limit = Math.min(100, Math.max(1, parseInt(searchParams.get("limit") || "50")));
   const filter = searchParams.get("filter") || "all";
   const search = searchParams.get("search") || "";
 
@@ -65,14 +67,14 @@ export async function GET(request: NextRequest) {
 
   try {
     const [blogs, total] = await Promise.all([
-      prisma.blog.findMany({ where, orderBy: { createdAt: "desc" }, take: 80 }),
+      prisma.blog.findMany({ where, orderBy: { createdAt: "desc" }, skip: (page - 1) * limit, take: limit }),
       prisma.blog.count({ where }),
     ]);
 
     return NextResponse.json({
       success: true,
       data: blogs,
-      pagination: { total }
+      pagination: { page, limit, total, totalPages: Math.ceil(total / limit) }
     });
   } catch (error) {
     console.error("[blogs-list]", error);

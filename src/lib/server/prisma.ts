@@ -14,6 +14,13 @@ function modelFromSchema<T extends Doc>(name: string, schemaFields: Record<strin
   return mongoose.model<T>(name, schema, collection);
 }
 
+function idFilter(value: unknown): Record<string, unknown> {
+  if (typeof value === "string" && mongoose.Types.ObjectId.isValid(value)) {
+    return { $or: [{ _id: new mongoose.Types.ObjectId(value) }, { _id: value }] };
+  }
+  return { _id: value };
+}
+
 function ensureId(data: Doc): Doc {
   if (!data._id && !data.id) {
     return { ...data, _id: crypto.randomUUID() };
@@ -39,7 +46,7 @@ function convertWhere(where: Record<string, unknown> = {}): Record<string, unkno
   const result: Record<string, unknown> = {};
   for (const [key, value] of Object.entries(where)) {
     if (key === "id") {
-      result._id = value;
+      Object.assign(result, idFilter(value));
     } else if (key === "NOT" || key === "not") {
       Object.assign(result, { $nor: [convertWhere(value as Record<string, unknown>)] });
     } else if (typeof value === "object" && value !== null && !Array.isArray(value)) {
@@ -102,7 +109,7 @@ async function handleInclude(model: Model<Doc>, doc: Doc, include?: Record<strin
       const refModel = await getModel(key);
       const refId = doc[`${key}Id`] || doc[key];
       if (refId && typeof refId === "string") {
-        const ref = await refModel.findById(refId).lean();
+        const ref = await refModel.findOne(idFilter(refId)).lean();
         if (ref) doc[key] = removeId(ref);
       }
     }
@@ -119,20 +126,20 @@ const prisma = {
   admin: {
     async findUnique({ where, include }: { where: { id?: string; email?: string }; include?: Record<string, boolean | { select: Record<string, boolean> }> }): Promise<Doc | null> {
       const m = await getModel("Admin");
-      const query = where.id ? { _id: convertWhere({ id: where.id })._id } : convertWhere(where);
+      const query = where.id ? idFilter(where.id) : convertWhere(where);
       const doc = await m.findOne(query).lean();
       if (!doc) return null;
       return handleInclude(m, removeId(doc), include);
     },
     async update({ where, data, include }: { where: { id: string }; data: Doc; include?: Record<string, boolean | { select: Record<string, boolean> }> }): Promise<Doc> {
       const m = await getModel("Admin");
-      const doc = await m.findByIdAndUpdate(where.id, { $set: data }, { new: true }).lean();
+      const doc = await m.findOneAndUpdate(idFilter(where.id), { $set: data }, { new: true }).lean();
       if (!doc) throw new Error("Admin not found");
       return handleInclude(m, removeId(doc), include);
     },
     async upsert({ where, update, create, include }: { where: { id?: string; email?: string }; update: Doc; create: Doc; include?: Record<string, boolean | { select: Record<string, boolean> }> }): Promise<Doc> {
       const m = await getModel("Admin");
-      const filter = where.email ? { email: where.email } : { _id: where.id };
+      const filter = where.email ? { email: where.email } : idFilter(where.id);
       const doc = await m.findOneAndUpdate(filter, { $set: update, $setOnInsert: create }, { upsert: true, new: true }).lean();
       return handleInclude(m, removeId(doc!), include);
     }
@@ -149,11 +156,12 @@ const prisma = {
       const m = await getModel("ContactInquiry");
       return m.countDocuments(where ? convertWhere(where) : {});
     },
-    async findMany({ where, orderBy, take, select }: { where?: Doc; orderBy?: Record<string, string> | Record<string, string>[]; take?: number; select?: Record<string, boolean> } = {}): Promise<Doc[]> {
+    async findMany({ where, orderBy, take, skip, select }: { where?: Doc; orderBy?: Record<string, string> | Record<string, string>[]; take?: number; skip?: number; select?: Record<string, boolean> } = {}): Promise<Doc[]> {
       const m = await getModel("ContactInquiry");
       let query = m.find(where ? convertWhere(where) : {});
       const sort = convertOrderBy(orderBy);
       if (Object.keys(sort).length) query = query.sort(sort);
+      if (skip) query = query.skip(skip);
       if (take) query = query.limit(take);
       if (select) query = query.select(convertSelect(select));
       const docs = await query.lean();
@@ -173,13 +181,13 @@ const prisma = {
     },
     async update({ where, data }: { where: { id: string }; data: Doc }): Promise<Doc> {
       const m = await getModel("ContactInquiry");
-      const doc = await m.findByIdAndUpdate(where.id, { $set: data }, { new: true }).lean();
+      const doc = await m.findOneAndUpdate(idFilter(where.id), { $set: data }, { new: true }).lean();
       if (!doc) throw new Error("ContactInquiry not found");
       return removeId(doc);
     },
     async delete({ where }: { where: { id: string } }): Promise<Doc> {
       const m = await getModel("ContactInquiry");
-      const doc = await m.findByIdAndDelete(where.id).lean();
+      const doc = await m.findOneAndDelete(idFilter(where.id)).lean();
       if (!doc) throw new Error("ContactInquiry not found");
       return removeId(doc);
     }
@@ -213,7 +221,7 @@ const prisma = {
     },
     async update({ where, data }: { where: { id: string }; data: Doc }): Promise<Doc> {
       const m = await getModel("Consultation");
-      const doc = await m.findByIdAndUpdate(where.id, { $set: data }, { new: true }).lean();
+      const doc = await m.findOneAndUpdate(idFilter(where.id), { $set: data }, { new: true }).lean();
       if (!doc) throw new Error("Consultation not found");
       return removeId(doc);
     }
@@ -223,11 +231,12 @@ const prisma = {
       const m = await getModel("CareerApplication");
       return m.countDocuments(where ? convertWhere(where) : {});
     },
-    async findMany({ where, orderBy, take, select }: { where?: Doc; orderBy?: Record<string, string> | Record<string, string>[]; take?: number; select?: Record<string, boolean> } = {}): Promise<Doc[]> {
+    async findMany({ where, orderBy, take, skip, select }: { where?: Doc; orderBy?: Record<string, string> | Record<string, string>[]; take?: number; skip?: number; select?: Record<string, boolean> } = {}): Promise<Doc[]> {
       const m = await getModel("CareerApplication");
       let query = m.find(where ? convertWhere(where) : {});
       const sort = convertOrderBy(orderBy);
       if (Object.keys(sort).length) query = query.sort(sort);
+      if (skip) query = query.skip(skip);
       if (take) query = query.limit(take);
       if (select) query = query.select(convertSelect(select));
       const docs = await query.lean();
@@ -247,13 +256,13 @@ const prisma = {
     },
     async update({ where, data }: { where: { id: string }; data: Doc }): Promise<Doc> {
       const m = await getModel("CareerApplication");
-      const doc = await m.findByIdAndUpdate(where.id, { $set: data }, { new: true }).lean();
+      const doc = await m.findOneAndUpdate(idFilter(where.id), { $set: data }, { new: true }).lean();
       if (!doc) throw new Error("CareerApplication not found");
       return removeId(doc);
     },
     async delete({ where }: { where: { id: string } }): Promise<Doc> {
       const m = await getModel("CareerApplication");
-      const doc = await m.findByIdAndDelete(where.id).lean();
+      const doc = await m.findOneAndDelete(idFilter(where.id)).lean();
       if (!doc) throw new Error("CareerApplication not found");
       return removeId(doc);
     }
@@ -263,11 +272,12 @@ const prisma = {
       const m = await getModel("Blog");
       return m.countDocuments(where ? convertWhere(where) : {});
     },
-    async findMany({ where, orderBy, take, select }: { where?: Doc; orderBy?: Record<string, string> | Record<string, string>[]; take?: number; select?: Record<string, boolean> } = {}): Promise<Doc[]> {
+    async findMany({ where, orderBy, take, skip, select }: { where?: Doc; orderBy?: Record<string, string> | Record<string, string>[]; take?: number; skip?: number; select?: Record<string, boolean> } = {}): Promise<Doc[]> {
       const m = await getModel("Blog");
       let query = m.find(where ? convertWhere(where) : {});
       const sort = convertOrderBy(orderBy);
       if (Object.keys(sort).length) query = query.sort(sort);
+      if (skip) query = query.skip(skip);
       if (take) query = query.limit(take);
       if (select) query = query.select(convertSelect(select));
       const docs = await query.lean();
@@ -280,13 +290,13 @@ const prisma = {
     },
     async update({ where, data }: { where: { id: string }; data: Doc }): Promise<Doc> {
       const m = await getModel("Blog");
-      const doc = await m.findByIdAndUpdate(where.id, { $set: data }, { new: true }).lean();
+      const doc = await m.findOneAndUpdate(idFilter(where.id), { $set: data }, { new: true }).lean();
       if (!doc) throw new Error("Blog not found");
       return removeId(doc);
     },
     async delete({ where }: { where: { id: string } }): Promise<Doc> {
       const m = await getModel("Blog");
-      const doc = await m.findByIdAndDelete(where.id).lean();
+      const doc = await m.findOneAndDelete(idFilter(where.id)).lean();
       if (!doc) throw new Error("Blog not found");
       return removeId(doc);
     }
@@ -309,7 +319,7 @@ const prisma = {
     },
     async update({ where, data }: { where: { id: string }; data: Doc }): Promise<Doc> {
       const m = await getModel("Newsletter");
-      const doc = await m.findByIdAndUpdate(where.id, { $set: data }, { new: true }).lean();
+      const doc = await m.findOneAndUpdate(idFilter(where.id), { $set: data }, { new: true }).lean();
       if (!doc) throw new Error("Newsletter not found");
       return removeId(doc);
     }
@@ -327,7 +337,7 @@ const prisma = {
     },
     async delete({ where }: { where: { id: string } }): Promise<Doc> {
       const m = await getModel("NewsletterSubscriber");
-      const doc = await m.findByIdAndDelete(where.id).lean();
+      const doc = await m.findOneAndDelete(idFilter(where.id)).lean();
       if (!doc) throw new Error("NewsletterSubscriber not found");
       return removeId(doc);
     }
@@ -345,7 +355,7 @@ const prisma = {
     },
     async delete({ where }: { where: { id: string } }): Promise<Doc> {
       const m = await getModel("Subscriber");
-      const doc = await m.findByIdAndDelete(where.id).lean();
+      const doc = await m.findOneAndDelete(idFilter(where.id)).lean();
       if (!doc) throw new Error("Subscriber not found");
       return removeId(doc);
     }
@@ -373,13 +383,13 @@ const prisma = {
     },
     async update({ where, data }: { where: { id: string }; data: Doc }): Promise<Doc> {
       const m = await getModel("ServiceOffer");
-      const doc = await m.findByIdAndUpdate(where.id, { $set: data }, { new: true }).lean();
+      const doc = await m.findOneAndUpdate(idFilter(where.id), { $set: data }, { new: true }).lean();
       if (!doc) throw new Error("ServiceOffer not found");
       return removeId(doc);
     },
     async delete({ where }: { where: { id: string } }): Promise<Doc> {
       const m = await getModel("ServiceOffer");
-      const doc = await m.findByIdAndDelete(where.id).lean();
+      const doc = await m.findOneAndDelete(idFilter(where.id)).lean();
       if (!doc) throw new Error("ServiceOffer not found");
       return removeId(doc);
     }
@@ -397,7 +407,7 @@ const prisma = {
     },
     async findUnique({ where }: { where: { id: string } }): Promise<Doc | null> {
       const m = await getModel("MediaAsset");
-      const doc = await m.findById(where.id).lean();
+      const doc = await m.findOne(idFilter(where.id)).lean();
       return doc ? removeId(doc) : null;
     },
     async create({ data }: { data: Doc }): Promise<Doc> {
@@ -407,7 +417,7 @@ const prisma = {
     },
     async delete({ where }: { where: { id: string } }): Promise<Doc> {
       const m = await getModel("MediaAsset");
-      const doc = await m.findByIdAndDelete(where.id).lean();
+      const doc = await m.findOneAndDelete(idFilter(where.id)).lean();
       if (!doc) throw new Error("MediaAsset not found");
       return removeId(doc);
     }
@@ -430,13 +440,13 @@ const prisma = {
     },
     async update({ where, data }: { where: { id: string }; data: Doc }): Promise<Doc> {
       const m = await getModel("CareerJob");
-      const doc = await m.findByIdAndUpdate(where.id, { $set: data }, { new: true }).lean();
+      const doc = await m.findOneAndUpdate(idFilter(where.id), { $set: data }, { new: true }).lean();
       if (!doc) throw new Error("CareerJob not found");
       return removeId(doc);
     },
     async delete({ where }: { where: { id: string } }): Promise<Doc> {
       const m = await getModel("CareerJob");
-      const doc = await m.findByIdAndDelete(where.id).lean();
+      const doc = await m.findOneAndDelete(idFilter(where.id)).lean();
       if (!doc) throw new Error("CareerJob not found");
       return removeId(doc);
     }
@@ -490,7 +500,7 @@ const prisma = {
     },
     async findUnique({ where, select }: { where: { id?: string; slug?: string }; select?: Record<string, boolean> }): Promise<Doc | null> {
       const m = await getModel("CompanyDivision");
-      const query = where.slug ? { slug: where.slug } : { _id: where.id };
+      const query = where.slug ? { slug: where.slug } : idFilter(where.id);
       let q = m.findOne(query);
       if (select) q = q.select(convertSelect(select));
       const doc = await q.lean();
@@ -503,13 +513,13 @@ const prisma = {
     },
     async update({ where, data }: { where: { id: string }; data: Doc }): Promise<Doc> {
       const m = await getModel("CompanyDivision");
-      const doc = await m.findByIdAndUpdate(where.id, { $set: data }, { new: true }).lean();
+      const doc = await m.findOneAndUpdate(idFilter(where.id), { $set: data }, { new: true }).lean();
       if (!doc) throw new Error("CompanyDivision not found");
       return removeId(doc);
     },
     async upsert({ where, update, create }: { where: { id?: string; slug?: string }; update: Doc; create: Doc }): Promise<Doc> {
       const m = await getModel("CompanyDivision");
-      const filter = where.slug ? { slug: where.slug } : { _id: where.id };
+      const filter = where.slug ? { slug: where.slug } : idFilter(where.id);
       const doc = await m.findOneAndUpdate(filter, { $set: update, $setOnInsert: create }, { upsert: true, new: true }).lean();
       return removeId(doc!);
     }
@@ -576,7 +586,7 @@ const prisma = {
     },
     async update({ where, data }: { where: { id: string }; data: Doc }): Promise<Doc> {
       const m = await getModel("DomainMapping");
-      const doc = await m.findByIdAndUpdate(where.id, { $set: data }, { new: true }).lean();
+      const doc = await m.findOneAndUpdate(idFilter(where.id), { $set: data }, { new: true }).lean();
       if (!doc) throw new Error("DomainMapping not found");
       return removeId(doc);
     },
@@ -587,7 +597,7 @@ const prisma = {
     },
     async delete({ where }: { where: { id: string } }): Promise<Doc> {
       const m = await getModel("DomainMapping");
-      const doc = await m.findByIdAndDelete(where.id).lean();
+      const doc = await m.findOneAndDelete(idFilter(where.id)).lean();
       if (!doc) throw new Error("DomainMapping not found");
       return removeId(doc);
     }
@@ -660,6 +670,40 @@ const prisma = {
       const m = await getModel("Notification");
       const result = await m.updateMany(convertWhere(where), { $set: data });
       return { count: result.modifiedCount };
+    }
+  },
+  ourWork: {
+    async count({ where }: { where?: Doc } = {}): Promise<number> {
+      const m = await getModel("OurWork");
+      return m.countDocuments(where ? convertWhere(where) : {});
+    },
+    async findMany({ where, orderBy, take, skip, select }: { where?: Doc; orderBy?: Record<string, string> | Record<string, string>[]; take?: number; skip?: number; select?: Record<string, boolean> } = {}): Promise<Doc[]> {
+      const m = await getModel("OurWork");
+      let query = m.find(where ? convertWhere(where) : {});
+      const sort = convertOrderBy(orderBy);
+      if (Object.keys(sort).length) query = query.sort(sort);
+      if (skip) query = query.skip(skip);
+      if (take) query = query.limit(take);
+      if (select) query = query.select(convertSelect(select));
+      const docs = await query.lean();
+      return removeIds(docs as Doc[]);
+    },
+    async create({ data }: { data: Doc }): Promise<Doc> {
+      const m = await getModel("OurWork");
+      const doc = await m.create(ensureId(data));
+      return removeId(doc.toObject());
+    },
+    async update({ where, data }: { where: { id: string }; data: Doc }): Promise<Doc> {
+      const m = await getModel("OurWork");
+      const doc = await m.findOneAndUpdate(idFilter(where.id), { $set: data }, { new: true }).lean();
+      if (!doc) throw new Error("OurWork not found");
+      return removeId(doc);
+    },
+    async delete({ where }: { where: { id: string } }): Promise<Doc> {
+      const m = await getModel("OurWork");
+      const doc = await m.findOneAndDelete(idFilter(where.id)).lean();
+      if (!doc) throw new Error("OurWork not found");
+      return removeId(doc);
     }
   }
 };

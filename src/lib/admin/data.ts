@@ -1305,6 +1305,20 @@ export async function getAdminCommandCenterData(
     auditLogs: auditRows,
     notifications: notificationRows,
     unreadNotifications: notificationRows.filter((notification) => notification.status === "unread").length,
+    projectUnreadCounts: notificationRows
+      .filter((n) => n.status === "unread")
+      .reduce<Record<string, number>>((acc, n) => {
+        const key = n.project || "other";
+        acc[key] = (acc[key] || 0) + 1;
+        return acc;
+      }, {}),
+    entityUnreadCounts: notificationRows
+      .filter((n) => n.status === "unread")
+      .reduce<Record<string, number>>((acc, n) => {
+        const key = n.entityType || "other";
+        acc[key] = (acc[key] || 0) + 1;
+        return acc;
+      }, {}),
     activities: activityRows,
     criticalAlerts,
     pendingReviews,

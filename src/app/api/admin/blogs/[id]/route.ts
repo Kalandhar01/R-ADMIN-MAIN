@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { getCurrentAdminFromRequest } from "@/lib/admin/auth";
 import { prisma as _prisma } from "@/lib/server/prisma";
+import { deleteFromCloudinary, parsePublicIdFromUrl } from "@/lib/server/cloudinary";
 const prisma = _prisma as any;
 
 export const runtime = "nodejs";
@@ -111,6 +112,12 @@ export async function DELETE(request: NextRequest, { params }: { params: Promise
   try {
     const existing = await prisma.blog.findMany({ where: { id }, take: 1 });
     if (!existing?.[0]) return NextResponse.json({ success: false, message: "Blog not found." }, { status: 404 });
+
+    const blog = existing[0];
+    if (blog.coverImage) {
+      const pid = parsePublicIdFromUrl(blog.coverImage);
+      if (pid) await deleteFromCloudinary(pid).catch(() => {});
+    }
 
     await prisma.blog.delete({ where: { id } });
     await audit(request, admin.id, "delete", id, `Deleted blog: ${existing[0].title}.`);

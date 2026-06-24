@@ -6,14 +6,14 @@ import { AnimatePresence, motion } from "framer-motion";
 import {
   LayoutDashboard, Bell, BarChart3, Mail, ShieldCheck, BookOpenText,
   BriefcaseBusiness, Send, Users, MessageCircle, Search, ChevronDown,
-  LogOut, Menu, X, Sparkles, Activity, Clock,
+  LogOut, Menu, X, Sparkles, Activity, Clock, FolderKanban, Building2,
   type LucideIcon,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { ProjectSwitcher } from "@/components/admin/project-switcher";
-import { adminProjectRoutes, groupProjectKey } from "@/lib/admin/projects";
+import { ProjectSwitcher, iconMap as projIconMapDS } from "@/components/admin/project-switcher";
+import { adminProjectRoutes, groupProjectKey, projectSwitcherItems as projItemsDS } from "@/lib/admin/projects";
 
-export type DashboardView = "overview" | "notifications" | "analytics" | "contacts" | "services" | "blogs" | "careers" | "newsletter" | "subscribers" | "chatbot" | "settings" | "audit" | "leads" | "projects" | "media" | "businesses" | "domains" | "command" | "home";
+export type DashboardView = "overview" | "notifications" | "analytics" | "contacts" | "services" | "blogs" | "our-works" | "careers" | "newsletter" | "subscribers" | "chatbot" | "settings" | "audit" | "leads" | "projects" | "media" | "businesses" | "domains" | "command" | "home";
 
 export type NavItemDef = {
   key: DashboardView;
@@ -25,15 +25,17 @@ export type NavItemDef = {
 
 const CORE_NAV: NavItemDef[] = [
   { key: "overview", label: "Dashboard", icon: LayoutDashboard },
+  { key: "leads", label: "Leads", icon: Mail, href: "" },
   { key: "notifications", label: "Notifications", icon: Bell },
   { key: "analytics", label: "Analytics", icon: BarChart3 },
-  { key: "contacts", label: "Contacts", icon: Mail },
+  { key: "contacts", label: "Contacts", icon: Building2 },
 ];
 
 const GROUP_NAV: NavItemDef[] = [
+  { key: "our-works", label: "Our Works", icon: FolderKanban, href: "" },
   { key: "services", label: "Services", icon: ShieldCheck },
   { key: "blogs", label: "Blogs", icon: BookOpenText, href: "" },
-  { key: "careers", label: "Careers", icon: BriefcaseBusiness },
+  { key: "careers", label: "Careers", icon: BriefcaseBusiness, href: "" },
   { key: "newsletter", label: "Newsletter", icon: Send },
   { key: "subscribers", label: "Subscribers", icon: Users },
   { key: "chatbot", label: "Chatbot", icon: MessageCircle },
@@ -68,10 +70,14 @@ export function DashboardShell({
   children,
   activeView,
   unreadCount = 0,
+  entityUnreadCounts = {},
+  projectUnreadCounts = {},
 }: {
   children: React.ReactNode;
   activeView?: DashboardView;
   unreadCount?: number;
+  entityUnreadCounts?: Record<string, number>;
+  projectUnreadCounts?: Record<string, number>;
 }) {
   const pathname = usePathname();
   const router = useRouter();
@@ -79,13 +85,46 @@ export function DashboardShell({
   const slug = typeof params?.project === "string" ? params.project : "";
   const isGroup = slug === "ractysh-group" || !slug;
 
-  const navItems = React.useMemo(
-    () => (isGroup ? [...CORE_NAV, ...GROUP_NAV.map((item) => ({
-      ...item,
-      href: item.key === "blogs" ? `/${slug}/dashboard/blogs` : undefined,
-    }))] : CORE_NAV),
-    [isGroup, slug]
-  );
+  const entityNavMapDS: Record<string, DashboardView> = {
+    lead: "leads",
+    blog: "blogs",
+    career: "careers",
+    application: "careers",
+    contact: "contacts",
+    subscriber: "subscribers",
+    newsletter: "newsletter",
+    chat: "chatbot",
+    message: "chatbot",
+    notification: "notifications",
+    service: "services",
+  };
+
+  const navItems = React.useMemo(() => {
+    const items = isGroup
+      ? [...CORE_NAV, ...GROUP_NAV.map((item) => ({
+          ...item,
+          href: item.key === "blogs" ? `/${slug}/dashboard/blogs` :
+                item.key === "our-works" ? `/${slug}/dashboard/our-works` :
+                item.key === "careers" ? `/${slug}/dashboard/careers` :
+                undefined,
+        }))]
+      : CORE_NAV.map((item) => ({
+          ...item,
+          href: item.key === "leads" ? `/${slug}/dashboard/leads` : undefined,
+        }));
+    return items.map((item) => {
+      let count = 0;
+      for (const [entity, navKey] of Object.entries(entityNavMapDS)) {
+        if (navKey === item.key) {
+          count += entityUnreadCounts[entity] || 0;
+        }
+      }
+      if (item.key === "notifications") {
+        count = unreadCount;
+      }
+      return { ...item, badge: count > 0 ? count : undefined };
+    });
+  }, [isGroup, slug, entityUnreadCounts, unreadCount]);
 
   const [sidebarCollapsed, setSidebarCollapsed] = React.useState(false);
   const [mobileSidebarOpen, setMobileSidebarOpen] = React.useState(false);
@@ -162,15 +201,62 @@ export function DashboardShell({
               )}
               <Icon className="relative z-10 h-[18px] w-[18px] shrink-0" />
               {!sidebarCollapsed && <span className="relative z-10">{item.label}</span>}
-              {item.key === "notifications" && unreadCount > 0 && (
+              {item.badge && item.badge > 0 && (
                 <span className={cn(
                   "relative z-10 ml-auto flex h-5 min-w-[20px] items-center justify-center rounded-full bg-[#D4AF37] px-1 text-[10px] font-bold text-[#050505]",
                   sidebarCollapsed && "absolute -right-0.5 -top-0.5"
                 )}>
-                  {unreadCount > 99 ? "99+" : unreadCount}
+                  {item.badge > 99 ? "99+" : item.badge}
                 </span>
               )}
             </button>
+          );
+        })}
+      </div>
+
+      <div className={cn("border-t border-white/[0.06] mx-3 my-1")} />
+
+      {!sidebarCollapsed && (
+        <div className="px-4 pt-3 pb-1">
+          <p className="text-[10px] font-semibold uppercase tracking-widest text-[#555]">Projects</p>
+        </div>
+      )}
+      <div className="px-2 pb-3 space-y-0.5">
+        {projItemsDS.map((project) => {
+          const Icon = projIconMapDS[project.icon] || Building2;
+          const isCurrent = project.slug === slug;
+          const projectCount = projectUnreadCounts[project.key] || 0;
+          return (
+            <a
+              key={project.slug}
+              href={project.href}
+              className={cn(
+                "group relative flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm transition-all duration-200",
+                sidebarCollapsed && "justify-center px-2",
+                isCurrent
+                  ? "bg-[#D4AF37]/10 text-[#D4AF37]"
+                  : "text-[#777] hover:bg-white/[0.04] hover:text-white"
+              )}
+            >
+              <div className={cn(
+                "flex h-7 w-7 shrink-0 items-center justify-center rounded-md border",
+                isCurrent
+                  ? "border-[#D4AF37]/30 bg-[#D4AF37]/10"
+                  : "border-white/[0.06] bg-white/[0.04]"
+              )}>
+                <Icon className={cn("h-3.5 w-3.5", isCurrent ? "text-[#D4AF37]" : "text-white/50")} />
+              </div>
+              {!sidebarCollapsed && (
+                <>
+                  <span className="flex-1 truncate">{project.label}</span>
+                  {projectCount > 0 && (
+                    <span className="flex h-5 min-w-[20px] items-center justify-center rounded-full bg-[#D4AF37] px-1.5 text-[10px] font-bold text-[#050505]">
+                      {projectCount > 99 ? "99+" : projectCount}
+                    </span>
+                  )}
+                </>
+              )}
+            </a>
           );
         })}
       </div>

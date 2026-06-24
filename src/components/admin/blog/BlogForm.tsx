@@ -3,7 +3,7 @@
 import * as React from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { ArrowLeft, Save, Loader2, Image as ImageIcon, X } from "lucide-react";
+import { ArrowLeft, Save, Loader2, Upload, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 type BlogFormData = {
@@ -31,6 +31,7 @@ export function BlogForm({
 }) {
   const router = useRouter();
   const [saving, setSaving] = React.useState(false);
+  const [uploading, setUploading] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
   const [tagInput, setTagInput] = React.useState("");
 
@@ -247,14 +248,32 @@ export function BlogForm({
             </motion.div>
 
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.17 }}>
-              <label className={labelClass}>Featured Image URL</label>
-              <input
-                type="url"
-                value={form.featuredImage}
-                onChange={(e) => setForm((prev) => ({ ...prev, featuredImage: e.target.value }))}
-                placeholder="https://example.com/image.jpg"
-                className={cn(inputClass, "mt-1.5")}
-              />
+              <label className={labelClass}>Featured Image</label>
+              <div className="mt-1.5 flex gap-2">
+                <input type="url" value={form.featuredImage} onChange={(e) => setForm((prev) => ({ ...prev, featuredImage: e.target.value }))}
+                  placeholder="https://res.cloudinary.com/..." className={cn(inputClass, "flex-1")} />
+                <label className="flex cursor-pointer items-center gap-2 rounded-xl border border-[#D4AF37]/20 bg-[#D4AF37]/10 px-3 text-sm font-medium text-[#D4AF37] hover:bg-[#D4AF37]/20">
+                  <Upload className="h-4 w-4" />
+                  Upload
+                  <input type="file" accept="image/*" className="hidden" disabled={uploading}
+                    onChange={async (e) => {
+                      const file = e.target.files?.[0];
+                      if (!file) return;
+                      setUploading(true);
+                      try {
+                        const fd = new FormData();
+                        fd.append("file", file);
+                        fd.append("folder", "ractysh-admin/blogs");
+                        const res = await fetch("/api/admin/upload", { method: "POST", body: fd });
+                        const data = await res.json();
+                        if (data.success) setForm((prev) => ({ ...prev, featuredImage: data.url }));
+                        else setError(data.message || "Upload failed.");
+                      } catch { setError("Upload failed."); }
+                      finally { setUploading(false); e.target.value = ""; }
+                    }} />
+                </label>
+              </div>
+              {uploading && <p className="mt-1 text-xs text-[#D4AF37]">Uploading image...</p>}
               {form.featuredImage && (
                 <div className="mt-2 overflow-hidden rounded-xl border border-white/[0.06]">
                   <img src={form.featuredImage} alt="Preview" className="h-32 w-full object-cover" onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }} />
