@@ -18,7 +18,9 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
-      "@services/*": ["services/*"]
+      "@services/*": ["services/*"],
+      "@ractysh/types/admin": ["src/@ractysh/types/admin"],
+      "@ractysh/types": ["src/@ractysh/types"]
     }
   },
   "include": ["next-env.d.ts", "src/**/*.ts", "src/**/*.tsx", ".next/types/**/*.ts"],
