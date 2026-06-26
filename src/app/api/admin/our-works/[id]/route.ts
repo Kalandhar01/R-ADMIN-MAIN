@@ -15,13 +15,16 @@ const ourWorkSchema = z.object({
   title: z.string().trim().min(1, "Title is required.").max(200),
   slug: z.string().trim().optional(),
   category: z.enum(CATEGORIES, { message: "Invalid category." }),
+  shortDescription: z.string().trim().optional().default(""),
   description: z.string().trim().optional().default(""),
   location: z.string().trim().optional().default(""),
   status: z.enum(STATUSES).optional().default("Ongoing"),
   coverImage: z.string().trim().optional().default(""),
   galleryImages: z.array(z.string()).optional().default([]),
   featured: z.boolean().optional().default(false),
-  order: z.number().int().optional().default(0),
+  displayOrder: z.number().int().optional().default(0),
+  seoTitle: z.string().trim().optional().default(""),
+  seoDescription: z.string().trim().optional().default(""),
 });
 
 function slugify(value: string): string {
@@ -51,6 +54,33 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
   const { id } = await params;
   try {
     const body = await request.json();
+
+    if (body._action === "duplicate") {
+      const existing = await prisma.ourWork.findMany({ where: { id }, take: 1 });
+      if (!existing?.[0]) return NextResponse.json({ success: false, message: "Work not found." }, { status: 404 });
+
+      const source = existing[0];
+      const dupSlug = slugify(`${source.title}-copy-${Date.now()}`);
+      const work = await prisma.ourWork.create({
+        data: {
+          title: `${source.title} (Copy)`,
+          slug: dupSlug,
+          category: source.category,
+          shortDescription: source.shortDescription || "",
+          description: source.description || "",
+          location: source.location || "",
+          status: source.status || "Ongoing",
+          coverImage: source.coverImage || "",
+          galleryImages: source.galleryImages || [],
+          featured: false,
+          displayOrder: typeof source.displayOrder === "number" ? source.displayOrder + 1 : 0,
+          seoTitle: source.seoTitle || "",
+          seoDescription: source.seoDescription || "",
+        }
+      });
+      return NextResponse.json({ success: true, data: work }, { status: 201 });
+    }
+
     const parsed = ourWorkSchema.parse(body);
 
     const existing = await prisma.ourWork.findMany({ where: { id }, take: 1 });
@@ -64,13 +94,16 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
         title: parsed.title,
         slug,
         category: parsed.category,
+        shortDescription: parsed.shortDescription,
         description: parsed.description,
         location: parsed.location,
         status: parsed.status,
         coverImage: parsed.coverImage,
         galleryImages: parsed.galleryImages,
         featured: parsed.featured,
-        order: parsed.order,
+        displayOrder: parsed.displayOrder,
+        seoTitle: parsed.seoTitle,
+        seoDescription: parsed.seoDescription,
       }
     });
 

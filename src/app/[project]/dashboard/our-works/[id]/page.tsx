@@ -15,21 +15,33 @@ export default function EditOurWorkPage() {
   const [loading, setLoading] = React.useState(true);
   const [error, setError] = React.useState<string | null>(null);
 
+  const DIVISION_SLUGS = ["architecture", "construction", "real-estate", "import-export", "otc"];
+
   React.useEffect(() => {
     if (!id) return;
     (async () => {
       try {
-        const res = await fetch(`/api/admin/our-works/${id}`);
-        const result = await res.json();
-        if (result.success) setWork(result.data);
-        else setError(result.message || "Work not found.");
+        const endpoints = DIVISION_SLUGS.includes(slug)
+          ? [`/api/admin/portfolio-projects/${id}`]
+          : [`/api/admin/our-works/${id}`, `/api/admin/portfolio-projects/${id}`];
+        for (const ep of endpoints) {
+          const res = await fetch(ep);
+          if (!res.ok) continue;
+          const result = await res.json();
+          if (result.success && result.data) {
+            setWork({ ...result.data, _apiBase: ep.includes("portfolio-projects") ? "/api/admin/portfolio-projects" : "/api/admin/our-works" });
+            setLoading(false);
+            return;
+          }
+        }
+        setError("Work not found.");
       } catch {
         setError("Failed to load work.");
       } finally {
         setLoading(false);
       }
     })();
-  }, [id]);
+  }, [id, slug]);
 
   if (loading) {
     return (
@@ -51,19 +63,23 @@ export default function EditOurWorkPage() {
     <DashboardShell activeView="our-works">
       <OurWorksForm
         projectSlug={slug}
+        divisionSlug={slug}
         isEditing
         initialData={{
           id: work.id as string,
-          title: work.title as string,
-          slug: work.slug as string,
+          title: (work.title as string) || "",
+          slug: (work.slug as string) || "",
           category: (work.category as string) || "architecture",
+          shortDescription: (work.shortDescription as string) || "",
           description: (work.description as string) || "",
           location: (work.location as string) || "",
           status: (work.status as string) || "Ongoing",
           coverImage: (work.coverImage as string) || "",
           galleryImages: (work.galleryImages as string[]) || [],
           featured: !!work.featured,
-          order: typeof work.order === "number" ? work.order : 0,
+          displayOrder: typeof work.displayOrder === "number" ? work.displayOrder : 0,
+          seoTitle: (work.seoTitle as string) || "",
+          seoDescription: (work.seoDescription as string) || "",
         }}
       />
     </DashboardShell>

@@ -3,6 +3,8 @@ import "server-only";
 import mongoose, { Schema, Model } from "mongoose";
 import { dbConnect } from "@/lib/db";
 
+const PORTFOLIO_DB_URI = (process.env.MONGODB_URI || "").replace("/ractysh?", "/Ractysh-Main?");
+
 type Doc = Record<string, unknown>;
 
 function modelFromSchema<T extends Doc>(name: string, schemaFields: Record<string, unknown>, collection?: string): Model<T> {
@@ -23,7 +25,7 @@ function idFilter(value: unknown): Record<string, unknown> {
 
 function ensureId(data: Doc): Doc {
   if (!data._id && !data.id) {
-    return { ...data, _id: crypto.randomUUID() };
+    return { ...data, _id: new mongoose.Types.ObjectId() };
   }
   return data;
 }
@@ -34,10 +36,16 @@ function makeModel(name: string, collection?: string): Model<Doc> {
 
 const models: Record<string, Model<Doc>> = {};
 
-async function getModel(name: string): Promise<Model<Doc>> {
+async function getModel(name: string, collection?: string, dbUri?: string): Promise<Model<Doc>> {
   if (!models[name]) {
-    await dbConnect();
-    models[name] = makeModel(name);
+    if (dbUri) {
+      const conn = await mongoose.createConnection(dbUri).asPromise();
+      const schema = new Schema<Doc>({}, { strict: false, timestamps: true, collection });
+      models[name] = conn.model<Doc>(name, schema, collection);
+    } else {
+      await dbConnect();
+      models[name] = makeModel(name, collection);
+    }
   }
   return models[name];
 }
@@ -670,6 +678,11 @@ const prisma = {
       const m = await getModel("Notification");
       const result = await m.updateMany(convertWhere(where), { $set: data });
       return { count: result.modifiedCount };
+    },
+    async deleteMany({ where }: { where: Doc }): Promise<{ count: number }> {
+      const m = await getModel("Notification");
+      const result = await m.deleteMany(convertWhere(where));
+      return { count: result.deletedCount };
     }
   },
   ourWork: {
@@ -703,6 +716,40 @@ const prisma = {
       const m = await getModel("OurWork");
       const doc = await m.findOneAndDelete(idFilter(where.id)).lean();
       if (!doc) throw new Error("OurWork not found");
+      return removeId(doc);
+    }
+  },
+  portfolioProject: {
+    async count({ where }: { where?: Doc } = {}): Promise<number> {
+      const m = await getModel("PortfolioProject", "portfolioprojects", PORTFOLIO_DB_URI);
+      return m.countDocuments(where ? convertWhere(where) : {});
+    },
+    async findMany({ where, orderBy, take, skip, select }: { where?: Doc; orderBy?: Record<string, string> | Record<string, string>[]; take?: number; skip?: number; select?: Record<string, boolean> } = {}): Promise<Doc[]> {
+      const m = await getModel("PortfolioProject", "portfolioprojects", PORTFOLIO_DB_URI);
+      let query = m.find(where ? convertWhere(where) : {});
+      const sort = convertOrderBy(orderBy);
+      if (Object.keys(sort).length) query = query.sort(sort);
+      if (skip) query = query.skip(skip);
+      if (take) query = query.limit(take);
+      if (select) query = query.select(convertSelect(select));
+      const docs = await query.lean();
+      return removeIds(docs as Doc[]);
+    },
+    async create({ data }: { data: Doc }): Promise<Doc> {
+      const m = await getModel("PortfolioProject", "portfolioprojects", PORTFOLIO_DB_URI);
+      const doc = await m.create(ensureId(data));
+      return removeId(doc.toObject());
+    },
+    async update({ where, data }: { where: { id: string }; data: Doc }): Promise<Doc> {
+      const m = await getModel("PortfolioProject", "portfolioprojects", PORTFOLIO_DB_URI);
+      const doc = await m.findOneAndUpdate(idFilter(where.id), { $set: data }, { new: true }).lean();
+      if (!doc) throw new Error("PortfolioProject not found");
+      return removeId(doc);
+    },
+    async delete({ where }: { where: { id: string } }): Promise<Doc> {
+      const m = await getModel("PortfolioProject", "portfolioprojects", PORTFOLIO_DB_URI);
+      const doc = await m.findOneAndDelete(idFilter(where.id)).lean();
+      if (!doc) throw new Error("PortfolioProject not found");
       return removeId(doc);
     }
   }

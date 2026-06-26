@@ -5,7 +5,7 @@
   "packageManager": "npm@11.13.0",
   "workspaces": ["packages/*"],
   "scripts": {
-    "dev": "next dev --port 3000",
+    "dev": "next dev --port 3001",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",

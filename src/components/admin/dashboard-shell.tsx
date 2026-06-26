@@ -13,7 +13,7 @@ import { cn } from "@/lib/utils";
 import { ProjectSwitcher, iconMap as projIconMapDS } from "@/components/admin/project-switcher";
 import { adminProjectRoutes, groupProjectKey, projectSwitcherItems as projItemsDS } from "@/lib/admin/projects";
 
-export type DashboardView = "overview" | "notifications" | "analytics" | "contacts" | "services" | "blogs" | "our-works" | "careers" | "newsletter" | "subscribers" | "chatbot" | "settings" | "audit" | "leads" | "projects" | "media" | "businesses" | "domains" | "command" | "home";
+export type DashboardView = "overview" | "notifications" | "analytics" | "contacts" | "services" | "blogs" | "our-works" | "all-works" | "portfolio-manager" | "careers" | "newsletter" | "subscribers" | "chatbot" | "settings" | "audit" | "leads" | "projects" | "media" | "businesses" | "domains" | "command" | "home";
 
 export type NavItemDef = {
   key: DashboardView;
@@ -25,14 +25,13 @@ export type NavItemDef = {
 
 const CORE_NAV: NavItemDef[] = [
   { key: "overview", label: "Dashboard", icon: LayoutDashboard },
-  { key: "leads", label: "Leads", icon: Mail, href: "" },
   { key: "notifications", label: "Notifications", icon: Bell },
   { key: "analytics", label: "Analytics", icon: BarChart3 },
+  { key: "our-works", label: "Our Works", icon: FolderKanban, href: "" },
   { key: "contacts", label: "Contacts", icon: Building2 },
 ];
 
 const GROUP_NAV: NavItemDef[] = [
-  { key: "our-works", label: "Our Works", icon: FolderKanban, href: "" },
   { key: "services", label: "Services", icon: ShieldCheck },
   { key: "blogs", label: "Blogs", icon: BookOpenText, href: "" },
   { key: "careers", label: "Careers", icon: BriefcaseBusiness, href: "" },
@@ -86,7 +85,6 @@ export function DashboardShell({
   const isGroup = slug === "ractysh-group" || !slug;
 
   const entityNavMapDS: Record<string, DashboardView> = {
-    lead: "leads",
     blog: "blogs",
     career: "careers",
     application: "careers",
@@ -100,18 +98,16 @@ export function DashboardShell({
   };
 
   const navItems = React.useMemo(() => {
-    const items = isGroup
-      ? [...CORE_NAV, ...GROUP_NAV.map((item) => ({
-          ...item,
-          href: item.key === "blogs" ? `/${slug}/dashboard/blogs` :
-                item.key === "our-works" ? `/${slug}/dashboard/our-works` :
-                item.key === "careers" ? `/${slug}/dashboard/careers` :
-                undefined,
-        }))]
-      : CORE_NAV.map((item) => ({
-          ...item,
-          href: item.key === "leads" ? `/${slug}/dashboard/leads` : undefined,
-        }));
+    const withHref = (item: NavItemDef) => ({
+      ...item,
+      href: item.key === "overview" ? `/${slug}/dashboard` :
+            item.key === "notifications" ? `/${slug}/dashboard/notifications` :
+            item.key === "our-works" ? `/${slug}/dashboard/our-works` :
+            item.key === "blogs" ? `/${slug}/dashboard/blogs` :
+            item.key === "careers" ? `/${slug}/dashboard/careers` :
+            undefined,
+    });
+    const items = isGroup ? [...CORE_NAV, ...GROUP_NAV.map(withHref)] : CORE_NAV.map(withHref);
     return items.map((item) => {
       let count = 0;
       for (const [entity, navKey] of Object.entries(entityNavMapDS)) {
@@ -131,6 +127,15 @@ export function DashboardShell({
   const [searchOpen, setSearchOpen] = React.useState(false);
   const [searchQuery, setSearchQuery] = React.useState("");
   const searchRef = React.useRef<HTMLInputElement>(null);
+
+  React.useEffect(() => {
+    if (mobileSidebarOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => { document.body.style.overflow = ""; };
+  }, [mobileSidebarOpen]);
 
   React.useEffect(() => {
     function handleKey(e: KeyboardEvent) {
@@ -155,19 +160,15 @@ export function DashboardShell({
 
   function handleNavigate(view: DashboardView) {
     const item = navItems.find((n) => n.key === view);
-    if (item?.href) {
-      router.push(item.href);
-    } else {
-      if (view === "overview") router.push(`/${slug}/dashboard`);
-    }
+    if (item?.href) router.push(item.href);
   }
 
   const sidebarContent = (
     <div className="flex h-full flex-col">
       <div className={cn("flex items-center gap-3 px-4 py-5", sidebarCollapsed && "justify-center px-2")}>
-        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-[#D4AF37]/20 bg-gradient-to-br from-[#D4AF37]/10 to-transparent">
+        <button onClick={() => setSidebarCollapsed(!sidebarCollapsed)} className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-[#D4AF37]/20 bg-gradient-to-br from-[#D4AF37]/10 to-transparent hover:border-[#D4AF37]/40 transition-colors">
           <Sparkles className="h-4 w-4 text-[#D4AF37]" />
-        </div>
+        </button>
         {!sidebarCollapsed && (
           <div className="min-w-0">
             <p className="truncate text-sm font-semibold text-white">Ractysh Group</p>
@@ -176,7 +177,7 @@ export function DashboardShell({
         )}
       </div>
 
-      <div className="flex-1 space-y-1 px-2 py-2">
+      <div className="flex-1 space-y-1 overflow-y-auto px-2 py-2">
         {navItems.map((item) => {
           const isActive = activeView === item.key || pathname.startsWith(item.href || `/${slug}/dashboard/${item.key}`);
           const Icon = item.icon;
@@ -314,7 +315,7 @@ export function DashboardShell({
         )}
       </AnimatePresence>
 
-      <div className="flex flex-1 flex-col overflow-hidden w-full max-w-full">
+      <div className="flex flex-1 flex-col w-full max-w-full">
         <header className="sticky top-0 z-30 border-b border-white/[0.06] bg-[#050505]/80 backdrop-blur-xl overflow-x-hidden">
           <div className="flex h-16 items-center gap-4 px-4 lg:px-6">
             <button
@@ -340,9 +341,22 @@ export function DashboardShell({
                 <span>Search...</span>
                 <kbd className="ml-6 rounded border border-white/[0.06] bg-white/[0.04] px-1.5 py-0.5 text-[10px] text-[#555]">⌘K</kbd>
               </button>
-              <button className="relative flex h-9 w-9 items-center justify-center rounded-lg text-[#888] transition-colors hover:bg-white/[0.06] hover:text-white">
-                <Bell className="h-[18px] w-[18px]" />
-                {unreadCount > 0 && <span className="absolute right-2 top-1.5 h-2 w-2 rounded-full bg-[#D4AF37]" />}
+              <button onClick={() => router.push(`/${slug}/dashboard/notifications`)} className={cn("relative flex h-9 w-9 items-center justify-center rounded-lg transition-all",
+                  unreadCount > 0
+                    ? "text-[#D4AF37] bg-[#D4AF37]/10 shadow-[0_0_12px_rgba(212,175,55,0.3)]"
+                    : "text-[#888] hover:bg-white/[0.06] hover:text-white"
+                )}>
+                <Bell className={cn("h-[18px] w-[18px]", unreadCount > 0 && "animate-[bellPulse_2s_ease-in-out_infinite]")} />
+                {unreadCount > 0 && (
+                  <>
+                    <span className="absolute right-1.5 top-1.5 h-2 w-2 rounded-full bg-[#D4AF37]" />
+                    <span className="absolute -inset-1 rounded-lg bg-[#D4AF37]/5 animate-[bellGlow_2s_ease-in-out_infinite]" />
+                    <span className="absolute -right-1 -top-1 flex min-w-[18px] items-center justify-center rounded-full bg-[#D4AF37] px-1 text-[9px] font-bold text-[#050505] leading-none"
+                      style={{ height: "16px" }}>
+                      {unreadCount > 99 ? "99+" : unreadCount}
+                    </span>
+                  </>
+                )}
               </button>
               <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-[#D4AF37]/20 to-[#D4AF37]/5 text-sm font-semibold text-[#D4AF37]">FA</div>
             </div>
@@ -381,6 +395,16 @@ export function DashboardShell({
           {children}
         </main>
       </div>
+      <style>{`
+        @keyframes bellPulse {
+          0%, 100% { transform: scale(1); }
+          50% { transform: scale(1.08); }
+        }
+        @keyframes bellGlow {
+          0%, 100% { opacity: 0.4; }
+          50% { opacity: 1; }
+        }
+      `}</style>
     </div>
   );
 }

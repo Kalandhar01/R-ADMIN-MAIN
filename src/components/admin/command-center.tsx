@@ -41,6 +41,7 @@ import {
   Star,
   Mail,
   Inbox,
+  FolderKanban,
   type LucideIcon,
 } from "lucide-react";
 import {
@@ -96,6 +97,7 @@ const CORE_NAV: NavItem[] = [
   { key: "overview", label: "Dashboard", icon: LayoutDashboard },
   { key: "notifications", label: "Notifications", icon: Bell },
   { key: "analytics", label: "Analytics", icon: BarChart3 },
+  { key: "our-works", label: "Our Works", icon: FolderKanban },
   { key: "contacts", label: "Contacts", icon: Mail },
 ];
 
@@ -233,7 +235,7 @@ function Sidebar({
         )}
       </div>
 
-      <div className="flex-1 space-y-1 px-2 py-2">
+      <div className="flex-1 space-y-1 overflow-y-auto px-2 py-2">
         {navItems.map((item) => {
           const isActive = activeView === item.key;
           const Icon = item.icon;
@@ -241,7 +243,13 @@ function Sidebar({
             <button
               key={item.key}
               onClick={() => {
-                onNavigate(item.key);
+                if (item.key === "our-works") {
+                  router.push(`/${currentSlug}/dashboard/our-works`);
+                } else if (item.key === "notifications") {
+                  router.push(`/${currentSlug}/dashboard/notifications`);
+                } else {
+                  onNavigate(item.key);
+                }
                 onMobileClose();
               }}
               className={cn(
@@ -401,6 +409,9 @@ function Header({
   unreadCount: number;
   navItems: NavItem[];
 }) {
+  const router = useRouter();
+  const headerParams = useParams();
+  const headerSlug = typeof headerParams?.project === "string" ? headerParams.project : "";
   const [searchOpen, setSearchOpen] = React.useState(false);
   const [searchQuery, setSearchQuery] = React.useState("");
   const searchRef = React.useRef<HTMLInputElement>(null);
@@ -464,10 +475,21 @@ function Header({
             </kbd>
           </button>
 
-          <button className="relative flex h-9 w-9 items-center justify-center rounded-lg text-[#888] transition-colors hover:bg-white/[0.06] hover:text-white">
-            <Bell className="h-[18px] w-[18px]" />
+          <button onClick={() => router.push(`/${headerSlug}/dashboard/notifications`)} className={cn("relative flex h-9 w-9 items-center justify-center rounded-lg transition-all",
+              unreadCount > 0
+                ? "text-[#D4AF37] bg-[#D4AF37]/10 shadow-[0_0_12px_rgba(212,175,55,0.3)]"
+                : "text-[#888] hover:bg-white/[0.06] hover:text-white"
+            )}>
+            <Bell className={cn("h-[18px] w-[18px]", unreadCount > 0 && "animate-[bellPulse_2s_ease-in-out_infinite]")} />
             {unreadCount > 0 && (
-              <span className="absolute right-2 top-1.5 h-2 w-2 rounded-full bg-[#D4AF37]" />
+              <>
+                <span className="absolute right-1.5 top-1.5 h-2 w-2 rounded-full bg-[#D4AF37]" />
+                <span className="absolute -inset-1 rounded-lg bg-[#D4AF37]/5 animate-[bellGlow_2s_ease-in-out_infinite]" />
+                <span className="absolute -right-1 -top-1 flex min-w-[18px] items-center justify-center rounded-full bg-[#D4AF37] px-1 text-[9px] font-bold text-[#050505] leading-none"
+                  style={{ height: "16px" }}>
+                  {unreadCount > 99 ? "99+" : unreadCount}
+                </span>
+              </>
             )}
           </button>
 
@@ -1766,6 +1788,15 @@ export function AdminCommandCenter({
     }
   }
 
+  React.useEffect(() => {
+    if (mobileSidebarOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => { document.body.style.overflow = ""; };
+  }, [mobileSidebarOpen]);
+
   return (
     <div className="flex min-h-screen bg-[#050505] text-white">
       <Sidebar
@@ -1780,7 +1811,7 @@ export function AdminCommandCenter({
         navItems={navItems}
       />
 
-      <div className="flex flex-1 flex-col overflow-hidden w-full max-w-full">
+      <div className="flex flex-1 flex-col w-full max-w-full">
         <Header
           activeView={activeView}
           onMenuClick={() => setMobileSidebarOpen(true)}
@@ -1821,6 +1852,16 @@ export function AdminCommandCenter({
         onArchive={handleArchive}
         onDelete={handleDelete}
       />
+      <style>{`
+        @keyframes bellPulse {
+          0%, 100% { transform: scale(1); }
+          50% { transform: scale(1.08); }
+        }
+        @keyframes bellGlow {
+          0%, 100% { opacity: 0.4; }
+          50% { opacity: 1; }
+        }
+      `}</style>
     </div>
   );
 }
