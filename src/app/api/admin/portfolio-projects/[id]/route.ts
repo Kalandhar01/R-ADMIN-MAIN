@@ -22,6 +22,7 @@ const projectSchema = z.object({
   coverImage: z.string().trim().optional().default(""),
   galleryImages: z.array(z.string()).optional().default([]),
   featured: z.boolean().optional().default(false),
+  published: z.boolean().optional().default(true),
   displayOrder: z.number().int().optional().default(0),
 });
 
@@ -74,6 +75,7 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
           coverImage: original.coverImage || "",
           galleryImages: original.galleryImages || [],
           featured: false,
+          published: true,
           displayOrder: 0,
         }
       });
@@ -106,6 +108,7 @@ export async function PUT(request: NextRequest, { params }: { params: Promise<{ 
     if (parsed.coverImage !== undefined) updateData.coverImage = parsed.coverImage;
     if (parsed.galleryImages !== undefined) updateData.galleryImages = parsed.galleryImages;
     if (parsed.featured !== undefined) updateData.featured = parsed.featured;
+    if (parsed.published !== undefined) updateData.published = parsed.published;
     if (parsed.displayOrder !== undefined) updateData.displayOrder = parsed.displayOrder;
 
     const updated = await prisma.portfolioProject.update({ where: { id }, data: updateData });

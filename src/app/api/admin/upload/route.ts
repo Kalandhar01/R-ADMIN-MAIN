@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getCurrentAdminFromRequest } from "@/lib/admin/auth";
 import { uploadToCloudinary, isCloudinaryConfigured } from "@/lib/server/cloudinary";
+import { parseFormData } from "@/lib/server/parseFormData";
 
 export const runtime = "nodejs";
 
@@ -13,16 +14,13 @@ export async function POST(request: NextRequest) {
   }
 
   try {
-    const formData = await request.formData();
-    const file = formData.get("file") as File | null;
-    const folder = (formData.get("folder") as string) || "ractysh-admin";
-
+    const { file, fileName, fields } = await parseFormData(request);
     if (!file) {
       return NextResponse.json({ success: false, message: "No file provided." }, { status: 400 });
     }
 
-    const buffer = Buffer.from(await file.arrayBuffer());
-    const result = await uploadToCloudinary(buffer, folder, file.name);
+    const folder = fields.folder || "ractysh-admin";
+    const result = await uploadToCloudinary(file, folder, fileName);
 
     return NextResponse.json({ success: true, url: result.url, publicId: result.publicId });
   } catch (error) {

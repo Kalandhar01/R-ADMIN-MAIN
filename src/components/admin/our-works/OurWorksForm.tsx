@@ -63,8 +63,7 @@ export function OurWorksForm({
   const isGroup = !divisionSlug || divisionSlug === "ractysh-group";
   const autoCategory = SLUG_TO_DIVISION[divisionSlug || ""] || "";
   const autoDivision = SLUG_TO_DIVISION_LABEL[divisionSlug || ""] || "";
-  const initialApiBase = isGroup ? "/api/admin/our-works" : "/api/admin/portfolio-projects";
-  const apiBase = (initialData as Record<string, unknown>)?._apiBase as string || initialApiBase;
+  const apiBase = "/api/admin/portfolio-projects";
   const [saving, setSaving] = React.useState(false);
   const [uploadingCover, setUploadingCover] = React.useState(false);
   const [uploadingGallery, setUploadingGallery] = React.useState(false);
@@ -101,10 +100,20 @@ export function OurWorksForm({
 
     for (const file of files) {
       try {
-        const fd = new FormData();
-        fd.append("file", file);
-        fd.append("folder", "ractysh-admin/our-works");
-        const res = await fetch("/api/admin/upload", { method: "POST", body: fd });
+        const b64 = await new Promise<string>((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => {
+            const result = reader.result as string;
+            resolve(result.split(",")[1]);
+          };
+          reader.onerror = reject;
+          reader.readAsDataURL(file);
+        });
+        const res = await fetch("/api/admin/upload", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ file: b64, fileName: file.name, folder: "ractysh-admin/our-works" }),
+        });
         const data = await res.json();
         if (data.success) urls.push(data.url);
       } catch { /* skip */ }
@@ -133,9 +142,8 @@ export function OurWorksForm({
     try {
       const url = isEditing && initialData?.id ? `${apiBase}/${initialData.id}` : apiBase;
       const method = isEditing ? "PUT" : "POST";
-      const body = isGroup
-        ? form
-        : { ...form, division: autoDivision, category: undefined };
+      const division = isGroup ? (SLUG_TO_DIVISION_LABEL[form.category] || form.category) : autoDivision;
+      const body = { ...form, division, category: undefined };
       const res = await fetch(url, { method, headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
       const result = await res.json();
       if (result.success) {

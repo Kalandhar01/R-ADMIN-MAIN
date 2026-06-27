@@ -253,40 +253,23 @@ export function OurWorksAdminClient({ projectSlug }: { projectSlug: string }) {
       if (statusFilter) params.set("status", statusFilter);
       if (featuredFilter) params.set("featured", featuredFilter);
 
-      const endpoints: string[] = [];
-      if (isDivision) {
-        endpoints.push("/api/admin/portfolio-projects");
-        if (categoryFilter) params.set("division", forcedDivision);
-      } else {
-        endpoints.push("/api/admin/our-works");
-        endpoints.push("/api/admin/portfolio-projects");
-        if (categoryFilter) {
-          params.set("category", categoryFilter);
-        }
+      const epParams = new URLSearchParams(params.toString());
+      if (isDivision && forcedDivision) {
+        epParams.set("division", forcedDivision);
+      } else if (categoryFilter) {
+        const catLabel = CATEGORY_LABELS[categoryFilter] || "";
+        if (catLabel) epParams.set("division", catLabel);
       }
 
-      const allData: Work[] = [];
-      let mergedTotal = 0;
-
-      for (const ep of endpoints) {
-        const epParams = new URLSearchParams(params.toString());
-        if (ep === "/api/admin/portfolio-projects" && !isDivision) {
-          const catLabel = CATEGORY_LABELS[categoryFilter] || "";
-          if (catLabel) epParams.set("division", catLabel);
-          else { epParams.delete("category"); epParams.delete("division"); }
-        }
-        const res = await fetch(`${ep}?${epParams}`);
-        const result = await res.json();
-        if (result.success && result.data) {
-          const mapped = result.data.map((item: Record<string, unknown>) => ({
+      const res = await fetch(`/api/admin/portfolio-projects?${epParams}`);
+      const result = await res.json();
+      const allData: Work[] = result.success && result.data
+        ? result.data.map((item: Record<string, unknown>) => ({
             ...item,
             category: item.category || (item.division as string) || "",
-            _apiBase: ep,
-          })) as Work[];
-          allData.push(...mapped);
-          mergedTotal += result.pagination?.total || result.data.length;
-        }
-      }
+          })) as Work[]
+        : [];
+      const mergedTotal = result.pagination?.total || allData.length;
 
       setWorks(allData);
       setTotalPages(Math.ceil(mergedTotal / limit));
@@ -300,8 +283,7 @@ export function OurWorksAdminClient({ projectSlug }: { projectSlug: string }) {
   function handleSearch() { setPage(1); fetchWorks(); }
 
   function apiFor(id: string): string {
-    const found = works.find((w) => w.id === id);
-    return found?._apiBase || (isDivision ? "/api/admin/portfolio-projects" : "/api/admin/our-works");
+    return "/api/admin/portfolio-projects";
   }
 
   async function toggleFeatured(work: Work) {

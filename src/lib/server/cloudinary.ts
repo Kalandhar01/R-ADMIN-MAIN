@@ -16,11 +16,10 @@ function signature(params: Record<string, string>, secret: string): string {
   return createHash("sha1").update(`${serialized}${secret}`).digest("hex");
 }
 
-function derivePublicId(fileName: string | undefined, folder: string): string {
-  const base = fileName
+function derivePublicId(fileName: string | undefined, _folder: string): string {
+  return fileName
     ? fileName.replace(/\.[^.]+$/, "").replace(/[^a-zA-Z0-9-_]/g, "-")
     : `upload-${Date.now()}`;
-  return `${folder}/${base}`;
 }
 
 async function uploadToCloudinaryApi(
@@ -34,9 +33,6 @@ async function uploadToCloudinaryApi(
   const params: Record<string, string> = {
     folder,
     public_id: publicId,
-    resource_type: "auto",
-    quality: "auto:best",
-    fetch_format: "auto",
     timestamp,
   };
 

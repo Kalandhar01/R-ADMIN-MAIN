@@ -10,6 +10,12 @@ const nextConfig: NextConfig = {
         hostname: "res.cloudinary.com"
       }
     ]
+  },
+  serverActions: {
+    bodySizeLimit: "50mb"
+  },
+  experimental: {
+    proxyClientMaxBodySize: "50mb"
   }
 };
 

@@ -21,6 +21,7 @@ const projectSchema = z.object({
   coverImage: z.string().trim().optional().default(""),
   galleryImages: z.array(z.string()).optional().default([]),
   featured: z.boolean().optional().default(false),
+  published: z.boolean().optional().default(true),
   displayOrder: z.number().int().optional().default(0),
 });
 
@@ -103,6 +104,7 @@ export async function POST(request: NextRequest) {
         coverImage: parsed.coverImage,
         galleryImages: parsed.galleryImages,
         featured: parsed.featured,
+        published: parsed.published,
         displayOrder: parsed.displayOrder,
       }
     });
